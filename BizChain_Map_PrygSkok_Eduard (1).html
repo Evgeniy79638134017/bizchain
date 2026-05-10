@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — Детский центр «Прыг-Скок» · Эдуард · Благовещенск</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --green: #22c55e;
+    --green-bg: #f0fdf4;
+    --green-border: #86efac;
+    --green-text: #15803d;
+    --yellow: #f59e0b;
+    --yellow-bg: #fffbeb;
+    --yellow-border: #fcd34d;
+    --yellow-text: #b45309;
+    --red: #ef4444;
+    --red-bg: #fef2f2;
+    --red-border: #fca5a5;
+    --red-text: #b91c1c;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+    --row-bg-alt: rgba(248,250,252,0.6);
+    --label-bg: linear-gradient(90deg, rgba(99,102,241,0.06), transparent);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --green-bg: #052e16;
+      --green-border: #15803d;
+      --green-text: #86efac;
+      --yellow-bg: #451a03;
+      --yellow-border: #b45309;
+      --yellow-text: #fcd34d;
+      --red-bg: #450a0a;
+      --red-border: #b91c1c;
+      --red-text: #fca5a5;
+      --row-bg-alt: rgba(30,41,59,0.5);
+      --label-bg: linear-gradient(90deg, rgba(99,102,241,0.12), transparent);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    line-height: 1.5;
+  }
+
+  .wrapper {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .header .hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* STATS */
+  .stats {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .stat-green { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+  .stat-yellow { background: var(--yellow-bg); color: var(--yellow-text); border-color: var(--yellow-border); }
+  .stat-red { background: var(--red-bg); color: var(--red-text); border-color: var(--red-border); }
+  .stat-summary {
+    background: rgba(99,102,241,0.1);
+    color: #6366f1;
+    border-color: rgba(99,102,241,0.3);
+  }
+
+  /* MAP */
+  .map-container {
+    position: relative;
+    background: var(--bg-secondary);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 16px;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+
+  .chain-svg {
+    display: block;
+    min-width: 720px;
+    width: 100%;
+    height: auto;
+  }
+
+  .chain-label {
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .node {
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+  .node:hover {
+    filter: brightness(0.94);
+  }
+  .node:hover rect.node-bg {
+    stroke-width: 2;
+  }
+  .node:active {
+    transform: translateY(1px);
+  }
+
+  .arrow-chevron {
+    fill: #94a3b8;
+    font-weight: 600;
+  }
+
+  /* POPUP */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .popup-overlay.active {
+    display: flex;
+    animation: fadeIn 0.18s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .popup {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.22s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(12px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .popup-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+  .popup-close:hover {
+    background: var(--border);
+    color: var(--text);
+  }
+  .popup-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .popup-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    padding-right: 32px;
+  }
+  .popup-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .popup-section {
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+  .popup-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .popup-section-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+  .legend-line {
+    width: 22px;
+    height: 0;
+    border-top: 1.5px dashed;
+  }
+
+  /* TRANSITIONS LEGEND */
+  .transitions-info {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .transitions-info strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  /* MOBILE */
+  @media (max-width: 560px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 16px; }
+    .header .subtitle { font-size: 12px; }
+    .stats { gap: 6px; }
+    .stat-pill { padding: 5px 10px; font-size: 11.5px; }
+    .map-container { padding: 10px; border-radius: 10px; }
+    .popup { padding: 20px; }
+    .popup-title { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="header">
+    <h1>🔗 BizChain Map — Детский центр «Прыг-Скок»</h1>
+    <div class="subtitle">Эдуард · Благовещенск · ОФП через игру для детей 2–9 лет</div>
+    <div class="hint">Карта бизнес-цепочек с ИИ-аудитом · Нажми на любое звено, чтобы увидеть детали</div>
+  </div>
+
+  <div class="stats">
+    <span class="stat-pill stat-summary">📊 ИИ-потенциал: 80% (20 из 25 звеньев)</span>
+    <span class="stat-pill stat-green">🟢 10 — ИИ автоматизирует</span>
+    <span class="stat-pill stat-yellow">🟡 10 — ИИ ускоряет</span>
+    <span class="stat-pill stat-red">🔴 5 — экспертиза Эдуарда</span>
+  </div>
+
+  <div class="map-container">
+    <svg class="chain-svg" viewBox="0 0 720 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Карта бизнес-цепочек детского центра Прыг-Скок">
+
+      <defs>
+        <!-- Стрелки для переходов между цепочками -->
+        <marker id="arr-teal" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0d9488"/>
+        </marker>
+        <marker id="arr-purple" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+        </marker>
+        <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#d97706"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#3b82f6"/>
+        </marker>
+        <marker id="arr-coral" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#f97316"/>
+        </marker>
+      </defs>
+
+      <!-- Чередующиеся фоны цепочек -->
+      <rect x="0" y="0" width="720" height="88" rx="6" fill="rgba(99,102,241,0.04)"/>
+      <rect x="0" y="184" width="720" height="80" rx="6" fill="rgba(99,102,241,0.04)"/>
+      <rect x="0" y="360" width="720" height="80" rx="6" fill="rgba(99,102,241,0.04)"/>
+
+      <!-- ==================== ЦЕПОЧКА 1: ПРИВЛЕЧЕНИЕ ==================== -->
+      <text x="10" y="44" class="chain-label">ПРИВЛЕЧЕ-</text>
+      <text x="10" y="58" class="chain-label">НИЕ</text>
+
+      <!-- 1.1 Флаеры в садик 🟡 -->
+      <g class="node" onclick="showPopup('p1_1')">
+        <rect class="node-bg" x="100" y="26" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="100" y="26" width="4" height="44" fill="#f59e0b"/>
+        <text x="145" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Флаеры садик</text>
+      </g>
+      <text x="197" y="53" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 1.2 Карточка 2ГИС 🟢 -->
+      <g class="node" onclick="showPopup('p1_2')">
+        <rect class="node-bg" x="204" y="26" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="204" y="26" width="4" height="44" fill="#22c55e"/>
+        <text x="249" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Карточка 2ГИС</text>
+      </g>
+      <text x="301" y="53" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 1.3 Запрос в Макс 🟡 -->
+      <g class="node" onclick="showPopup('p1_3')">
+        <rect class="node-bg" x="308" y="26" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="308" y="26" width="4" height="44" fill="#f59e0b"/>
+        <text x="353" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Запрос в Макс</text>
+      </g>
+      <text x="405" y="53" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 1.4 Шлёт прайс 🟢 -->
+      <g class="node" onclick="showPopup('p1_4')">
+        <rect class="node-bg" x="412" y="26" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="412" y="26" width="4" height="44" fill="#22c55e"/>
+        <text x="457" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Шлёт прайс</text>
+      </g>
+      <text x="509" y="53" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 1.5 На пробное 🟡 -->
+      <g class="node" onclick="showPopup('p1_5')">
+        <rect class="node-bg" x="516" y="26" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="516" y="26" width="4" height="44" fill="#f59e0b"/>
+        <text x="561" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">На пробное</text>
+      </g>
+
+      <!-- ==================== ЦЕПОЧКА 2: ПРОДАЖА ==================== -->
+      <text x="10" y="132" class="chain-label">ПРОДАЖА</text>
+
+      <!-- 2.1 Пробное 45 мин 🔴 -->
+      <g class="node" onclick="showPopup('p2_1')">
+        <rect class="node-bg" x="100" y="114" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="100" y="114" width="4" height="44" fill="#ef4444"/>
+        <text x="145" y="140" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Пробное 45м</text>
+      </g>
+      <text x="197" y="141" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 2.2 Закрывает 🔴 -->
+      <g class="node" onclick="showPopup('p2_2')">
+        <rect class="node-bg" x="204" y="114" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="204" y="114" width="4" height="44" fill="#ef4444"/>
+        <text x="249" y="140" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Закрывает</text>
+      </g>
+      <text x="301" y="141" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 2.3 Тарифы 🟢 -->
+      <g class="node" onclick="showPopup('p2_3')">
+        <rect class="node-bg" x="308" y="114" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="308" y="114" width="4" height="44" fill="#22c55e"/>
+        <text x="353" y="140" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Шлёт тарифы</text>
+      </g>
+      <text x="405" y="141" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 2.4 Оплата 🟡 -->
+      <g class="node" onclick="showPopup('p2_4')">
+        <rect class="node-bg" x="412" y="114" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="412" y="114" width="4" height="44" fill="#f59e0b"/>
+        <text x="457" y="140" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Оплата</text>
+      </g>
+      <text x="509" y="141" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 2.5 Допродажа 🟡 -->
+      <g class="node" onclick="showPopup('p2_5')">
+        <rect class="node-bg" x="516" y="114" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="516" y="114" width="4" height="44" fill="#f59e0b"/>
+        <text x="561" y="140" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Допродажа</text>
+      </g>
+
+      <!-- ==================== ЦЕПОЧКА 3: ИСПОЛНЕНИЕ ==================== -->
+      <text x="10" y="220" class="chain-label">ИСПОЛНЕ-</text>
+      <text x="10" y="234" class="chain-label">НИЕ</text>
+
+      <!-- 3.1 Учёт Excel 🟢 -->
+      <g class="node" onclick="showPopup('p3_1')">
+        <rect class="node-bg" x="100" y="202" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="100" y="202" width="4" height="44" fill="#22c55e"/>
+        <text x="145" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Учёт в Excel</text>
+      </g>
+      <text x="197" y="229" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 3.2 Напоминает 🟢 -->
+      <g class="node" onclick="showPopup('p3_2')">
+        <rect class="node-bg" x="204" y="202" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="204" y="202" width="4" height="44" fill="#22c55e"/>
+        <text x="249" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Напоминает</text>
+      </g>
+      <text x="301" y="229" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 3.3 Занятие 🔴 -->
+      <g class="node" onclick="showPopup('p3_3')">
+        <rect class="node-bg" x="308" y="202" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="308" y="202" width="4" height="44" fill="#ef4444"/>
+        <text x="353" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Занятие 45м</text>
+      </g>
+      <text x="405" y="229" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 3.4 Отчёт маме 🟡 -->
+      <g class="node" onclick="showPopup('p3_4')">
+        <rect class="node-bg" x="412" y="202" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="412" y="202" width="4" height="44" fill="#f59e0b"/>
+        <text x="457" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Отчёт маме</text>
+      </g>
+      <text x="509" y="229" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 3.5 Дневник + сок 🔴 -->
+      <g class="node" onclick="showPopup('p3_5')">
+        <rect class="node-bg" x="516" y="202" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="516" y="202" width="4" height="44" fill="#ef4444"/>
+        <text x="561" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Дневник+сок</text>
+      </g>
+
+      <!-- ==================== ЦЕПОЧКА 4: КОНТЕНТ ==================== -->
+      <text x="10" y="316" class="chain-label">КОНТЕНТ</text>
+
+      <!-- 4.1 Съёмка 🔴 -->
+      <g class="node" onclick="showPopup('p4_1')">
+        <rect class="node-bg" x="100" y="290" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="100" y="290" width="4" height="44" fill="#ef4444"/>
+        <text x="145" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#b91c1c">Съёмка</text>
+      </g>
+      <text x="197" y="317" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 4.2 Монтаж 🟡 -->
+      <g class="node" onclick="showPopup('p4_2')">
+        <rect class="node-bg" x="204" y="290" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="204" y="290" width="4" height="44" fill="#f59e0b"/>
+        <text x="249" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Монтаж</text>
+      </g>
+      <text x="301" y="317" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 4.3 Текст поста 🟢 -->
+      <g class="node" onclick="showPopup('p4_3')">
+        <rect class="node-bg" x="308" y="290" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="308" y="290" width="4" height="44" fill="#22c55e"/>
+        <text x="353" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Текст поста</text>
+      </g>
+      <text x="405" y="317" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 4.4 Публикация 🟢 -->
+      <g class="node" onclick="showPopup('p4_4')">
+        <rect class="node-bg" x="412" y="290" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="412" y="290" width="4" height="44" fill="#22c55e"/>
+        <text x="457" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Публикация</text>
+      </g>
+      <text x="509" y="317" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 4.5 Комменты 🟡 -->
+      <g class="node" onclick="showPopup('p4_5')">
+        <rect class="node-bg" x="516" y="290" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="516" y="290" width="4" height="44" fill="#f59e0b"/>
+        <text x="561" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Комменты</text>
+      </g>
+
+      <!-- ==================== ЦЕПОЧКА 5: УДЕРЖАНИЕ ==================== -->
+      <text x="10" y="404" class="chain-label">УДЕРЖА-</text>
+      <text x="10" y="418" class="chain-label">НИЕ</text>
+
+      <!-- 5.1 Сбор отзывов 🟢 -->
+      <g class="node" onclick="showPopup('p5_1')">
+        <rect class="node-bg" x="100" y="378" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="100" y="378" width="4" height="44" fill="#22c55e"/>
+        <text x="145" y="404" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Сбор отзывов</text>
+      </g>
+      <text x="197" y="405" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 5.2 Остаток 🟢 -->
+      <g class="node" onclick="showPopup('p5_2')">
+        <rect class="node-bg" x="204" y="378" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="204" y="378" width="4" height="44" fill="#22c55e"/>
+        <text x="249" y="404" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Остаток</text>
+      </g>
+      <text x="301" y="405" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 5.3 Поздравление 🟢 -->
+      <g class="node" onclick="showPopup('p5_3')">
+        <rect class="node-bg" x="308" y="378" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="308" y="378" width="4" height="44" fill="#22c55e"/>
+        <text x="353" y="404" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">Поздравление</text>
+      </g>
+      <text x="405" y="405" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 5.4 Реферал 🟡 -->
+      <g class="node" onclick="showPopup('p5_4')">
+        <rect class="node-bg" x="412" y="378" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="412" y="378" width="4" height="44" fill="#f59e0b"/>
+        <text x="457" y="404" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Реферал</text>
+      </g>
+      <text x="509" y="405" text-anchor="middle" font-size="16" class="arrow-chevron">›</text>
+
+      <!-- 5.5 Возврат 🟡 -->
+      <g class="node" onclick="showPopup('p5_5')">
+        <rect class="node-bg" x="516" y="378" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="516" y="378" width="4" height="44" fill="#f59e0b"/>
+        <text x="561" y="404" text-anchor="middle" font-size="11" font-weight="600" fill="#b45309">Возврат</text>
+      </g>
+
+      <!-- ==================== ПЕРЕХОДЫ МЕЖДУ ЦЕПОЧКАМИ ==================== -->
+
+      <!-- 1) Продажа → Исполнение: Оплата → Учёт Excel (триггерный, бирюзовый) -->
+      <path d="M 457,158 L 457,180 L 145,180 L 145,202"
+            stroke="#0d9488" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-teal)"/>
+
+      <!-- 2) Исполнение → Контент: Занятие → Съёмка (информационный, фиолетовый) -->
+      <path d="M 353,246 L 353,268 L 145,268 L 145,290"
+            stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-purple)"/>
+
+      <!-- 3) Исполнение → Удержание: Дневник → Сбор отзывов (триггерный, янтарный) -->
+      <path d="M 561,246 L 561,356 L 145,356 L 145,378"
+            stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-amber)"/>
+
+      <!-- 4) Контент → Привлечение: Публикация → Карточка 2ГИС (петля, синий) -->
+      <path d="M 457,290 L 457,82 L 249,82 L 249,70"
+            stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-blue)"/>
+
+      <!-- 5) Удержание → Привлечение: Реферал → Запрос в Макс (петля сарафана, коралловый) -->
+      <path d="M 457,422 L 680,422 L 680,48 L 606,48"
+            stroke="#f97316" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-coral)"/>
+
+    </svg>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#22c55e"></div>
+      ИИ автоматизирует полностью
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#f59e0b"></div>
+      ИИ ускоряет в 5–10 раз
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#ef4444"></div>
+      Нужен живой Эдуард
+    </div>
+  </div>
+
+  <div class="transitions-info">
+    <strong>🔗 Переплетения цепочек (пунктирные стрелки):</strong><br>
+    <span style="color:#0d9488">━━</span> Оплата → Учёт (триггер новой записи) &nbsp;·&nbsp;
+    <span style="color:#7c3aed">━━</span> Занятие → Съёмка (материал для контента) &nbsp;·&nbsp;
+    <span style="color:#d97706">━━</span> Дневник → Запрос отзыва &nbsp;·&nbsp;
+    <span style="color:#3b82f6">━━</span> Публикация → 2ГИС-витрина (петля контента) &nbsp;·&nbsp;
+    <span style="color:#f97316">━━</span> Реферал → Новый запрос (петля сарафана)
+  </div>
+
+  <div class="footer">
+    BizChain Map · Май 2026 · ИИщенко LAB · Эдуард, Прыг-Скок, Благовещенск
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup(event)">
+  <div class="popup" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="hidePopup()" aria-label="Закрыть">×</button>
+    <div id="popupStatus" class="popup-status"></div>
+    <div id="popupTitle" class="popup-title"></div>
+    <div id="popupDesc" class="popup-desc"></div>
+    <div class="popup-section">
+      <div class="popup-section-title">💡 ИИ здесь</div>
+      <div id="popupAI" class="popup-section-text"></div>
+    </div>
+    <div class="popup-section" id="popupLinksSection">
+      <div class="popup-section-title">⚡ Связан с</div>
+      <div id="popupLinks" class="popup-section-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const nodeData = {
+    /* ==================== ПРИВЛЕЧЕНИЕ ==================== */
+    'p1_1': {
+      title: 'Раздаёт флаеры в садиках',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Эдуард с командой обходит садики, раздаёт листовки родителям на выходе. Работает: «вообще супер, лучший приток». Но запуск каждой партии — вручную: дизайн, печать, маршрут, согласования.',
+      ai: 'ИИ генерирует макеты под сезон/праздник, тексты «под мам», варианты призыва. Excel + ИИ строят план обхода (дни, садики, кто пошёл). Для частных садиков (Дракоша) — сразу пакет: флаер + презентация + готовый текст в Макс администратору.',
+      links: 'Питает <b>«Карточка 2ГИС»</b> — флаер ведёт на 2ГИС → 2ГИС закрывает на пробное.'
+    },
+    'p1_2': {
+      title: 'Карточка 2ГИС работает',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: '~70% обращений приходят с 2ГИС. 54 отзыва, цель — 100. Фото, видео, рейтинг. «Прямо 100% — там фото, видео, истории. Очень хорошо работает.» Но обновляется нерегулярно — посты в карточке появляются от случая к случаю.',
+      ai: 'Раз в неделю ИИ генерирует пост в 2ГИС из материалов занятий: фото от Марии + подпись в стиле Эдуарда + хэштег #Благовещенск. Автоматический ответ на каждый новый отзыв (с тёплым тоном, по имени). Подсказки, какие темы сейчас работают.',
+      links: 'Триггер для <b>«Запрос в Макс»</b>. Получает входящий поток от <b>Публикация</b> (петля контента → витрина).'
+    },
+    'p1_3': {
+      title: 'Получает запрос (Макс/звонок)',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Мама пишет в Макс или звонит. Цель — ответить за 10 минут. Реальность — иногда Эдуард на тренировке и пропускает. «Не работает автоответ в Максе — могу пропустить». Топ-5 первых вопросов одинаковы у всех родителей: что это, расписание, адрес, цена, что брать.',
+      ai: 'ИИ-автоответ в Макс / Telegram / WhatsApp с моментальной реакцией: «Здравствуйте! Меня зовут Эдуард, через 10 минут вернусь — а пока вот ответы на 5 главных вопросов: …». Квалификация: возраст ребёнка, район, удобное время. Эдуард видит уже подготовленную карточку клиента.',
+      links: 'Получает поток от <b>Карточка 2ГИС</b>, <b>Раздача флаеров</b>, петли <b>Реферал</b>. Питает <b>«Шлёт прайс»</b>.'
+    },
+    'p1_4': {
+      title: 'Высылает прайс',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Прайс одинаковый для всех: пробное бесплатно, 3 000 / 5 000 / 7 000 руб. за 4/8/12 занятий. Сейчас Эдуард копипастит вручную — иногда забывает упомянуть про скидку 10% на брата/сестру.',
+      ai: 'Шаблон ответа отправляется автоматически после квалификации. Версии под разные кейсы: один ребёнок / два ребёнка / запрос индивидуального / запрос на маленького (2-4 года, акцент «у нас Бажена 2,5 ходит — это вообще нонсенс»).',
+      links: 'Из <b>«Запрос в Макс»</b>. Питает <b>«Запись на пробное»</b>.'
+    },
+    'p1_5': {
+      title: 'Записывает на пробное',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Эдуард предлагает время голосом или в переписке. Записывает в Excel. Дыра: нет онлайн-записи, нет автонапоминаний — мама может не дойти. Из тех, кто написал, до пробного доходят не все.',
+      ai: 'Онлайн-запись с виджетом в 2ГИС / Макс — мама сама выбирает свободный слот. ИИ-напоминание за день и за 2 часа до пробного («Эдуард ждёт Тимура завтра в 18:00 — спортивная одежда, сменка»). Если не пришла — follow-up через день: «Заболели? Перенесём на удобное время?»',
+      links: 'Закрывает цепочку Привлечение, открывает <b>Пробное занятие</b> в Продаже.'
+    },
+
+    /* ==================== ПРОДАЖА ==================== */
+    'p2_1': {
+      title: 'Пробное занятие 45 минут',
+      status: 'red',
+      statusText: '🔴 Только Эдуард',
+      desc: 'Сердце воронки. Знакомство, адаптация, поддержка. «Пятёрки даём, говорю "Молодец, супер". Если совсем тяжело — мячик или полусферу: потрогал, пощупал». Если ребёнок плакал — скорее всего не купят. Если получилось — оды поют.',
+      ai: 'НЕ автоматизируется. Это экспертиза Эдуарда — именно за это родители платят. Контакт глаза в глаза, мягкая дисциплина, индивидуальный подход к каждому пупсику. Должно остаться красным. Это и есть конкурентное преимущество.',
+      links: 'Из <b>Запись на пробное</b>. Питает <b>«Закрывает после пробного»</b>.'
+    },
+    'p2_2': {
+      title: 'Закрывает после пробного',
+      status: 'red',
+      statusText: '🔴 Только Эдуард',
+      desc: '«Ну что, вам понравилось? Будете ходить?» — и сразу варианты абонементов. Это живой разговор, считывание родителя, отработка «подумаем». Эдуард делает это сам — и должен делать сам, тут конверсия в деньги.',
+      ai: 'НЕ автоматизируется сама беседа. Но ИИ может за 30 секунд до выхода родителя из зала прислать Эдуарду в Telegram карточку: имя ребёнка, что делал на пробном, аргументы под этого ребёнка («скажи про Бажену 2,5 — у мамы малыш»). После разговора — дозакрытие через follow-up.',
+      links: 'Из <b>Пробное</b>. Если «да» → <b>Шлёт тарифы</b>. Если «подумаем» → автоматический follow-up через 24 часа.'
+    },
+    'p2_3': {
+      title: 'Шлёт варианты тарифов',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'После «беру!» — отправка карточки тарифов. Сейчас вручную, копипастом. С тарифами + реквизитами + что взять на первое занятие.',
+      ai: 'Готовая карточка с подбором: для одного ребёнка / двух (со скидкой 10%) / на каникулы. Текст «как удобно оплатить» + реквизиты + список «что взять». Всё одним сообщением, без поисков по чатам.',
+      links: 'Из <b>Закрывает</b>. Питает <b>Оплата</b>.'
+    },
+    'p2_4': {
+      title: 'Принимает оплату',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Перевод или наличные. Терминала пока нет («в планах»). Эдуард фиксирует поступление в Excel руками: имя, тариф, сумма, дата. Это кусок времени каждый день.',
+      ai: 'Уведомление об оплате срабатывает триггером: запись попадает в журнал, родителю автоматически уходит подтверждение со списком правил и расписанием, Эдуарду — короткое «✅ Новый клиент: Тимур, 8 занятий, начинает 12.05». Потом — ИП на НПД и онлайн-чек тоже автоматом.',
+      links: 'Триггер запускает <b>Учёт в Excel</b> в Исполнении (см. бирюзовую стрелку ↓).'
+    },
+    'p2_5': {
+      title: 'Допродаёт 4 → 8 занятий',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Эдуард предлагает всем после первого месяца: «Давайте на два раза в неделю — прогресс будет заметнее». Конверсия 50/50 — половина соглашается. Делает вручную, в потоке других задач — иногда забывает предложить.',
+      ai: 'ИИ ловит момент: 3 занятия из 4 пройдено + ребёнок без отмен → автоматически готовит Эдуарду персональное сообщение для родителя с конкретикой («Тимур уже делает кувырок, на 8 занятиях освоит и через мостик»). Эдуард только нажимает «отправить».',
+      links: 'Из <b>Оплата</b> (после первого месяца). Может питать новый цикл <b>Шлёт тарифы</b>.'
+    },
+
+    /* ==================== ИСПОЛНЕНИЕ ==================== */
+    'p3_1': {
+      title: 'Учёт клиента в Excel',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Эдуард сам по словам: «10 часов в неделю». Записать имя, занятия, сумму, расписание. Ручной труд №2 после самих занятий. Топ-3 «пожирателя времени».',
+      ai: 'CRM/Notion на базе шаблона: оплата = автоматическая запись в журнал, привязка к расписанию, родитель видит свой кабинет с остатком. Эдуарду остаётся только смотреть аналитику. Освобождение: ~10 часов в неделю.',
+      links: 'Триггер из <b>Оплата</b> (бирюзовая стрелка). Питает <b>Напоминает о занятии</b>.'
+    },
+    'p3_2': {
+      title: 'Напоминает о занятии',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Сейчас Эдуард пишет каждому в день занятия: «У вас сегодня в 18:00». Минимум 5 часов в неделю. Сам Эдуард: «Если бы ИИ взял одну задачу — это была бы №1. Огромное высвобождение времени».',
+      ai: 'Автонапоминание за день и за 2 часа: «Тимур, ждём тебя сегодня в 18:00. Бери сменку! 🤸». При отмене — автоматическое предложение перенести на ближайший слот. Эдуард видит только тех, кто не подтвердил.',
+      links: 'Из <b>Учёт в Excel</b>. Питает <b>Занятие 45 минут</b>.'
+    },
+    'p3_3': {
+      title: 'Проводит занятие 45 минут',
+      status: 'red',
+      statusText: '🔴 Только Эдуард',
+      desc: 'Структура: 10 мин разминка → 10 мин надувная дорожка → 15 мин квест → 5 мин игра → растяжка + дневник. Через игру: «спасаем жирафа, переплываем океан, перепрыгиваем через лаву». Это и есть продукт. ~15 часов в неделю.',
+      ai: 'НЕ автоматизируется. Хотя ChatGPT уже помогает Эдуарду генерировать сценарии («задаю возраст, тему — он составляет план»). Это вспомогательный инструмент в подготовке. Само занятие — экспертиза, артистизм, контакт глаза в глаза. Должно остаться красным.',
+      links: 'Питает <b>Съёмка</b> в Контенте (фиолетовая стрелка ↓) и <b>Отчёт маме</b>.'
+    },
+    'p3_4': {
+      title: 'Пишет родителю «как прошло»',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'После каждого занятия Эдуард сообщает родителю текстом, как прошло. «Не получается отправлять голосовое после каждого — это жёстко по каждому ребёнку». Где есть — там «прямо самое сердечко» от родителей.',
+      ai: 'Эдуард после занятия диктует 30 секунд голосом «общую картину» — ИИ расшифровывает, разбирает по детям и формирует индивидуальные сообщения каждому родителю в стиле Эдуарда («Тимур сегодня прыгал через "лаву" не боясь — красавчик! Выдали 4 звезды»). Эдуард пробегает глазами и отправляет.',
+      links: 'Из <b>Занятие</b>. Питает <b>Дневник + сок</b> (новички) и <b>Сбор отзывов</b>.'
+    },
+    'p3_5': {
+      title: 'Выдаёт дневник + сок (новичкам)',
+      status: 'red',
+      statusText: '🔴 Только живой контакт',
+      desc: 'При покупке первого абонемента ребёнок получает «Набор юного спортсмена» — дневник (синий/розовый) и сок. Дневник чемпиона — система звёзд за посещение, форму, старания. «Дети видят киндеры — это вообще супер стимулирует».',
+      ai: 'Сам момент выдачи — живой ритуал, не автоматизируется (это и есть «вау» для ребёнка). Но ИИ может: следить за остатком в коробке (когда заказать новые), генерировать персональные обложки дневников для именинников, печатать раз в месяц «доску почёта» с лучшими.',
+      links: 'Питает <b>Сбор отзывов</b> (янтарная стрелка ↓): впечатлённый родитель → отзыв в 2ГИС.'
+    },
+
+    /* ==================== КОНТЕНТ ==================== */
+    'p4_1': {
+      title: 'Снимает рилс на занятии',
+      status: 'red',
+      statusText: '🔴 Узкое место',
+      desc: 'Мария на iPhone 14, когда успевает. «На занятии бывает тяжело снимать — дети перевозбуждены, кто-то плачет, или просто нет времени. Есть время — снимаем, нет — нет». Это единственное красное звено в Контенте — и оно блокирует все остальные.',
+      ai: 'НЕ автоматизируется (нужен живой человек с телефоном). НО: ИИ присылает Марии утром «план съёмки на сегодня» (3 коротких сцены под трендовый рилс из Reels) — без плана съёмка хаотичная, с планом рефлекс «поставил → снял». Освобождает Эдуарда от поиска трендов.',
+      links: 'Из <b>Занятие</b> (фиолетовая стрелка). Питает <b>Монтаж</b>. Это узкое место всей цепочки Контента.'
+    },
+    'p4_2': {
+      title: 'Монтирует рилс (жена)',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Жена Эдуарда монтирует видео — выбирает лучшее, обрезает, накладывает звук. Задержка: «Не в тот же вечер. 1-2 дня». За это время тренд может остыть.',
+      ai: 'ИИ-монтаж (CapCut Pro / Descript): загружает сырое видео → автоматическая нарезка по трендовым шаблонам с музыкой → жена выбирает финальный из трёх вариантов и одобряет. Сокращение времени с 1-2 дней до 30 минут.',
+      links: 'Из <b>Съёмка</b>. Питает <b>Текст поста</b>.'
+    },
+    'p4_3': {
+      title: 'Пишет текст поста',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Сейчас СММ-менеджер за 5 000 ₽/мес. Темы — нейтральные обучалки, фото с занятий. Эдуард: «прямо не контент. Три-пять рубрик — это классно, но мне бы отдать ИИ и агентам».',
+      ai: 'ИИ-ассистент пишет посты в стиле Эдуарда («пушка, гонка, полетели», «пупсики», «прямо самое сердечко») — ему уже скормили 10 контекстных файлов с голосом. Рубрики готовы: «Сегодня на занятии», «Ребёнок сделал!», трендовые рилсы, ответы на вопросы родителей, сезонные.',
+      links: 'Из <b>Монтаж</b>. Питает <b>Публикация</b>.'
+    },
+    'p4_4': {
+      title: 'Публикует в соцсети',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Один и тот же пост — в Instagram, Telegram, ВК (Макс). Сейчас вручную копирует СММ. К концу 2026 главным становится Макс («почти все мамочки у меня в Максе»).',
+      ai: 'Автопостинг через сервис (SmmPlanner / Postoplan) — один пост → все каналы по расписанию, с адаптацией формата под каждую площадку. Аналитика: какой пост сработал, в какое время лучше публиковать.',
+      links: 'Питает <b>Карточка 2ГИС</b> (синяя петля ↑) — лучший контент попадает на витрину 2ГИС. И <b>Комменты</b>.'
+    },
+    'p4_5': {
+      title: 'Отвечает в комментах',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Под постами и в директе появляются вопросы. Эдуард тратит ~1 час в неделю — но не системно, может пропустить.',
+      ai: 'ИИ драфтит ответ в стиле Эдуарда → Эдуард пробегает глазами и нажимает «отправить». Типовые вопросы (расписание, цены, адрес) — отвечаются автоматически без проверки. Сложные — с одобрением.',
+      links: 'Закрывает цепочку Контента. Часть лидов из комментов уходит обратно в <b>Запрос в Макс</b>.'
+    },
+
+    /* ==================== УДЕРЖАНИЕ ==================== */
+    'p5_1': {
+      title: 'Просит отзыв (+Kinder Joy)',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: '«Kinder Joy за отзыв в 2ГИС — работает суперски. Дети видят Kinder, родителям нетрудно оставить отзыв». 54 отзыва, цель — 100. Сейчас просит руками, иногда забывает.',
+      ai: 'После 4-го занятия (когда родитель уже видит результат) — автоматическое сообщение в Макс: «Тимур уже месяц с нами! Если у вас всё ок — оставьте, пожалуйста, отзыв. На следующем занятии Kinder Joy ждёт». Ссылка прямо на 2ГИС, в одно касание.',
+      links: 'Триггер из <b>Дневник</b> (янтарная стрелка ↑). Усиливает <b>Карточка 2ГИС</b> (петля). Питает <b>Реферал</b>.'
+    },
+    'p5_2': {
+      title: 'Сообщает остаток занятий',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Когда у клиента остаётся 1 занятие — Эдуард пишет: «У вас осталось одно». После последнего — «Будем рады, если останетесь». Сейчас вручную, по памяти.',
+      ai: 'Автоматический триггер: осталось 2 занятия → мягкое напоминание; осталось 1 → предложение продлить (с акцией «продли в 48ч — скидка 10%»); занятия закончились → follow-up «расскажите, что понравилось/не очень». Снижение оттока с ~8% до ~3-4%.',
+      links: 'Из <b>Учёт в Excel</b>. Если продлевают → новый цикл <b>Оплата</b>. Если уходят → запускает <b>Возврат</b>.'
+    },
+    'p5_3': {
+      title: 'Поздравляет с Днём рождения',
+      status: 'green',
+      statusText: '🟢 ИИ автоматизирует',
+      desc: 'Сейчас Эдуард поздравляет лично — «иногда пропускает». Ребёнку и родителям приятно, особенно при персонализации.',
+      ai: 'Автоматическое поздравление утром в день рождения: персональное сообщение от Эдуарда + оформленная картинка с фото ребёнка с занятия + подарок (бесплатное занятие или Kinder). На самом занятии — Эдуард отдельно поздравляет лично, в кругу друзей.',
+      links: 'Из <b>Учёт в Excel</b>. Усиливает лояльность → питает <b>Реферал</b>.'
+    },
+    'p5_4': {
+      title: 'Просит рекомендацию',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Сарафан работает: «дружат семьями, до 5 детей привели друзей». Но системы нет. 10% кэшбэк не зашёл, Kinder Joy за приведённого друга работает лучше. До 5 детей через сарафан — это потолок без системы.',
+      ai: 'После 8-го занятия (родитель уже точно «продаёт» ребёнка подругам в чате садика) — ИИ присылает в Макс готовый «текст для подруги»: тёплый, с фото ребёнка, ссылкой на 2ГИС и кодом «приведи подругу — Kinder обоим». Маме остаётся переслать.',
+      links: 'Закрывает петлю сарафана → возвращает в <b>Запрос в Макс</b> (коралловая стрелка ↑).'
+    },
+    'p5_5': {
+      title: 'Возвращает ушедших',
+      status: 'yellow',
+      statusText: '🟡 ИИ ускоряет',
+      desc: 'Из тех 6-7, кто ушёл, двое «просто исчезли». Никто не пишет им больше. Дыра: «нет программы для тех, кто ушёл — не возвращаются». Сезонная пауза + специальный повод могли бы вернуть половину.',
+      ai: 'ИИ ведёт список ушедших и причины. Через 2-3 месяца после ухода — персональное сообщение от Эдуарда: «Анна, скучаем по Тимуру! Мы за это время сделали [конкретика]. Приглашаем на бесплатное занятие — посмотреть, как он подрос». Эдуард одобряет → отправляется.',
+      links: 'Из <b>Сообщает остаток</b> (когда абонемент закончился и не продлили). Закрывает петлю удержания.'
+    }
+  };
+
+  const statusColors = {
+    green: { bg: '#f0fdf4', text: '#15803d', darkBg: '#052e16', darkText: '#86efac' },
+    yellow: { bg: '#fffbeb', text: '#b45309', darkBg: '#451a03', darkText: '#fcd34d' },
+    red: { bg: '#fef2f2', text: '#b91c1c', darkBg: '#450a0a', darkText: '#fca5a5' }
+  };
+
+  function showPopup(id) {
+    const d = nodeData[id];
+    if (!d) return;
+
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const sc = statusColors[d.status];
+
+    const statusEl = document.getElementById('popupStatus');
+    statusEl.textContent = d.statusText;
+    statusEl.style.background = isDark ? sc.darkBg : sc.bg;
+    statusEl.style.color = isDark ? sc.darkText : sc.text;
+
+    document.getElementById('popupTitle').textContent = d.title;
+    document.getElementById('popupDesc').textContent = d.desc;
+    document.getElementById('popupAI').textContent = d.ai;
+
+    if (d.links) {
+      document.getElementById('popupLinks').innerHTML = d.links;
+      document.getElementById('popupLinksSection').style.display = 'block';
+    } else {
+      document.getElementById('popupLinksSection').style.display = 'none';
+    }
+
+    document.getElementById('popupOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hidePopup(e) {
+    if (!e || e.target === document.getElementById('popupOverlay') ||
+        (e.target && e.target.classList && e.target.classList.contains('popup-close'))) {
+      document.getElementById('popupOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.getElementById('popupOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>
