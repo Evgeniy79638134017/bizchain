@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — Ольга · Digital Stars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbf9f4;
+  --bg-grain: #f5f1e8;
+  --paper: #ffffff;
+  --paper-soft: #f9f6ee;
+  --ink: #1a1814;
+  --ink-muted: #6b6357;
+  --ink-soft: #8a7f6f;
+  --rule: #e8e1d1;
+  --rule-soft: #f0eadb;
+
+  --green: #2f7d4f;
+  --green-bg: #e8f3e9;
+  --green-border: #a8d4ad;
+  --green-deep: #1f5b37;
+
+  --yellow: #b67617;
+  --yellow-bg: #faf0d8;
+  --yellow-border: #e8c87a;
+  --yellow-deep: #8a5510;
+
+  --red: #b8362e;
+  --red-bg: #f9e3df;
+  --red-border: #e8a89f;
+  --red-deep: #8e221b;
+
+  --link-teal: #0f7d76;
+  --link-violet: #7a3fb5;
+  --link-amber: #c2740d;
+  --link-blue: #2961c4;
+  --link-coral: #d75634;
+
+  --shadow-sm: 0 1px 2px rgba(38, 28, 14, 0.04);
+  --shadow-md: 0 4px 16px rgba(38, 28, 14, 0.08);
+  --shadow-lg: 0 20px 60px rgba(38, 28, 14, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15130f;
+    --bg-grain: #1c1914;
+    --paper: #1f1c16;
+    --paper-soft: #25211a;
+    --ink: #f5efe1;
+    --ink-muted: #b5ac99;
+    --ink-soft: #897e6b;
+    --rule: #34302a;
+    --rule-soft: #2a2620;
+
+    --green-bg: #1a2f1f;
+    --green-border: #2f5f3a;
+    --green-deep: #6fc784;
+    --green: #6fc784;
+
+    --yellow-bg: #2e251a;
+    --yellow-border: #6b5018;
+    --yellow-deep: #f0b94e;
+    --yellow: #f0b94e;
+
+    --red-bg: #2e1c1a;
+    --red-border: #6b2922;
+    --red-deep: #f08a82;
+    --red: #f08a82;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 800px 400px at 15% -5%, rgba(184, 54, 46, 0.04), transparent 70%),
+    radial-gradient(ellipse 700px 500px at 95% 100%, rgba(15, 125, 118, 0.05), transparent 70%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 32px 24px 48px;
+}
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ────── ЗАГОЛОВОК ────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.masthead::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 64px; height: 2px;
+  background: var(--ink);
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+}
+.masthead-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+h1.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+h1.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+.subtitle {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  max-width: 620px;
+}
+
+/* ────── КАРТОЧКА БИЗНЕСА ────── */
+.bizcard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 28px 0 32px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.bizcard-cell {
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule);
+}
+.bizcard-cell:last-child { border-right: none; }
+.bizcard-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.bizcard-value {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  .bizcard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bizcard-cell:nth-child(2n) { border-right: none; }
+  .bizcard-cell:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+}
+
+/* ────── СТАТЫ ────── */
+.stats-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  align-items: center;
+}
+.stat-pill {
+  padding: 7px 14px 7px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid;
+}
+.stat-pill .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.stat-green { background: var(--green-bg); color: var(--green-deep); border-color: var(--green-border); }
+.stat-green .dot { background: var(--green); }
+.stat-yellow { background: var(--yellow-bg); color: var(--yellow-deep); border-color: var(--yellow-border); }
+.stat-yellow .dot { background: var(--yellow); }
+.stat-red { background: var(--red-bg); color: var(--red-deep); border-color: var(--red-border); }
+.stat-red .dot { background: var(--red); }
+
+.potential-line {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 8px 0 24px;
+  line-height: 1.3;
+}
+.potential-line .num {
+  color: var(--green-deep);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.potential-line .small {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ────── КАРТА ────── */
+.map-frame {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 18px 14px 14px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+.map-frame::before {
+  content: 'MAP';
+  position: absolute;
+  top: 8px; right: 12px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+.chain-svg {
+  display: block;
+  min-width: 700px;
+  width: 100%;
+  height: auto;
+}
+
+.chain-label {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.node-rect {
+  transition: filter 0.18s ease, transform 0.18s ease;
+}
+.node {
+  cursor: pointer;
+}
+.node:hover .node-rect {
+  filter: brightness(0.96) drop-shadow(0 3px 8px rgba(0,0,0,0.08));
+}
+.node:hover .node-text {
+  font-weight: 700;
+}
+.node:active .node-rect {
+  transform: translateY(1px);
+}
+.node-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}
+.chevron {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 300;
+  fill: var(--ink-soft);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ────── ЛЕГЕНДА ────── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 16px 4px 4px;
+  margin-top: 16px;
+  border-top: 1px dashed var(--rule);
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-dash {
+  width: 22px; height: 0;
+  border-top: 1.5px dashed currentColor;
+  flex-shrink: 0;
+}
+
+/* ────── ПЕРЕХОДЫ ЛЕГЕНДА ────── */
+.transitions-legend {
+  margin-top: 28px;
+  padding: 20px 24px;
+  background: var(--paper-soft);
+  border-radius: 4px;
+  border-left: 3px solid var(--ink);
+}
+.transitions-legend h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.transitions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+.trans-item {
+  display: flex;
+  gap: 10px;
+}
+.trans-bar {
+  width: 3px;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+.trans-text strong {
+  color: var(--ink);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ────── ИНСАЙТ-БЛОК ────── */
+.insight {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.insight-card {
+  padding: 18px 22px;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+.insight-card.warn {
+  border-left: 3px solid var(--red);
+}
+.insight-card.calm {
+  border-left: 3px solid var(--green);
+}
+.insight-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.insight-card h4 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.insight-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+.insight-card p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (min-width: 720px) {
+  .insight {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ────── ПОПАП ────── */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 10, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.popup-overlay.active {
+  display: flex;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.popup {
+  background: var(--paper);
+  border-radius: 6px;
+  padding: 28px 28px 26px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-top: 4px solid var(--ink);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.popup.green-accent { border-top-color: var(--green); }
+.popup.yellow-accent { border-top-color: var(--yellow); }
+.popup.red-accent { border-top-color: var(--red); }
+
+.popup-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: none;
+  border: none;
+  width: 28px; height: 28px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink-soft);
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.popup-close:hover {
+  background: var(--rule-soft);
+  color: var(--ink);
+}
+.popup-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px 4px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  border: 1px solid;
+}
+.popup-status .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+}
+
+.popup-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.popup-chain {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.popup-desc {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.popup-section {
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.popup-section-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.popup-section-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.popup-section-text em {
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+/* ────── ПОДВАЛ ────── */
+.colophon {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.colophon-mark {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">BizChain Map · Формат А</div>
+    <div class="masthead-meta">№ 001 · МАЙ 2026 · БЛАГОВЕЩЕНСК</div>
+  </header>
+
+  <h1 class="title">Карта бизнес-цепочек <em>Ольги</em><br>«Digital Stars»</h1>
+  <p class="subtitle">
+    Путь от военной службы к фрилансу. Сайты, контент, реклама с ИИ.
+    Карта показывает 25 рабочих звеньев в пяти цепочках бизнеса
+    и где именно ИИ-помощник снимает рутину, чтобы Ольга могла
+    делать свою работу — даже при графике «сутки через сутки».
+  </p>
+
+  <!-- КАРТОЧКА БИЗНЕСА -->
+  <div class="bizcard">
+    <div class="bizcard-cell">
+      <div class="bizcard-label">Этап</div>
+      <div class="bizcard-value">Старт фриланса</div>
+    </div>
+    <div class="bizcard-cell">
+      <div class="bizcard-label">Бюджет времени</div>
+      <div class="bizcard-value">5–10 ч/нед</div>
+    </div>
+    <div class="bizcard-cell">
+      <div class="bizcard-label">Ёмкость сейчас</div>
+      <div class="bizcard-value">1 сайт / мес</div>
+    </div>
+    <div class="bizcard-cell">
+      <div class="bizcard-label">Цель</div>
+      <div class="bizcard-value">Октябрь 2028</div>
+    </div>
+  </div>
+
+  <!-- СТАТИСТИКА -->
+  <div class="stats-row">
+    <span class="stat-pill stat-green">
+      <span class="dot"></span> 9 звеньев · ИИ автоматизирует
+    </span>
+    <span class="stat-pill stat-yellow">
+      <span class="dot"></span> 9 звеньев · ИИ ускоряет
+    </span>
+    <span class="stat-pill stat-red">
+      <span class="dot"></span> 7 звеньев · работает Ольга
+    </span>
+  </div>
+  <div class="potential-line">
+    ИИ-потенциал — <span class="num">72%</span> рабочих звеньев.
+    <span class="small">Это значит: 18 из 25 операций готовы к автоматизации или существенному ускорению. Нажми на любое звено — посмотри что и как.</span>
+  </div>
+
+  <!-- КАРТА -->
+  <div class="map-frame">
+    <svg class="chain-svg" viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Базовая стрелка -->
+        <marker id="arr-base" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#6b6357"/>
+        </marker>
+        <!-- Цветные маркеры для переходов -->
+        <marker id="arr-teal" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0f7d76"/>
+        </marker>
+        <marker id="arr-violet" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#7a3fb5"/>
+        </marker>
+        <marker id="arr-amber" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#c2740d"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#2961c4"/>
+        </marker>
+        <marker id="arr-coral" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#d75634"/>
+        </marker>
+      </defs>
+
+      <!-- Чередующиеся фоны строк -->
+      <rect x="0" y="22" width="700" height="60" fill="var(--rule-soft)" opacity="0.5"/>
+      <rect x="0" y="198" width="700" height="60" fill="var(--rule-soft)" opacity="0.5"/>
+      <rect x="0" y="374" width="700" height="60" fill="var(--rule-soft)" opacity="0.5"/>
+
+      <!-- ════════ ЦЕПОЧКА 1 — ПРИВЛЕЧЕНИЕ (y центр 48) ════════ -->
+      <text x="6" y="44" class="chain-label" fill="var(--ink-muted)">ПРИВЛЕЧЕНИЕ</text>
+      <text x="6" y="58" class="chain-label" fill="var(--ink-soft)" style="font-size: 9px; letter-spacing: 0.05em">5 звеньев</text>
+
+      <!-- 1.1 Публикует Reels — green -->
+      <g class="node" onclick="showPopup('p1')">
+        <rect class="node-rect" x="100" y="26" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="100" y="26" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="145" y="50" text-anchor="middle" fill="var(--green-deep)">Публикует</text>
+        <text class="node-text" x="145" y="62" text-anchor="middle" fill="var(--green-deep)">Reels</text>
+      </g>
+      <text class="chevron" x="197" y="55" text-anchor="middle">›</text>
+
+      <!-- 1.2 Ведёт Telegram — RED (главный риск!) -->
+      <g class="node" onclick="showPopup('p2')">
+        <rect class="node-rect" x="204" y="26" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="204" y="26" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="249" y="50" text-anchor="middle" fill="var(--red-deep)">Ведёт</text>
+        <text class="node-text" x="249" y="62" text-anchor="middle" fill="var(--red-deep)">Telegram</text>
+      </g>
+      <text class="chevron" x="301" y="55" text-anchor="middle">›</text>
+
+      <!-- 1.3 Откликается Kwork — yellow -->
+      <g class="node" onclick="showPopup('p3')">
+        <rect class="node-rect" x="308" y="26" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="308" y="26" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="353" y="50" text-anchor="middle" fill="var(--yellow-deep)">Откликается</text>
+        <text class="node-text" x="353" y="62" text-anchor="middle" fill="var(--yellow-deep)">на Kwork</text>
+      </g>
+      <text class="chevron" x="405" y="55" text-anchor="middle">›</text>
+
+      <!-- 1.4 Активирует круг — RED -->
+      <g class="node" onclick="showPopup('p4')">
+        <rect class="node-rect" x="412" y="26" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="412" y="26" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="457" y="50" text-anchor="middle" fill="var(--red-deep)">Активирует</text>
+        <text class="node-text" x="457" y="62" text-anchor="middle" fill="var(--red-deep)">тёплый круг</text>
+      </g>
+      <text class="chevron" x="509" y="55" text-anchor="middle">›</text>
+
+      <!-- 1.5 Принимает запрос — green -->
+      <g class="node" onclick="showPopup('p5')">
+        <rect class="node-rect" x="516" y="26" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="516" y="26" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="561" y="50" text-anchor="middle" fill="var(--green-deep)">Принимает</text>
+        <text class="node-text" x="561" y="62" text-anchor="middle" fill="var(--green-deep)">запрос в директ</text>
+      </g>
+
+      <!-- ════════ ЦЕПОЧКА 2 — ПРОДАЖА (y центр 136) ════════ -->
+      <text x="6" y="132" class="chain-label" fill="var(--ink-muted)">ПРОДАЖА</text>
+      <text x="6" y="146" class="chain-label" fill="var(--ink-soft)" style="font-size: 9px; letter-spacing: 0.05em">5 звеньев</text>
+
+      <!-- 2.1 Отвечает в директ — green -->
+      <g class="node" onclick="showPopup('s1')">
+        <rect class="node-rect" x="100" y="114" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="100" y="114" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="145" y="138" text-anchor="middle" fill="var(--green-deep)">Отвечает</text>
+        <text class="node-text" x="145" y="150" text-anchor="middle" fill="var(--green-deep)">в директ</text>
+      </g>
+      <text class="chevron" x="197" y="143" text-anchor="middle">›</text>
+
+      <!-- 2.2 Снимает бриф — yellow -->
+      <g class="node" onclick="showPopup('s2')">
+        <rect class="node-rect" x="204" y="114" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="204" y="114" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="249" y="138" text-anchor="middle" fill="var(--yellow-deep)">Снимает</text>
+        <text class="node-text" x="249" y="150" text-anchor="middle" fill="var(--yellow-deep)">бриф</text>
+      </g>
+      <text class="chevron" x="301" y="143" text-anchor="middle">›</text>
+
+      <!-- 2.3 Просит референсы — yellow -->
+      <g class="node" onclick="showPopup('s3')">
+        <rect class="node-rect" x="308" y="114" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="308" y="114" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="353" y="138" text-anchor="middle" fill="var(--yellow-deep)">Просит</text>
+        <text class="node-text" x="353" y="150" text-anchor="middle" fill="var(--yellow-deep)">референсы</text>
+      </g>
+      <text class="chevron" x="405" y="143" text-anchor="middle">›</text>
+
+      <!-- 2.4 Назначает цену — RED (главный тормоз!) -->
+      <g class="node" onclick="showPopup('s4')">
+        <rect class="node-rect" x="412" y="114" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="412" y="114" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="457" y="138" text-anchor="middle" fill="var(--red-deep)">Назначает</text>
+        <text class="node-text" x="457" y="150" text-anchor="middle" fill="var(--red-deep)">цену</text>
+      </g>
+      <text class="chevron" x="509" y="143" text-anchor="middle">›</text>
+
+      <!-- 2.5 Берёт предоплату — RED -->
+      <g class="node" onclick="showPopup('s5')">
+        <rect class="node-rect" x="516" y="114" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="516" y="114" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="561" y="138" text-anchor="middle" fill="var(--red-deep)">Берёт</text>
+        <text class="node-text" x="561" y="150" text-anchor="middle" fill="var(--red-deep)">предоплату 50%</text>
+      </g>
+
+      <!-- ════════ ЦЕПОЧКА 3 — ИСПОЛНЕНИЕ (y центр 224) ════════ -->
+      <text x="6" y="220" class="chain-label" fill="var(--ink-muted)">ИСПОЛНЕНИЕ</text>
+      <text x="6" y="234" class="chain-label" fill="var(--ink-soft)" style="font-size: 9px; letter-spacing: 0.05em">5 звеньев</text>
+
+      <!-- 3.1 Отправляет анкету — green -->
+      <g class="node" onclick="showPopup('e1')">
+        <rect class="node-rect" x="100" y="202" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="100" y="202" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="145" y="226" text-anchor="middle" fill="var(--green-deep)">Отправляет</text>
+        <text class="node-text" x="145" y="238" text-anchor="middle" fill="var(--green-deep)">анкету-бриф</text>
+      </g>
+      <text class="chevron" x="197" y="231" text-anchor="middle">›</text>
+
+      <!-- 3.2 Делает структуру — yellow -->
+      <g class="node" onclick="showPopup('e2')">
+        <rect class="node-rect" x="204" y="202" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="204" y="202" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="249" y="226" text-anchor="middle" fill="var(--yellow-deep)">Набрасывает</text>
+        <text class="node-text" x="249" y="238" text-anchor="middle" fill="var(--yellow-deep)">структуру</text>
+      </g>
+      <text class="chevron" x="301" y="231" text-anchor="middle">›</text>
+
+      <!-- 3.3 Согласует мудборд — RED -->
+      <g class="node" onclick="showPopup('e3')">
+        <rect class="node-rect" x="308" y="202" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="308" y="202" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="353" y="226" text-anchor="middle" fill="var(--red-deep)">Согласует</text>
+        <text class="node-text" x="353" y="238" text-anchor="middle" fill="var(--red-deep)">мудборд</text>
+      </g>
+      <text class="chevron" x="405" y="231" text-anchor="middle">›</text>
+
+      <!-- 3.4 Пилит чистовой — yellow -->
+      <g class="node" onclick="showPopup('e4')">
+        <rect class="node-rect" x="412" y="202" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="412" y="202" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="457" y="226" text-anchor="middle" fill="var(--yellow-deep)">Пилит</text>
+        <text class="node-text" x="457" y="238" text-anchor="middle" fill="var(--yellow-deep)">чистовой</text>
+      </g>
+      <text class="chevron" x="509" y="231" text-anchor="middle">›</text>
+
+      <!-- 3.5 Сдаёт проект — yellow -->
+      <g class="node" onclick="showPopup('e5')">
+        <rect class="node-rect" x="516" y="202" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="516" y="202" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="561" y="226" text-anchor="middle" fill="var(--yellow-deep)">Сдаёт</text>
+        <text class="node-text" x="561" y="238" text-anchor="middle" fill="var(--yellow-deep)">проект</text>
+      </g>
+
+      <!-- ════════ ЦЕПОЧКА 4 — КОНТЕНТ (y центр 312) ════════ -->
+      <text x="6" y="308" class="chain-label" fill="var(--ink-muted)">КОНТЕНТ</text>
+      <text x="6" y="322" class="chain-label" fill="var(--ink-soft)" style="font-size: 9px; letter-spacing: 0.05em">5 звеньев</text>
+
+      <!-- 4.1 Генерирует план — green -->
+      <g class="node" onclick="showPopup('c1')">
+        <rect class="node-rect" x="100" y="290" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="100" y="290" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="145" y="314" text-anchor="middle" fill="var(--green-deep)">Генерирует</text>
+        <text class="node-text" x="145" y="326" text-anchor="middle" fill="var(--green-deep)">контент-план</text>
+      </g>
+      <text class="chevron" x="197" y="319" text-anchor="middle">›</text>
+
+      <!-- 4.2 Раскрывает тему — green -->
+      <g class="node" onclick="showPopup('c2')">
+        <rect class="node-rect" x="204" y="290" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="204" y="290" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="249" y="314" text-anchor="middle" fill="var(--green-deep)">Раскрывает</text>
+        <text class="node-text" x="249" y="326" text-anchor="middle" fill="var(--green-deep)">тему</text>
+      </g>
+      <text class="chevron" x="301" y="319" text-anchor="middle">›</text>
+
+      <!-- 4.3 Редактирует под себя — yellow -->
+      <g class="node" onclick="showPopup('c3')">
+        <rect class="node-rect" x="308" y="290" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="308" y="290" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="353" y="314" text-anchor="middle" fill="var(--yellow-deep)">Редактирует</text>
+        <text class="node-text" x="353" y="326" text-anchor="middle" fill="var(--yellow-deep)">под себя</text>
+      </g>
+      <text class="chevron" x="405" y="319" text-anchor="middle">›</text>
+
+      <!-- 4.4 Делает обложку — yellow -->
+      <g class="node" onclick="showPopup('c4')">
+        <rect class="node-rect" x="412" y="290" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="412" y="290" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="457" y="314" text-anchor="middle" fill="var(--yellow-deep)">Делает</text>
+        <text class="node-text" x="457" y="326" text-anchor="middle" fill="var(--yellow-deep)">обложку</text>
+      </g>
+      <text class="chevron" x="509" y="319" text-anchor="middle">›</text>
+
+      <!-- 4.5 Публикует — green -->
+      <g class="node" onclick="showPopup('c5')">
+        <rect class="node-rect" x="516" y="290" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="516" y="290" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="561" y="314" text-anchor="middle" fill="var(--green-deep)">Публикует</text>
+        <text class="node-text" x="561" y="326" text-anchor="middle" fill="var(--green-deep)">пост / Reels</text>
+      </g>
+
+      <!-- ════════ ЦЕПОЧКА 5 — УДЕРЖАНИЕ (y центр 400) ════════ -->
+      <text x="6" y="396" class="chain-label" fill="var(--ink-muted)">УДЕРЖАНИЕ</text>
+      <text x="6" y="410" class="chain-label" fill="var(--ink-soft)" style="font-size: 9px; letter-spacing: 0.05em">5 звеньев</text>
+
+      <!-- 5.1 Спрашивает «как сайт» — green -->
+      <g class="node" onclick="showPopup('u1')">
+        <rect class="node-rect" x="100" y="378" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="100" y="378" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="145" y="402" text-anchor="middle" fill="var(--green-deep)">Спрашивает</text>
+        <text class="node-text" x="145" y="414" text-anchor="middle" fill="var(--green-deep)">«как сайт?»</text>
+      </g>
+      <text class="chevron" x="197" y="407" text-anchor="middle">›</text>
+
+      <!-- 5.2 Запрашивает отзыв — green -->
+      <g class="node" onclick="showPopup('u2')">
+        <rect class="node-rect" x="204" y="378" width="90" height="44" rx="4" fill="var(--green-bg)" stroke="var(--green-border)" stroke-width="1"/>
+        <rect x="204" y="378" width="3" height="44" fill="var(--green)"/>
+        <text class="node-text" x="249" y="402" text-anchor="middle" fill="var(--green-deep)">Запрашивает</text>
+        <text class="node-text" x="249" y="414" text-anchor="middle" fill="var(--green-deep)">отзыв (видео)</text>
+      </g>
+      <text class="chevron" x="301" y="407" text-anchor="middle">›</text>
+
+      <!-- 5.3 Делает допродажу — RED -->
+      <g class="node" onclick="showPopup('u3')">
+        <rect class="node-rect" x="308" y="378" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="308" y="378" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="353" y="402" text-anchor="middle" fill="var(--red-deep)">Делает</text>
+        <text class="node-text" x="353" y="414" text-anchor="middle" fill="var(--red-deep)">допродажу</text>
+      </g>
+      <text class="chevron" x="405" y="407" text-anchor="middle">›</text>
+
+      <!-- 5.4 Просит рекомендацию — RED -->
+      <g class="node" onclick="showPopup('u4')">
+        <rect class="node-rect" x="412" y="378" width="90" height="44" rx="4" fill="var(--red-bg)" stroke="var(--red-border)" stroke-width="1"/>
+        <rect x="412" y="378" width="3" height="44" fill="var(--red)"/>
+        <text class="node-text" x="457" y="402" text-anchor="middle" fill="var(--red-deep)">Просит</text>
+        <text class="node-text" x="457" y="414" text-anchor="middle" fill="var(--red-deep)">рекомендацию</text>
+      </g>
+      <text class="chevron" x="509" y="407" text-anchor="middle">›</text>
+
+      <!-- 5.5 Возвращает с триггером — yellow -->
+      <g class="node" onclick="showPopup('u5')">
+        <rect class="node-rect" x="516" y="378" width="90" height="44" rx="4" fill="var(--yellow-bg)" stroke="var(--yellow-border)" stroke-width="1"/>
+        <rect x="516" y="378" width="3" height="44" fill="var(--yellow)"/>
+        <text class="node-text" x="561" y="402" text-anchor="middle" fill="var(--yellow-deep)">Возвращает</text>
+        <text class="node-text" x="561" y="414" text-anchor="middle" fill="var(--yellow-deep)">с триггером</text>
+      </g>
+
+      <!-- ════════════════ ПЕРЕХОДЫ МЕЖДУ ЦЕПОЧКАМИ ════════════════ -->
+
+      <!-- ПЕРЕХОД 1: Продажа (s5 предоплата) → Исполнение (e1 анкета) — БИРЮЗОВЫЙ -->
+      <!-- Из правого нижнего угла s5 (x=606, y=158) → вниз → влево → вниз к e1 (x=145, y=202) -->
+      <path d="M 606,158 Q 626,180 606,180 L 165,180 Q 145,180 145,202"
+            stroke="#0f7d76" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-teal)" opacity="0.85"/>
+      <text x="380" y="174" font-size="9.5" font-weight="600" fill="#0f7d76" text-anchor="middle"
+            letter-spacing="0.04em" style="font-family: Manrope">оплата → бриф (мгновенно)</text>
+
+      <!-- ПЕРЕХОД 2: Исполнение (e5 сдача) → Контент (c2 раскрывает) — ФИОЛЕТОВЫЙ -->
+      <!-- Из e5 (x=606, y=246) → вниз → к c2 (x=249, y=290) — кейс с цифрами -->
+      <path d="M 606,246 Q 626,268 606,268 L 269,268 Q 249,268 249,290"
+            stroke="#7a3fb5" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-violet)" opacity="0.85"/>
+      <text x="430" y="262" font-size="9.5" font-weight="600" fill="#7a3fb5" text-anchor="middle"
+            letter-spacing="0.04em" style="font-family: Manrope">кейс с цифрами в Instagram</text>
+
+      <!-- ПЕРЕХОД 3: Исполнение (e5 сдача) → Удержание (u1 «как сайт») — ЯНТАРНЫЙ -->
+      <!-- Сначала пунктир спускается ниже Контента, ныряет к u1 -->
+      <path d="M 632,246 L 632,360 Q 632,378 615,378 L 192,378"
+            stroke="#c2740d" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-amber)" opacity="0.7"/>
+      <text x="640" y="302" font-size="9" font-weight="600" fill="#c2740d"
+            letter-spacing="0.04em" style="font-family: Manrope" transform="rotate(90 640 302)">через 2-3 дня</text>
+
+      <!-- ПЕТЛЯ: Контент (c5 публикует) → Привлечение (p5 принимает запрос) — СИНИЙ -->
+      <!-- c5 (x=606, y=290 верх) → вверх вправо → к p5 (x=606, y=70 низ) -->
+      <path d="M 606,290 L 626,290 Q 660,290 660,238 L 660,98 Q 660,70 626,70 L 606,70"
+            stroke="#2961c4" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-blue)" opacity="0.7"/>
+      <text x="676" y="180" font-size="9" font-weight="600" fill="#2961c4"
+            letter-spacing="0.04em" style="font-family: Manrope" transform="rotate(90 676 180)">кейсы → новые лиды</text>
+
+      <!-- ПЕТЛЯ: Удержание (u4 рекомендация) → Привлечение (p4 круг) — КОРАЛЛОВЫЙ — петля сарафана слева -->
+      <!-- u4 (x=412, y=422 низ) → вниз → влево вокруг → вверх → к p4 (x=412, y=26 верх) -->
+      <path d="M 457,422 Q 457,442 437,442 L 50,442 Q 30,442 30,422 L 30,46 Q 30,26 50,26 L 412,26"
+            stroke="#d75634" stroke-width="1.5" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-coral)" opacity="0.6"/>
+      <text x="42" y="234" font-size="9" font-weight="600" fill="#d75634"
+            letter-spacing="0.04em" style="font-family: Manrope" transform="rotate(-90 42 234)">петля сарафана</text>
+
+    </svg>
+
+    <!-- ЛЕГЕНДА -->
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-dot" style="background: var(--green)"></span>
+        ИИ автоматизирует
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: var(--yellow)"></span>
+        ИИ ускоряет, Ольга проверяет
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: var(--red)"></span>
+        Только Ольга
+      </div>
+      <div class="legend-item">
+        <span class="legend-dash" style="color: #0f7d76"></span>
+        Переход (триггер / связь)
+      </div>
+    </div>
+  </div>
+
+  <!-- ПЕРЕХОДЫ — РАСШИФРОВКА -->
+  <div class="transitions-legend">
+    <h3>Связи между цепочками</h3>
+    <div class="transitions-grid">
+      <div class="trans-item">
+        <div class="trans-bar" style="background: #0f7d76"></div>
+        <div class="trans-text">
+          <strong>Оплата → бриф</strong>
+          Мгновенно после предоплаты ИИ отправляет анкету и делает первые наброски сайта.
+        </div>
+      </div>
+      <div class="trans-item">
+        <div class="trans-bar" style="background: #7a3fb5"></div>
+        <div class="trans-text">
+          <strong>Сдача → кейс в контенте</strong>
+          После согласования с заказчиком — пост с цифрами в Instagram и Telegram.
+        </div>
+      </div>
+      <div class="trans-item">
+        <div class="trans-bar" style="background: #c2740d"></div>
+        <div class="trans-text">
+          <strong>Сдача → «как сайт?»</strong>
+          Через 2–3 дня — забота о клиенте, повод вернуться в диалог.
+        </div>
+      </div>
+      <div class="trans-item">
+        <div class="trans-bar" style="background: #2961c4"></div>
+        <div class="trans-text">
+          <strong>Контент → новые лиды</strong>
+          Опубликованные кейсы — главный источник входящих в директ.
+        </div>
+      </div>
+      <div class="trans-item">
+        <div class="trans-bar" style="background: #d75634"></div>
+        <div class="trans-text">
+          <strong>Сарафан → новый клиент</strong>
+          Петля возврата: рекомендация Размаевой → подруга-педикюр → дальше.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ИНСАЙТЫ -->
+  <div class="insight">
+    <div class="insight-card warn">
+      <div class="insight-eyebrow">Три точки роста</div>
+      <h4>Где спрятан рывок</h4>
+      <p>
+        Семь красных звеньев — не «всё плохо», а карта психологии Ольги.
+        Три блока, обозначенные в распаковке, держат всю систему:
+        <strong>назвать цену</strong> (Б2.4),
+        <strong>вести Telegram</strong> (Б1.7),
+        <strong>чувствовать себя экспертом</strong> в контенте (Б4.8) — последний
+        проходит сквозным фоном через всю цепочку Контента, поэтому не выделен
+        отдельным звеном. Снять эти три блока — и зелёные с жёлтыми оживают сами.
+      </p>
+    </div>
+    <div class="insight-card calm">
+      <div class="insight-eyebrow">Главная артерия</div>
+      <h4>Сарафан — это система</h4>
+      <p>
+        Связь <strong>исполнение → кейс → рекомендация → новый клиент</strong>
+        — становой хребет. Уже первый проект (Размаева) запускает цикл.
+        ИИ-помощник держит всю периферию: тексты, обложки, напоминания —
+        а Ольга остаётся там, где она нужна: финальный контроль и человеческий контакт.
+      </p>
+    </div>
+  </div>
+
+  <footer class="colophon">
+    <span>BIZCHAIN MAP · ИИЩЕНКО LAB · МАЙ 2026</span>
+    <span class="colophon-mark">25 звеньев · 5 цепочек · 5 связей</span>
+  </footer>
+
+</div>
+
+<!-- ════════ ПОПАП ════════ -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup(event)">
+  <div class="popup" id="popupBox">
+    <button class="popup-close" onclick="hidePopup()" aria-label="Закрыть">×</button>
+    <div id="popupStatus" class="popup-status"><span class="dot"></span><span id="popupStatusText"></span></div>
+    <div id="popupChain" class="popup-chain"></div>
+    <div id="popupTitle" class="popup-title"></div>
+    <div id="popupDesc" class="popup-desc"></div>
+    <div class="popup-section">
+      <div class="popup-section-title">⚡ ИИ здесь</div>
+      <div id="popupAI" class="popup-section-text"></div>
+    </div>
+    <div class="popup-section" id="popupLinksSection">
+      <div class="popup-section-title">🔗 Связан с</div>
+      <div id="popupLinks" class="popup-section-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const nodeData = {
+  // ════════ ПРИВЛЕЧЕНИЕ ════════
+  p1: {
+    chain: 'Привлечение · 1/5',
+    title: 'Публикует Reels',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Любимая площадка. Ролики о работе с клиентами, ИИ-инструментах, кейсы. Ольга сама себя на камере не видит, но за кадром или по сценарию — да.',
+    ai: 'ИИ-помощник готовит сценарий по теме, монтажные подсказки, обложку и описание. Ольге остаётся снять и опубликовать.',
+    links: 'Темы для Reels приходят из реальной работы с клиентами и заметок в GPT. Лиды отсюда уходят в директ → ПРОДАЖА.'
+  },
+  p2: {
+    chain: 'Привлечение · 2/5',
+    title: 'Ведёт Telegram',
+    status: 'red',
+    statusText: 'Главный риск',
+    desc: 'Сама же про эту площадку говорит: «отложится скорее всего». Без Telegram-канала падает охват и доверие у удалённых клиентов из Москвы и Питера.',
+    ai: 'ИИ-помощник готовит посты заранее на 2 недели вперёд — нужно только нажать «опубликовать». Иначе канал умирает на старте.',
+    links: 'Запитывается из ИСПОЛНЕНИЯ (кейсы) и параллелит Instagram. Без него петля «Контент → лиды» работает на одной ноге.'
+  },
+  p3: {
+    chain: 'Привлечение · 3/5',
+    title: 'Откликается на Kwork',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Один из трёх каналов привлечения. Сама же признаёт: «каждый день писать не буду» — отсюда нерегулярность откликов и просадки.',
+    ai: 'ИИ читает бриф и за минуту делает релевантный отклик под конкретного клиента. Можно покрывать площадку регулярно вместо разовых попыток.',
+    links: 'Заявка отсюда уходит в ПРОДАЖУ → «Отвечает в директ».'
+  },
+  p4: {
+    chain: 'Привлечение · 4/5',
+    title: 'Активирует тёплый круг',
+    status: 'red',
+    statusText: 'Психоблок',
+    desc: 'Активный круг для работы: Размаева (точно), подруга-педикюр (возможно), муж (натяжные потолки). Остальные — закрытый периметр. Сложно зайти из-за внутреннего стеснения.',
+    ai: 'ИИ помогает с формулировкой первого захода: «не продажа, а предложение помочь». Готовые шаблоны под каждый тип отношений.',
+    links: 'Тёплый круг — динамичное понятие: сюда возвращаются новые контакты по рекомендациям из УДЕРЖАНИЯ, расширяя орбиту.'
+  },
+  p5: {
+    chain: 'Привлечение · 5/5',
+    title: 'Принимает запрос в директ',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Время ответа — 2–5 минут. Это сильная сторона: клиент пишет — Ольга на связи. Сама + ИИ-помощник.',
+    ai: 'ИИ-помощник в Telegram-боте принимает первое сообщение, задаёт квалификационные вопросы и собирает данные до того, как Ольга освободится со службы.',
+    links: 'Передаёт горячий контакт в ПРОДАЖУ → «Отвечает в директ».'
+  },
+
+  // ════════ ПРОДАЖА ════════
+  s1: {
+    chain: 'Продажа · 1/5',
+    title: 'Отвечает в директ',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Текстовое общение — комфортный формат. «В тексте мне легче. Я неуверенно говорю голосом». Созвон только если клиент сам настаивает.',
+    ai: 'Готовые шаблоны первого ответа под три ниши: сайт, контент, реклама. ИИ подбирает нужный по словам клиента.',
+    links: 'Заявка из ПРИВЛЕЧЕНИЯ (директ или Kwork) → ведёт в «Снимает бриф».'
+  },
+  s2: {
+    chain: 'Продажа · 2/5',
+    title: 'Снимает бриф',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Просит описать бизнес и задачу. Иногда — короткий созвон. Обычно — текстом. Здесь решается: понимает ли Ольга проект.',
+    ai: 'ИИ предлагает чек-лист ключевых вопросов под нишу клиента. Ольга задаёт их по списку — снимает страх «забыть важное».',
+    links: 'Подготавливает данные для «Назначает цену».'
+  },
+  s3: {
+    chain: 'Продажа · 3/5',
+    title: 'Просит референсы',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Без референсов нельзя сделать смету. Клиенты часто не знают, что показывать — Ольга подсказывает направления.',
+    ai: 'ИИ подбирает несколько примеров под нишу из своей базы и присылает клиенту: «вот направление 1, вот 2, какое ближе?». Экономит время на сборе референсов.',
+    links: 'Готовый референс → в «Назначает цену».'
+  },
+  s4: {
+    chain: 'Продажа · 4/5',
+    title: 'Назначает цену',
+    status: 'red',
+    statusText: 'Главный тормоз',
+    desc: '«Главный тормоз — назвать цену и вообще понять, сколько стоит какой объём работы. И вообще я стесняюсь предлагать услуги.» Это центральный психологический блок всей продажи.',
+    ai: 'ИИ-помощник по чек-листу разбирает проект на блоки и считает: каждый элемент имеет цену. Цифра приходит готовой — Ольге не нужно «выдумывать», она пересылает расчёт. Структурный подход снимает стеснение.',
+    links: 'Решающее звено: либо проходит в «Берёт предоплату», либо клиент уходит «подумать».'
+  },
+  s5: {
+    chain: 'Продажа · 5/5',
+    title: 'Берёт предоплату 50%',
+    status: 'red',
+    statusText: 'Психоблок',
+    desc: '«Мне будет страшно сказать о предоплате». Без неё — нет старта работы. Ближайшие 2,5 года — без юридического оформления, оплата на карту мужа или Ольги.',
+    ai: 'Готовая формулировка: «Чтобы зарезервировать ваш проект и начать работу — нужна предоплата 50%». ИИ просто подаёт текст в нужный момент, чтобы Ольга его отправила.',
+    links: 'Пуск ИСПОЛНЕНИЯ: оплата мгновенно запускает «Отправляет анкету-бриф».'
+  },
+
+  // ════════ ИСПОЛНЕНИЕ ════════
+  e1: {
+    chain: 'Исполнение · 1/5',
+    title: 'Отправляет анкету-бриф',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Сразу после оплаты. Ольга сама говорит: «даю задачу ИИ, чтобы он делал первые наброски сайта». Старт без задержки.',
+    ai: 'ИИ автоматически высылает анкету по нише клиента, параллельно генерит черновую структуру и собирает референсы.',
+    links: 'Триггер от ПРОДАЖИ («Берёт предоплату»). Подготавливает данные для «Набрасывает структуру».'
+  },
+  e2: {
+    chain: 'Исполнение · 2/5',
+    title: 'Набрасывает структуру',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'По референсам — наброски структуры сайта. Согласование с клиентом. Это первая видимая часть работы.',
+    ai: 'ИИ-промт делает 2–3 варианта структуры под нишу. Ольга выбирает лучший и доводит, а не строит с нуля.',
+    links: 'Данные идут в «Согласует мудборд».'
+  },
+  e3: {
+    chain: 'Исполнение · 3/5',
+    title: 'Согласует мудборд',
+    status: 'red',
+    statusText: 'Только Ольга',
+    desc: 'Цветовая гамма, оферы, кнопки, общая визуальная логика. Здесь нужны вкус и чувство клиента — Ольга никогда не отдаст это полностью ИИ.',
+    ai: 'ИИ предлагает варианты палитр и фоновых текстур, но финал — за Ольгой. Она же сама говорит: «контролировать визуал — буду я».',
+    links: 'Согласованный мудборд → в «Пилит чистовой».'
+  },
+  e4: {
+    chain: 'Исполнение · 4/5',
+    title: 'Пилит чистовой',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Блоки, картинки, тексты, отзывы, контакты. Самая длинная часть работы по сайту — большая часть проекта.',
+    ai: 'ИИ пишет тексты блоков по брифу, генерит изображения. Ольга финализирует — она же сама говорит: «проверять текста — тоже буду я».',
+    links: 'Готовый сайт → в «Сдаёт проект».'
+  },
+  e5: {
+    chain: 'Исполнение · 5/5',
+    title: 'Сдаёт проект',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: '3 правки бесплатно — дальше за деньги. Если клиент токсичен — возврат и разрыв. Чёткие правила, которые Ольга держит.',
+    ai: 'Шаблоны сообщений «как закрыть проект, чтобы клиент сказал спасибо». Чек-лист проверки перед сдачей: что должно быть на сайте такого типа.',
+    links: 'Запускает три перехода сразу (Б8.2–8.3): кейс с цифрами → в КОНТЕНТ; «как сайт?» через 2-3 дня → в УДЕРЖАНИЕ; и через цикл сарафана питает ПРИВЛЕЧЕНИЕ.'
+  },
+
+  // ════════ КОНТЕНТ ════════
+  c1: {
+    chain: 'Контент · 1/5',
+    title: 'Генерирует контент-план',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Свой канал и канал клиента. Источники тем — рабочие ситуации и заметки в GPT-чате.',
+    ai: 'ИИ берёт из чата накопленные мысли + темы из работы с клиентами и собирает план на месяц. С привязкой к календарю и сезонности.',
+    links: 'План → в «Раскрывает тему».'
+  },
+  c2: {
+    chain: 'Контент · 2/5',
+    title: 'Раскрывает тему',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Ольга формат «свидетель-практик» — пока не «эксперт». Тема + личный опыт = пост. Особый материал — биография (служба, Сирия) и стек (Claude Code, Synapse).',
+    ai: 'ИИ пишет черновик под голос Ольги (он сохранён в контекстных файлах распаковки). Сохраняет «не толкаем в эксперта на старте».',
+    links: 'Триггерится от ИСПОЛНЕНИЯ («кейс с цифрами»). Уходит в «Редактирует под себя».'
+  },
+  c3: {
+    chain: 'Контент · 3/5',
+    title: 'Редактирует под себя',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Жёсткое правило времени: «полчаса максимум. Час-два — это слишком много». Если ИИ не уложил черновик в 30-минутную доработку — пост не зайдёт.',
+    ai: 'Качество черновика на входе определяет, влезает ли пост в окно 30 минут. Поэтому ИИ-промт настраивается итеративно: каждый раз обучается ближе к голосу Ольги.',
+    links: 'Готовый текст → в «Делает обложку».'
+  },
+  c4: {
+    chain: 'Контент · 4/5',
+    title: 'Делает обложку',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Визуальный финал поста. Не «танцы и пошлости» — спокойная, человечная эстетика. Иногда — фото с выезда к клиенту.',
+    ai: 'ИИ генерирует обложку или подбирает фото из съёмки. Шаблоны под Instagram и Telegram готовы заранее.',
+    links: 'Готовый пост → в «Публикует».'
+  },
+  c5: {
+    chain: 'Контент · 5/5',
+    title: 'Публикует пост / Reels',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: '2–3 поста в неделю — реалистичная норма для текущего графика «сутки через сутки».',
+    ai: 'Постинг по расписанию через бота. Ольга только нажимает «одобрить» — это укладывается в перерыв на службе.',
+    links: 'Замыкает петлю: КОНТЕНТ → лиды → возврат в ПРИВЛЕЧЕНИЕ. Главный двигатель сарафана.'
+  },
+
+  // ════════ УДЕРЖАНИЕ ════════
+  u1: {
+    chain: 'Удержание · 1/5',
+    title: 'Спрашивает «как сайт?»',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: 'Через 2–3 дня после сдачи. Простое сообщение: «как работает, всё ли устраивает?». Маленькое касание — большое доверие.',
+    ai: 'Календарь напоминаний автоматически ставит задачу на 3-й день. ИИ предлагает текст под конкретного клиента.',
+    links: 'Триггер от ИСПОЛНЕНИЯ (сдача проекта). Открывает диалог для «Запрашивает отзыв».'
+  },
+  u2: {
+    chain: 'Удержание · 2/5',
+    title: 'Запрашивает отзыв',
+    status: 'green',
+    statusText: 'ИИ автоматизирует',
+    desc: '«Через несколько дней. Желательно, чтобы это было видео». Видеоотзыв — самый сильный социальный пруф.',
+    ai: 'Готовая формулировка просьбы + список из 3 вопросов, которые клиент может коротко проговорить на видео. Ольге не нужно каждый раз думать «как просить».',
+    links: 'Отзыв уходит в КОНТЕНТ как материал для следующего кейса.'
+  },
+  u3: {
+    chain: 'Удержание · 3/5',
+    title: 'Делает допродажу',
+    status: 'red',
+    statusText: 'Психоблок',
+    desc: '«Когда сделаю сайт — намекну, что неплохо приукрасить Instagram. Также после Reels — предложить воронку.» Намёк есть — продажи может не случиться из-за стеснения.',
+    ai: 'ИИ-помощник через неделю после сдачи проекта (Б5.1) готовит готовый оффер по второму продукту с привязкой к тому, что Ольга увидела на сайте клиента. Ольга только адаптирует.',
+    links: 'Если получилось — клиент возвращается в ПРОДАЖУ как заявка на новый продукт.'
+  },
+  u4: {
+    chain: 'Удержание · 4/5',
+    title: 'Просит рекомендацию',
+    status: 'red',
+    statusText: 'Психоблок',
+    desc: '«Буду просить клиентов, чтобы они меня рекомендовали или отмечали у себя.» Со скидкой для тех, кто пришёл по рекомендации. Стесняется — поэтому делает реже, чем хотела бы.',
+    ai: 'ИИ после довольного отзыва присылает Ольге готовое сообщение клиенту: «спасибо за отзыв — вот ссылка с вашим именем для рекомендации, скидка для друга». Ольга только пересылает.',
+    links: 'Запускает петлю сарафана → возврат в ПРИВЛЕЧЕНИЕ («Активирует тёплый круг»).'
+  },
+  u5: {
+    chain: 'Удержание · 5/5',
+    title: 'Возвращает с триггером',
+    status: 'yellow',
+    statusText: 'ИИ ускоряет',
+    desc: 'Триггеры возврата: смена тарифов клиента, появление нового мастера, сезон. «Месяц-два не пишут — буду стесняться, поэтому хочу календарь».',
+    ai: 'Календарь напоминаний с регулярными интервалами. ИИ следит за событиями ниши клиента (праздники, сезон) и предлагает повод написать с готовой формулировкой.',
+    links: 'Может вернуть клиента в ПРОДАЖУ на новый проект.'
+  }
+};
+
+const statusStyles = {
+  green: { className: 'green-accent', bg: 'var(--green-bg)', color: 'var(--green-deep)', border: 'var(--green-border)', dot: 'var(--green)' },
+  yellow: { className: 'yellow-accent', bg: 'var(--yellow-bg)', color: 'var(--yellow-deep)', border: 'var(--yellow-border)', dot: 'var(--yellow)' },
+  red: { className: 'red-accent', bg: 'var(--red-bg)', color: 'var(--red-deep)', border: 'var(--red-border)', dot: 'var(--red)' }
+};
+
+function showPopup(id) {
+  const d = nodeData[id];
+  if (!d) return;
+  const s = statusStyles[d.status];
+
+  const popupBox = document.getElementById('popupBox');
+  popupBox.classList.remove('green-accent', 'yellow-accent', 'red-accent');
+  popupBox.classList.add(s.className);
+
+  const statusEl = document.getElementById('popupStatus');
+  statusEl.style.background = s.bg;
+  statusEl.style.color = s.color;
+  statusEl.style.borderColor = s.border;
+  statusEl.querySelector('.dot').style.background = s.dot;
+
+  document.getElementById('popupStatusText').textContent = d.statusText;
+  document.getElementById('popupChain').textContent = d.chain;
+  document.getElementById('popupTitle').textContent = d.title;
+  document.getElementById('popupDesc').textContent = d.desc;
+  document.getElementById('popupAI').textContent = d.ai;
+
+  if (d.links) {
+    document.getElementById('popupLinks').textContent = d.links;
+    document.getElementById('popupLinksSection').style.display = 'block';
+  } else {
+    document.getElementById('popupLinksSection').style.display = 'none';
+  }
+
+  document.getElementById('popupOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePopup(e) {
+  if (!e || e.target === document.getElementById('popupOverlay') || e.target.classList.contains('popup-close')) {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') hidePopup({ target: document.getElementById('popupOverlay') });
+});
+</script>
+
+</body>
+</html>
