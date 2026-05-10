@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — Razmaeva Nails · Ольга Размаева</title>
+<style>
+:root {
+  --bg: #fafaf9;
+  --bg-card: #ffffff;
+  --bg-soft: #f5f5f4;
+  --text: #18181b;
+  --text-muted: #71717a;
+  --text-soft: #a1a1aa;
+  --border: #e7e5e4;
+  --border-soft: #f4f4f3;
+  --brand: #be185d;
+  --brand-soft: #fdf2f8;
+  --brand-deep: #831843;
+
+  --green: #10b981;
+  --green-bg: #ecfdf5;
+  --green-border: #a7f3d0;
+  --green-text: #047857;
+
+  --yellow: #f59e0b;
+  --yellow-bg: #fffbeb;
+  --yellow-border: #fcd34d;
+  --yellow-text: #b45309;
+
+  --red: #ef4444;
+  --red-bg: #fef2f2;
+  --red-border: #fca5a5;
+  --red-text: #b91c1c;
+
+  --teal: #0d9488;
+  --violet: #7c3aed;
+  --blue: #3b82f6;
+  --orange: #f97316;
+  --amber: #d97706;
+
+  --shadow-sm: 0 1px 2px rgba(24,24,27,0.04), 0 1px 3px rgba(24,24,27,0.06);
+  --shadow-md: 0 2px 4px rgba(24,24,27,0.04), 0 4px 12px rgba(24,24,27,0.06);
+  --shadow-lg: 0 8px 24px rgba(24,24,27,0.08), 0 16px 48px rgba(24,24,27,0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0a09;
+    --bg-card: #1c1917;
+    --bg-soft: #292524;
+    --text: #fafaf9;
+    --text-muted: #a8a29e;
+    --text-soft: #78716c;
+    --border: #292524;
+    --border-soft: #1c1917;
+    --brand: #ec4899;
+    --brand-soft: #2a0f1d;
+    --brand-deep: #f472b6;
+
+    --green-bg: #022c22;
+    --green-border: #047857;
+    --green-text: #6ee7b7;
+
+    --yellow-bg: #2a1c02;
+    --yellow-border: #b45309;
+    --yellow-text: #fcd34d;
+
+    --red-bg: #2a0e0e;
+    --red-border: #b91c1c;
+    --red-text: #fca5a5;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 2px 4px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.5), 0 16px 48px rgba(0,0,0,0.5);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* HERO */
+.hero {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  background: var(--brand-soft);
+  padding: 6px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.hero h1 .accent { color: var(--brand); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 720px;
+  line-height: 1.55;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* SECTION HEADERS */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::before {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: var(--text-soft);
+}
+.section { margin-bottom: 36px; }
+
+/* BUSINESS CARD — METRICS */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.metric {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  transition: all 0.2s ease;
+}
+.metric:hover {
+  border-color: var(--brand);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.metric-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.metric-hint {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+/* TASKS GRID */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.task-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.task-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.task-text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.task-text strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+.task-text span {
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+/* STATS PILLS */
+.stats-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid;
+}
+.stat-pill .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.stat-green {
+  background: var(--green-bg);
+  color: var(--green-text);
+  border-color: var(--green-border);
+}
+.stat-green .dot { background: var(--green); }
+.stat-yellow {
+  background: var(--yellow-bg);
+  color: var(--yellow-text);
+  border-color: var(--yellow-border);
+}
+.stat-yellow .dot { background: var(--yellow); }
+.stat-red {
+  background: var(--red-bg);
+  color: var(--red-text);
+  border-color: var(--red-border);
+}
+.stat-red .dot { background: var(--red); }
+.stat-total {
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  border-color: var(--brand);
+  font-weight: 700;
+}
+
+/* MAP */
+.map-shell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.map-scroll {
+  overflow-x: auto;
+  margin: 0 -8px;
+  padding: 0 8px 8px;
+}
+.chain-svg {
+  display: block;
+  min-width: 1080px;
+  width: 100%;
+  height: auto;
+}
+
+/* NODE */
+.node { cursor: pointer; transition: transform 0.18s ease; }
+.node:hover { transform: translateY(-2px); }
+.node:hover .node-bg {
+  filter: brightness(0.97);
+  stroke-width: 2;
+}
+.node-bg {
+  transition: all 0.18s ease;
+}
+
+/* LEGEND */
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-top: 18px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.legend-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.legend-block-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+.legend-swatch {
+  width: 12px; height: 12px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.legend-line {
+  width: 24px; height: 2px;
+  flex-shrink: 0;
+}
+
+/* INTERLINKS */
+.interlinks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.link-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+}
+.link-card.violet { border-left-color: var(--violet); }
+.link-card.amber { border-left-color: var(--amber); }
+.link-card.blue { border-left-color: var(--blue); }
+.link-card.orange { border-left-color: var(--orange); }
+.link-flow {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.link-desc {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.link-desc strong { color: var(--brand); font-weight: 600; }
+
+/* POTENTIAL */
+.potential-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.potential-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+.potential-name {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.potential-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.potential-hint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ROI */
+.roi-block {
+  background: linear-gradient(135deg, var(--brand-soft) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--brand);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.roi-cell h3 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-deep);
+  margin-bottom: 8px;
+}
+.roi-num {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.roi-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* DISCLAIMER */
+.disclaimer {
+  margin-top: 28px;
+  background: var(--yellow-bg);
+  border: 1px solid var(--yellow-border);
+  border-left: 4px solid var(--yellow);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+.disclaimer-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--yellow-text);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.disclaimer-text {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-soft);
+  text-align: center;
+  line-height: 1.6;
+}
+.footer strong { color: var(--text-muted); }
+
+/* POPUP */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(24,24,27,0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.18s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.popup-overlay.active { display: flex; }
+.popup {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px 24px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.22s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.popup-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: var(--bg-soft);
+  border: none;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.popup-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+.popup-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+.popup-status.green { background: var(--green-bg); color: var(--green-text); }
+.popup-status.yellow { background: var(--yellow-bg); color: var(--yellow-text); }
+.popup-status.red { background: var(--red-bg); color: var(--red-text); }
+.popup-chain {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.popup-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.popup-section {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.popup-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+.popup-section-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.popup-section-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.popup-section-text em {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container { padding: 20px 16px 40px; }
+  .hero h1 { font-size: 26px; }
+  .hero-sub { font-size: 15px; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .tasks-grid { grid-template-columns: 1fr; }
+  .interlinks-grid { grid-template-columns: 1fr; }
+  .potential-grid { grid-template-columns: repeat(2, 1fr); }
+  .roi-grid { grid-template-columns: 1fr; gap: 18px; }
+}
+@media (max-width: 560px) {
+  .container { padding: 16px 12px 32px; }
+  .hero h1 { font-size: 22px; }
+  .metric-value { font-size: 18px; }
+  .map-shell { padding: 12px; }
+  .roi-block { padding: 20px; }
+  .roi-num { font-size: 22px; }
+  .popup { padding: 22px 20px 20px; }
+  .popup-title { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===================== HERO ===================== -->
+  <div class="hero">
+    <span class="hero-tag">🔗 BizChain Map · Диагностический отчёт</span>
+    <h1>Razmaeva Nails — <span class="accent">карта бизнеса Ольги</span></h1>
+    <p class="hero-sub">
+      Полная карта бизнес-цепочек школы маникюра и магазина материалов с цветовым ИИ-аудитом каждого звена. Видно, где ИИ возьмёт на себя задачи прямо сейчас, где усилит существующие процессы, и где живая экспертиза останется за Ольгой и командой.
+    </p>
+    <div class="hero-meta">
+      <span class="meta-pill">📍 Благовещенск</span>
+      <span class="meta-pill">💅 Школа маникюра + магазин материалов</span>
+      <span class="meta-pill">⭐ 2ГИС: 4.7 / 214 отзывов</span>
+    </div>
+  </div>
+
+  <!-- ===================== METRICS ===================== -->
+  <section class="section">
+    <div class="section-title">Ключевые показатели бизнеса</div>
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-label">Магазин · выручка</div>
+        <div class="metric-value">500–600 тыс ₽</div>
+        <div class="metric-hint">в месяц, падает; цель Ольги — вернуть к 2,5–3 млн</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">База контактов</div>
+        <div class="metric-value">1 200</div>
+        <div class="metric-hint">Учениц + покупателей магазина</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Подписчиков IG</div>
+        <div class="metric-value">13 600</div>
+        <div class="metric-hint">Активность низкая, рилс 4 000 без заявок</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">WhatsApp-группа</div>
+        <div class="metric-value">902 мастера</div>
+        <div class="metric-hint">~300 просмотров на пост — главный охват</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Сарафан</div>
+        <div class="metric-value">50 %</div>
+        <div class="metric-hint">Главный канал привлечения учениц</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Постов в неделю</div>
+        <div class="metric-value">≈ 24</div>
+        <div class="metric-hint">Без стратегии — много, но без конверсии</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Готовность к ИИ</div>
+        <div class="metric-value">7,5 / 10</div>
+        <div class="metric-hint">ChatGPT каждый день, ИИ-агент на 2ГИС</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">2ГИС</div>
+        <div class="metric-value">4,7 · 214</div>
+        <div class="metric-hint">Рейтинг и количество отзывов школы</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TASKS ===================== -->
+  <section class="section">
+    <div class="section-title">Главные задачи бизнеса · приоритеты Ольги</div>
+    <div class="tasks-grid">
+      <div class="task-card">
+        <div class="task-icon">🎯</div>
+        <div class="task-text">
+          <strong>Снять Ольгу с продаж</strong>
+          <span>Сейчас 100 % продаж лично через неё — узкое горло бизнеса</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">📲</div>
+        <div class="task-text">
+          <strong>Полное ведение соцсетей</strong>
+          <span>Telegram + Instagram + WhatsApp без вовлечения Ольги</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🔄</div>
+        <div class="task-text">
+          <strong>Сопровождение учениц после курса</strong>
+          <span>Скрипты онбординга + связь через 7/14/30 дней</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">📞</div>
+        <div class="task-text">
+          <strong>Реактивация базы 1 200</strong>
+          <span>Сейчас 0 % — Ольге «стыдно выпрашивать», идеально для ИИ</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🛒</div>
+        <div class="task-text">
+          <strong>Связка курс ↔ магазин</strong>
+          <span>Сейчас конверсия ≈ 10 %, можно поднять до 30 %</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🚀</div>
+        <div class="task-text">
+          <strong>Запуск онлайн-курса «Онихолизис»</strong>
+          <span>Готов год, профессор Цыкин одобрил — нет системы запуска</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STATS ===================== -->
+  <div class="stats-row">
+    <span class="stat-pill stat-green"><span class="dot"></span>13 звеньев · ИИ автоматизирует</span>
+    <span class="stat-pill stat-yellow"><span class="dot"></span>7 звеньев · ИИ ускоряет в 5–10 раз</span>
+    <span class="stat-pill stat-red"><span class="dot"></span>5 звеньев · экспертиза человека</span>
+    <span class="stat-pill stat-total">⚡ ИИ-потенциал · 80 %</span>
+  </div>
+
+  <!-- ===================== MAP ===================== -->
+  <div class="map-shell">
+    <div class="map-scroll">
+      <svg class="chain-svg" viewBox="0 0 1100 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Карта бизнес-цепочек Razmaeva Nails">
+        <defs>
+          <marker id="arr-gray" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#a1a1aa"/>
+          </marker>
+          <marker id="arr-teal" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#0d9488"/>
+          </marker>
+          <marker id="arr-violet" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+          </marker>
+          <marker id="arr-amber" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#d97706"/>
+          </marker>
+          <marker id="arr-blue" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#3b82f6"/>
+          </marker>
+          <marker id="arr-orange" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#f97316"/>
+          </marker>
+        </defs>
+
+        <!-- ROW BACKGROUNDS -->
+        <rect x="0"   y="10"  width="1100" height="90" rx="10" fill="#f5f5f4" opacity="0.5"/>
+        <rect x="0"   y="210" width="1100" height="90" rx="10" fill="#f5f5f4" opacity="0.5"/>
+        <rect x="0"   y="410" width="1100" height="90" rx="10" fill="#f5f5f4" opacity="0.5"/>
+
+        <!-- ===== ROW 1: ПРИВЛЕЧЕНИЕ (y_center=55) ===== -->
+        <text x="20" y="42" font-size="13" font-weight="700" fill="#71717a" font-family="-apple-system,sans-serif" letter-spacing="0.5">ПРИВЛЕЧЕНИЕ</text>
+        <text x="20" y="62" font-size="10.5" font-weight="500" fill="#a1a1aa" font-family="-apple-system,sans-serif">Как новая ученица узнаёт о школе</text>
+
+        <!-- Node 1.1: Создаёт пост -->
+        <g class="node" onclick="showPopup('a1')">
+          <rect class="node-bg" x="160" y="26" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="160" y="26" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="240" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Создаёт пост</text>
+          <text x="240" y="68" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">для IG / Telegram / WA</text>
+        </g>
+        <text x="332" y="60" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 1.2: Рассылает по каналам -->
+        <g class="node" onclick="showPopup('a2')">
+          <rect class="node-bg" x="344" y="26" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="344" y="26" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="424" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Распространяет</text>
+          <text x="424" y="68" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">WhatsApp 902 мастера</text>
+        </g>
+        <text x="516" y="60" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 1.3: Активирует сарафан -->
+        <g class="node" onclick="showPopup('a3')">
+          <rect class="node-bg" x="528" y="26" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="528" y="26" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="608" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Активирует сарафан</text>
+          <text x="608" y="68" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">благодарит за рекомендацию</text>
+        </g>
+        <text x="700" y="60" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 1.4: Отвечает на запрос -->
+        <g class="node" onclick="showPopup('a4')">
+          <rect class="node-bg" x="712" y="26" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="712" y="26" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="792" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Отвечает в директ</text>
+          <text x="792" y="68" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">скрипт + Ольга подтверждает</text>
+        </g>
+        <text x="884" y="60" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 1.5: Квалифицирует -->
+        <g class="node" onclick="showPopup('a5')">
+          <rect class="node-bg" x="896" y="26" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="896" y="26" width="4" height="58" rx="2" fill="#ef4444"/>
+          <text x="976" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c" font-family="-apple-system,sans-serif">Квалифицирует</text>
+          <text x="976" y="68" text-anchor="middle" font-size="10.5" fill="#ef4444" font-family="-apple-system,sans-serif">личное общение Ольги</text>
+        </g>
+
+        <!-- ===== ROW 2: ПРОДАЖА (y_center=155) ===== -->
+        <text x="20" y="142" font-size="13" font-weight="700" fill="#71717a" font-family="-apple-system,sans-serif">ПРОДАЖА</text>
+        <text x="20" y="162" font-size="10.5" font-weight="500" fill="#a1a1aa" font-family="-apple-system,sans-serif">От первого касания до предоплаты</text>
+
+        <!-- Node 2.1: Консультирует -->
+        <g class="node" onclick="showPopup('b1')">
+          <rect class="node-bg" x="160" y="126" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="160" y="126" width="4" height="58" rx="2" fill="#ef4444"/>
+          <text x="240" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c" font-family="-apple-system,sans-serif">Консультирует</text>
+          <text x="240" y="168" text-anchor="middle" font-size="10.5" fill="#ef4444" font-family="-apple-system,sans-serif">только Ольга, под ученицу</text>
+        </g>
+        <text x="332" y="160" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 2.2: Согласует дату -->
+        <g class="node" onclick="showPopup('b2')">
+          <rect class="node-bg" x="344" y="126" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="344" y="126" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="424" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Согласует дату</text>
+          <text x="424" y="168" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">расписание + мессенджер</text>
+        </g>
+        <text x="516" y="160" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 2.3: Шлёт реквизиты -->
+        <g class="node" onclick="showPopup('b3')">
+          <rect class="node-bg" x="528" y="126" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="528" y="126" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="608" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Шлёт реквизиты</text>
+          <text x="608" y="168" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">шаблон + автоотправка</text>
+        </g>
+        <text x="700" y="160" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 2.4: Догревает оплату -->
+        <g class="node" onclick="showPopup('b4')">
+          <rect class="node-bg" x="712" y="126" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="712" y="126" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="792" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Догревает оплату</text>
+          <text x="792" y="168" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">сейчас «чёрная дыра»</text>
+        </g>
+        <text x="884" y="160" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 2.5: Принимает оплату -->
+        <g class="node" onclick="showPopup('b5')">
+          <rect class="node-bg" x="896" y="126" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="896" y="126" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="976" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Принимает оплату</text>
+          <text x="976" y="168" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">авто-фиксация в CRM</text>
+        </g>
+
+        <!-- ===== ROW 3: ИСПОЛНЕНИЕ (y_center=255) ===== -->
+        <text x="20" y="242" font-size="13" font-weight="700" fill="#71717a" font-family="-apple-system,sans-serif">ИСПОЛНЕНИЕ</text>
+        <text x="20" y="262" font-size="10.5" font-weight="500" fill="#a1a1aa" font-family="-apple-system,sans-serif">От оплаты до выпуска ученицы</text>
+
+        <!-- Node 3.1: Заносит в CRM -->
+        <g class="node" onclick="showPopup('c1')">
+          <rect class="node-bg" x="160" y="226" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="160" y="226" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="240" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Заносит в CRM</text>
+          <text x="240" y="268" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">блокнот → цифровая база</text>
+        </g>
+        <text x="332" y="260" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 3.2: Создаёт группу -->
+        <g class="node" onclick="showPopup('c2')">
+          <rect class="node-bg" x="344" y="226" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="344" y="226" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="424" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Создаёт группу</text>
+          <text x="424" y="268" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">приветствие + информация</text>
+        </g>
+        <text x="516" y="260" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 3.3: Догревает к курсу -->
+        <g class="node" onclick="showPopup('c3')">
+          <rect class="node-bg" x="528" y="226" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="528" y="226" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="608" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Догревает к курсу</text>
+          <text x="608" y="268" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">сейчас дыра — ничего не делаем</text>
+        </g>
+        <text x="700" y="260" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 3.4: Проводит курс -->
+        <g class="node" onclick="showPopup('c4')">
+          <rect class="node-bg" x="712" y="226" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="712" y="226" width="4" height="58" rx="2" fill="#ef4444"/>
+          <text x="792" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c" font-family="-apple-system,sans-serif">Проводит курс</text>
+          <text x="792" y="268" text-anchor="middle" font-size="10.5" fill="#ef4444" font-family="-apple-system,sans-serif">живая работа инструкторов</text>
+        </g>
+        <text x="884" y="260" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 3.5: Выдаёт документы -->
+        <g class="node" onclick="showPopup('c5')">
+          <rect class="node-bg" x="896" y="226" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="896" y="226" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="976" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Выдаёт документы</text>
+          <text x="976" y="268" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">ИИ готовит, Ольга проверяет</text>
+        </g>
+
+        <!-- ===== ROW 4: КОНТЕНТ (y_center=355) ===== -->
+        <text x="20" y="342" font-size="13" font-weight="700" fill="#71717a" font-family="-apple-system,sans-serif">КОНТЕНТ</text>
+        <text x="20" y="362" font-size="10.5" font-weight="500" fill="#a1a1aa" font-family="-apple-system,sans-serif">Превращает курсы в видимость</text>
+
+        <!-- Node 4.1: Снимает на курсе -->
+        <g class="node" onclick="showPopup('d1')">
+          <rect class="node-bg" x="160" y="326" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="160" y="326" width="4" height="58" rx="2" fill="#ef4444"/>
+          <text x="240" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c" font-family="-apple-system,sans-serif">Снимает на курсе</text>
+          <text x="240" y="368" text-anchor="middle" font-size="10.5" fill="#ef4444" font-family="-apple-system,sans-serif">инструкторы / SMM лично</text>
+        </g>
+        <text x="332" y="360" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 4.2: Берёт обратную связь -->
+        <g class="node" onclick="showPopup('d2')">
+          <rect class="node-bg" x="344" y="326" width="160" height="58" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="344" y="326" width="4" height="58" rx="2" fill="#ef4444"/>
+          <text x="424" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c" font-family="-apple-system,sans-serif">Берёт обратную связь</text>
+          <text x="424" y="368" text-anchor="middle" font-size="10.5" fill="#ef4444" font-family="-apple-system,sans-serif">сейчас только Ольга</text>
+        </g>
+        <text x="516" y="360" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 4.3: Пишет пост -->
+        <g class="node" onclick="showPopup('d3')">
+          <rect class="node-bg" x="528" y="326" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="528" y="326" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="608" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Пишет пост</text>
+          <text x="608" y="368" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">из съёмки + отзыва</text>
+        </g>
+        <text x="700" y="360" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 4.4: Публикует серии -->
+        <g class="node" onclick="showPopup('d4')">
+          <rect class="node-bg" x="712" y="326" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="712" y="326" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="792" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Публикует серии</text>
+          <text x="792" y="368" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">по расписанию, не залпом</text>
+        </g>
+        <text x="884" y="360" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 4.5: Раскладывает в каналы -->
+        <g class="node" onclick="showPopup('d5')">
+          <rect class="node-bg" x="896" y="326" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="896" y="326" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="976" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Раскладывает в каналы</text>
+          <text x="976" y="368" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">IG / TG / WA / Max — адаптация</text>
+        </g>
+
+        <!-- ===== ROW 5: УДЕРЖАНИЕ (y_center=455) ===== -->
+        <text x="20" y="442" font-size="13" font-weight="700" fill="#71717a" font-family="-apple-system,sans-serif">УДЕРЖАНИЕ</text>
+        <text x="20" y="462" font-size="10.5" font-weight="500" fill="#a1a1aa" font-family="-apple-system,sans-serif">Главный неосвоенный потенциал</text>
+
+        <!-- Node 5.1: Просит отзыв -->
+        <g class="node" onclick="showPopup('e1')">
+          <rect class="node-bg" x="160" y="426" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="160" y="426" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="240" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Просит отзыв</text>
+          <text x="240" y="468" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">2ГИС + Яндекс автоматом</text>
+        </g>
+        <text x="332" y="460" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 5.2: Сопровождает после курса -->
+        <g class="node" onclick="showPopup('e2')">
+          <rect class="node-bg" x="344" y="426" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="344" y="426" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="424" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Сопровождает после курса</text>
+          <text x="424" y="468" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">7 / 14 / 30 дней — сейчас 0</text>
+        </g>
+        <text x="516" y="460" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 5.3: Реактивирует базу -->
+        <g class="node" onclick="showPopup('e3')">
+          <rect class="node-bg" x="528" y="426" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="528" y="426" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="608" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Реактивирует базу 1 200</text>
+          <text x="608" y="468" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">сейчас 0% — Ольге стыдно</text>
+        </g>
+        <text x="700" y="460" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 5.4: Допродаёт материалы -->
+        <g class="node" onclick="showPopup('e4')">
+          <rect class="node-bg" x="712" y="426" width="160" height="58" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+          <rect x="712" y="426" width="4" height="58" rx="2" fill="#f59e0b"/>
+          <text x="792" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309" font-family="-apple-system,sans-serif">Допродаёт материалы</text>
+          <text x="792" y="468" text-anchor="middle" font-size="10.5" fill="#f59e0b" font-family="-apple-system,sans-serif">пакет под технику курса</text>
+        </g>
+        <text x="884" y="460" text-anchor="middle" font-size="22" fill="#a1a1aa" font-weight="300">›</text>
+
+        <!-- Node 5.5: Запускает рефералов -->
+        <g class="node" onclick="showPopup('e5')">
+          <rect class="node-bg" x="896" y="426" width="160" height="58" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <rect x="896" y="426" width="4" height="58" rx="2" fill="#10b981"/>
+          <text x="976" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#047857" font-family="-apple-system,sans-serif">Запускает рефералов</text>
+          <text x="976" y="468" text-anchor="middle" font-size="10.5" fill="#10b981" font-family="-apple-system,sans-serif">благодарность + бонус</text>
+        </g>
+
+        <!-- ===== TRANSITIONS BETWEEN CHAINS ===== -->
+        <!-- T1: Продажа (Принимает оплату) → Исполнение (Заносит в CRM) [TEAL] -->
+        <path d="M 976,184 Q 976,205 800,210 Q 240,215 240,226"
+              stroke="#0d9488" stroke-width="1.8" stroke-dasharray="5,3"
+              fill="none" marker-end="url(#arr-teal)" opacity="0.85"/>
+
+        <!-- T2: Исполнение (Проводит курс) → Контент (Снимает на курсе) [VIOLET] -->
+        <path d="M 792,284 Q 792,305 500,310 Q 240,315 240,326"
+              stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5,3"
+              fill="none" marker-end="url(#arr-violet)" opacity="0.85"/>
+
+        <!-- T3: Исполнение (Выдаёт документы) → Удержание (Просит отзыв) [AMBER] -->
+        <path d="M 976,284 L 976,300 L 110,300 L 110,420 L 240,420 L 240,426"
+              stroke="#d97706" stroke-width="1.8" stroke-dasharray="5,3"
+              fill="none" marker-end="url(#arr-amber)" opacity="0.85"/>
+
+        <!-- LOOP 1: Контент (Раскладывает) → Привлечение (Создаёт пост) [BLUE] -->
+        <path d="M 1056,355 L 1086,355 L 1086,5 L 145,5 L 145,55 L 158,55"
+              stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="5,3"
+              fill="none" marker-end="url(#arr-blue)" opacity="0.85"/>
+
+        <!-- LOOP 2: Удержание (Запускает рефералов) → Привлечение (Активирует сарафан) [ORANGE] -->
+        <path d="M 1056,455 L 1086,455 L 1086,520 L 105,520 L 105,108 L 608,108 L 608,86"
+              stroke="#f97316" stroke-width="1.8" stroke-dasharray="5,3"
+              fill="none" marker-end="url(#arr-orange)" opacity="0.7"/>
+
+      </svg>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend-row">
+      <div class="legend-block">
+        <div class="legend-block-title">Цвета звеньев</div>
+        <div class="legend-items">
+          <div class="legend-item"><span class="legend-swatch" style="background:#10b981"></span>ИИ автоматизирует полностью</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#f59e0b"></span>ИИ ускоряет в 5–10 раз</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#ef4444"></span>Экспертиза человека</div>
+        </div>
+      </div>
+      <div class="legend-block">
+        <div class="legend-block-title">Переплетения цепочек</div>
+        <div class="legend-items">
+          <div class="legend-item"><span class="legend-line" style="background:#0d9488"></span>Продажа → Исполнение</div>
+          <div class="legend-item"><span class="legend-line" style="background:#7c3aed"></span>Курс → Контент</div>
+          <div class="legend-item"><span class="legend-line" style="background:#d97706"></span>Курс → Удержание</div>
+          <div class="legend-item"><span class="legend-line" style="background:#3b82f6"></span>Контент → Привлечение</div>
+          <div class="legend-item"><span class="legend-line" style="background:#f97316"></span>Сарафан возврат</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== INTERLINKS ===================== -->
+  <section class="section" style="margin-top: 36px;">
+    <div class="section-title">Переплетения · что связывает цепочки</div>
+    <div class="interlinks-grid">
+      <div class="link-card">
+        <div class="link-flow">Продажа → Исполнение</div>
+        <div class="link-desc">После предоплаты — <strong>авто-занесение ученицы в CRM</strong>. Сейчас Ольга вручную пишет в блокнот: «Узнаём фамилию, имя, телефон, прописываем». Это идеальный кандидат под автоматизацию.</div>
+      </div>
+      <div class="link-card violet">
+        <div class="link-flow">Курс → Контент</div>
+        <div class="link-desc">Финальная съёмка с курса — <strong>главный двигатель сарафана</strong>. «Коллеги видят работы учениц, рекомендуют школу». ИИ берёт сырьё (фото + цитата ученицы) и превращает в пост, рилс, объявление.</div>
+      </div>
+      <div class="link-card amber">
+        <div class="link-flow">Курс → Удержание</div>
+        <div class="link-desc">Через день после выпуска — <strong>авто-просьба отзыва в 2ГИС и Яндекс</strong>. Сейчас «стыдно выпрашивать», и Ольга теряет фокус через несколько дней. ИИ снимает этот барьер.</div>
+      </div>
+      <div class="link-card blue">
+        <div class="link-flow">Контент → Привлечение</div>
+        <div class="link-desc">Каждый пост — <strong>новые входящие в директ</strong>. Сейчас связь «контент → действие» не выстроена: 4 000 просмотров рилса дают 0 заявок. ИИ пишет с CTA и сегментом под канал.</div>
+      </div>
+      <div class="link-card orange">
+        <div class="link-flow">Удержание → Привлечение (петля сарафана)</div>
+        <div class="link-desc">Довольная ученица — <strong>50 % всех новых учениц</strong>. Но «бонусной системы нет, благодарности нет». ИИ ведёт реферальную программу: благодарит, начисляет бонус, возвращает в новую цепочку.</div>
+      </div>
+      <div class="link-card" style="border-left-color: var(--brand);">
+        <div class="link-flow">Курс ↔ Магазин (главный разрыв)</div>
+        <div class="link-desc">Сейчас <strong>90 % учениц уходят без покупки</strong> материалов. Магазин не контактирует с группой курса. ИИ собирает пакет под технику курса до старта и предлагает в первый день — конверсия 10 % → 30 %.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== POTENTIAL ===================== -->
+  <section class="section">
+    <div class="section-title">Потенциал по цепочкам · ориентировочный прогноз</div>
+    <div class="potential-grid">
+      <div class="potential-card">
+        <div class="potential-name">Привлечение</div>
+        <div class="potential-value">до ×2</div>
+        <div class="potential-hint">Стратегический контент-план + рассылки в Direct + реактивация WA-902</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-name">Продажа</div>
+        <div class="potential-value">до +30%</div>
+        <div class="potential-hint">Догрев в период «реквизиты → оплата» + допродажи в моменте записи</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-name">Исполнение</div>
+        <div class="potential-value">10% → 30%</div>
+        <div class="potential-hint">Связка курс ↔ магазин — конверсия курса в покупку материалов</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-name">Контент</div>
+        <div class="potential-value">до ×4</div>
+        <div class="potential-hint">Из одной съёмки — пост, рилс, отзыв-цитата, ответ на FAQ</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-name">Удержание</div>
+        <div class="potential-value">+60 покупок</div>
+        <div class="potential-hint">Реактивация базы 1 200 даже на 5 % = +60 заказов в магазин</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ROI BLOCK ===================== -->
+  <section class="section">
+    <div class="section-title">Финансовый потенциал · из диагностики</div>
+    <div class="roi-block">
+      <div class="roi-grid">
+        <div class="roi-cell">
+          <h3>Магазин — возврат к цели</h3>
+          <div class="roi-num">2,5–3 млн ₽</div>
+          <div class="roi-desc">При выстроенной связке «курс ↔ магазин» — возврат к показателям 2023 года. Сейчас выручка 500–600 тыс., падает.</div>
+        </div>
+        <div class="roi-cell">
+          <h3>Онлайн-курс «Онихолизис»</h3>
+          <div class="roi-num">до 100 000 ₽/мес</div>
+          <div class="roi-desc">2 000 ₽ × 50 покупок/мес — низковисящий плод. Курс готов год, профессор Цыкин одобрил, текст «пробуждения» уже есть.</div>
+        </div>
+        <div class="roi-cell">
+          <h3>Реферальная программа</h3>
+          <div class="roi-num">+10 % выручки</div>
+          <div class="roi-desc">Сарафан 50 % × 20 % бонусной активации = +10 % к общей выручке школы. Сейчас программы нет.</div>
+        </div>
+        <div class="roi-cell">
+          <h3>Реактивация базы</h3>
+          <div class="roi-num">+60 заказов/мес</div>
+          <div class="roi-desc">База 1 200 контактов при минимальной 5 % конверсии. Сейчас работа с базой = 0 часов в неделю.</div>
+        </div>
+        <div class="roi-cell">
+          <h3>Отзывы Яндекс</h3>
+          <div class="roi-num">≈ +200 отзывов</div>
+          <div class="roi-desc">Дублирование уровня 2ГИС (4.7 / 214 отзывов) на Яндекс — улучшает SEO и видимость в локальном поиске.</div>
+        </div>
+        <div class="roi-cell">
+          <h3>Освобождение времени Ольги</h3>
+          <div class="roi-num">несколько ч/нед</div>
+          <div class="roi-desc">Снятие соцсетей, скриптов, рассылок, ответов в директ. Главное — снятие психологического барьера «стыдно выпрашивать», который сегодня блокирует работу с базой.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ О цифрах в этом отчёте</div>
+      <div class="disclaimer-text">
+        Все показатели — <strong>ориентировочный прогноз</strong> при реализации плана внедрения ИИ-ассистента и системы процессов. Точные цифры зависят от темпа внедрения, готовности команды и сезонности рынка. Базовые данные взяты из ответов Ольги (анкета) и комплексной диагностики Razmaeva Nails (май 2026).
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>BizChain Map</strong> · Авторская методология Евгения Ищенко<br>
+    Создано на основе анкеты, диагностики 50+ страниц и распаковки 184 вопросов · ИИщенко LAB · май 2026
+  </div>
+
+</div>
+
+<!-- ===================== POPUP ===================== -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup(event)">
+  <div class="popup">
+    <button class="popup-close" onclick="hidePopup()" aria-label="Закрыть">×</button>
+    <div id="popupChain" class="popup-chain"></div>
+    <div id="popupStatus" class="popup-status"></div>
+    <div id="popupTitle" class="popup-title"></div>
+
+    <div class="popup-section">
+      <div class="popup-section-title">📍 Что сейчас происходит</div>
+      <div id="popupNow" class="popup-section-text"></div>
+    </div>
+
+    <div class="popup-section">
+      <div class="popup-section-title">💡 Что делает ИИ</div>
+      <div id="popupAI" class="popup-section-text"></div>
+    </div>
+
+    <div class="popup-section" id="popupLinksSection">
+      <div class="popup-section-title">⚡ Связан с</div>
+      <div id="popupLinks" class="popup-section-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const nodeData = {
+  // ============ ПРИВЛЕЧЕНИЕ ============
+  a1: {
+    chain: 'Привлечение',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Создаёт пост',
+    now: 'Ольга использует ChatGPT каждый день, но темы и стратегия — на ней. 24 поста в неделю без эффекта на запись. Личный аккаунт не развит — главный нереализованный актив.',
+    ai: 'ИИ ведёт стратегический контент-план: разделяет рабочий и личный аккаунты, генерирует посты, рилс-сценарии и сторис под каждый канал. Темы — из реальной экспертизы Ольги (распаковка 184 вопросов).',
+    links: 'Получает сырьё из съёмки на курсе и обратной связи учениц (Контент → Пишет пост) → раскладывается по каналам (Контент → Раскладывает в каналы)'
+  },
+  a2: {
+    chain: 'Привлечение',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Распространяет по каналам',
+    now: 'WhatsApp-группа на 902 мастера — самый сильный канал (≈300 просмотров/пост). Дублирование контента в Telegram (50–70 просмотров) и Max (164 подписчика, растёт). Хэштеги не используются.',
+    ai: 'Автопостинг по расписанию с адаптацией под канал: длинный пост в Telegram, короткое сообщение в WA-группе, рилс в IG, прогрев в Max. Хэштеги генерируются для SEO-видимости в IG.',
+    links: 'Питается контентом из цепочки Контент (Раскладывает в каналы) → создаёт входящие запросы (Привлечение → Отвечает в директ)'
+  },
+  a3: {
+    chain: 'Привлечение',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Активирует сарафан',
+    now: 'Сарафан = 50 % новых учениц. Но «рекомендовать не прошу, как-то они сами это делают». Нет благодарности рекомендателю, нет реферальной системы, нет аналитики — кто рекомендует чаще.',
+    ai: 'ИИ отслеживает, кто привёл новую ученицу, отправляет персональную благодарность от имени Ольги, начисляет бонус. Готовит «текст для пересылки» — простой инструмент рекомендации. Ольга только подтверждает.',
+    links: 'Получает данные из цепочки Удержание (Запускает рефералов) → возвращает новых учениц в Привлечение (петля сарафана)'
+  },
+  a4: {
+    chain: 'Привлечение',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Отвечает в директ',
+    now: '«Я отвечаю сама на данный момент времени, всех консультирую, и в директ также отвечаю я и довожу человека уже до покупки». Скрипта нет — каждый ответ под ученицу. Это узкое горло.',
+    ai: 'ИИ отвечает мгновенно на типовые вопросы (цена, даты, программа курса). Если запрос сложный — собирает контекст и передаёт Ольге уже подготовленным. Время отклика — секунды, а не часы.',
+    links: 'Принимает запросы от Распространяет по каналам → передаёт горячих в Квалификация'
+  },
+  a5: {
+    chain: 'Привлечение',
+    status: 'red',
+    statusText: '🔴 Экспертиза Ольги',
+    title: 'Квалифицирует',
+    now: 'Ольга лично определяет — горячая ученица, тёплая или в лист ожидания. «Если девушка говорит: я планирую обучаться только летом — мы записываем её в лист ожидания».',
+    ai: 'ИИ не заменяет, но готовит: собирает анамнез (опыт, бюджет, цели) ещё до разговора с Ольгой. Это позволяет Ольге принимать решение за 2 минуты, а не за 20.',
+    links: 'Получает горячие запросы от Отвечает в директ → передаёт в цепочку Продажа (Консультирует)'
+  },
+
+  // ============ ПРОДАЖА ============
+  b1: {
+    chain: 'Продажа',
+    status: 'red',
+    statusText: '🔴 Экспертиза Ольги',
+    title: 'Консультирует',
+    now: 'На 100 % через Ольгу. «Скрипт ответа практически всегда подстраивается под ученицу». Это и сила (персонализация), и слабость (узкое горло — один Ольгин день, один пиковый объём).',
+    ai: 'ИИ не консультирует за Ольгу, но создаёт скрипты для команды (Александры, Натальи) под типовые случаи. Часть рутинных консультаций можно делегировать команде — Ольга освобождается для сложных запросов.',
+    links: 'Принимает квалифицированных учениц от Привлечение (Квалифицирует) → передаёт в Согласует дату'
+  },
+  b2: {
+    chain: 'Продажа',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Согласует дату',
+    now: '«Отправляем ей даты, она согласовывает, какую дату ей удобно. Дальше мы уходим в тот мессенджер, в котором ей удобно общаться». Это работает, но вручную.',
+    ai: 'ИИ показывает ученице актуальное расписание автоматически, бронирует слот, переводит общение в её любимый мессенджер. Для Ольги — только финальное «ОК».',
+    links: 'Получает горячую ученицу от Консультирует → передаёт в Шлёт реквизиты'
+  },
+  b3: {
+    chain: 'Продажа',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Шлёт реквизиты',
+    now: 'Стандартное сообщение «вот реквизиты, как будете готовы — внесите предоплату». Это уже шаблон, но отправляет Ольга вручную.',
+    ai: 'ИИ автоматически отправляет реквизиты в нужный мессенджер сразу после согласования даты. Включает понятную инструкцию, скриншот примера, контакт для вопросов.',
+    links: 'Принимает ученицу от Согласует дату → запускает Догревает оплату'
+  },
+  b4: {
+    chain: 'Продажа',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Догревает оплату',
+    now: 'Это типичная «чёрная дыра». Между «отправили реквизиты» и «получили оплату» — ничего не происходит. «Они уже по своей готовности отписываются». Часть учениц «передумала».',
+    ai: 'ИИ автоматически догревает: через 3 дня — отзыв ученицы, через 5 — рилс с курса, через 7 — мягкое напоминание. Конверсия из «отправили реквизиты → оплатила» заметно растёт, часть учениц, которая раньше «передумала», доходит до оплаты.',
+    links: 'Запускается после Шлёт реквизиты → завершается на Принимает оплату'
+  },
+  b5: {
+    chain: 'Продажа',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Принимает оплату',
+    now: 'Сейчас — Ольга вручную отмечает оплату в блокноте. «Записываем это всё в блокнот. С блокнота тут же отмечаем, что у неё внесена предоплата».',
+    ai: 'Авто-фиксация в цифровой CRM: оплата → запись закреплена → запускается следующая цепочка (Исполнение). Ольга освобождается от ручного переноса.',
+    links: 'Завершает цепочку Продажа → запускает Исполнение через переплетение «Продажа → Исполнение»'
+  },
+
+  // ============ ИСПОЛНЕНИЕ ============
+  c1: {
+    chain: 'Исполнение',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Заносит в CRM',
+    now: '«Мы вносим её в наш блокнот, где записываем учеников. Пишем ей: напишите, пожалуйста, ваша фамилия, имя, откуда вы». Полностью ручной перенос данных, без цифровой истории.',
+    ai: 'ИИ автоматически создаёт карточку ученицы в CRM: имя, контакт, выбранный курс, дата, источник, бюджет. Все данные собираются в одном месте — Ольга видит историю каждой ученицы за секунду.',
+    links: 'Запускается после Принимает оплату → передаёт данные в Создаёт группу'
+  },
+  c2: {
+    chain: 'Исполнение',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Создаёт группу',
+    now: '«За пару дней до курса мы создаём группу. Вносим всех своих учеников и инструктора в группу и присылаем туда приветственное сообщение». Стандартизировано, но создаётся вручную.',
+    ai: 'ИИ автоматически создаёт групповой чат за N дней до курса (WA или Max — по предпочтению учениц), добавляет инструктора, отправляет приветствие, описание программы и материалов.',
+    links: 'Получает данные от Заносит в CRM → запускает Догревает к курсу'
+  },
+  c3: {
+    chain: 'Исполнение',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Догревает к курсу',
+    now: 'Главная дыра между оплатой и стартом. «Что теряется после оплаты до старта курса? Я не знаю, что нужно делать». От 3 дней до 3 недель — ничего не происходит.',
+    ai: 'ИИ ведёт серию: письмо «что взять с собой», видео-приветствие от инструктора, мини-теория на разогрев, набор материалов из магазина под технику курса. Ученица приходит на курс уже тёплой и подготовленной.',
+    links: 'Запускается после Создаёт группу → завершается на Проводит курс'
+  },
+  c4: {
+    chain: 'Исполнение',
+    status: 'red',
+    statusText: '🔴 Экспертиза человека',
+    title: 'Проводит курс',
+    now: 'Живая работа инструкторов: теория, практика без моделей, практика с моделями, финальная фотография. Это центральная экспертиза школы — должна оставаться красной.',
+    ai: 'ИИ не заменяет инструкторов. Но готовит: методички в персонализированном формате, цифровой раздаточный материал, тесты на проверку усвоения теории.',
+    links: 'Запускается после Догревает к курсу → передаёт сырьё в Контент (Снимает на курсе) и в Удержание (через Выдаёт документы)'
+  },
+  c5: {
+    chain: 'Исполнение',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Выдаёт документы',
+    now: 'Сертификаты «Восток-1» и документы гособразца через Институт ПРП (Москва). Заказывает Ольга лично — собирает данные, отправляет, проверяет. Это узкое горло.',
+    ai: 'ИИ собирает данные с учениц автоматически (имя, паспорт, программа), готовит заявку на сертификаты, передаёт Ольге уже на финальную проверку. Время сокращается с часов до минут.',
+    links: 'Завершает цепочку Исполнение → запускает Удержание через переплетение «Курс → Удержание» (Просит отзыв)'
+  },
+
+  // ============ КОНТЕНТ ============
+  d1: {
+    chain: 'Контент',
+    status: 'red',
+    statusText: '🔴 Экспертиза человека',
+    title: 'Снимает на курсе',
+    now: '«Фото делается всегда. Делают это инструкторы. Иногда приходит делать SMM-менеджер». Физическая съёмка работ учениц — это живое действие.',
+    ai: 'ИИ не снимает, но даёт инструкторам чек-лист: какие ракурсы, какие сюжеты, что обязательно снять (до/после, процесс, эмоции). Качество съёмок становится системным.',
+    links: 'Запускается из Исполнение (Проводит курс) → передаёт сырьё в Берёт обратную связь и Пишет пост'
+  },
+  d2: {
+    chain: 'Контент',
+    status: 'red',
+    statusText: '🔴 Экспертиза человека',
+    title: 'Берёт обратную связь',
+    now: '«Когда я нахожусь, я обязательно снимаю, расспрашиваю у них, как им курс. Чаще всего инструкторы сами это не делают». Самый ценный материал собирается только Ольгой и не масштабируется.',
+    ai: 'ИИ не берёт интервью, но даёт инструкторам короткий скрипт из 3 вопросов и QR-код на форму. Ученицы дают обратную связь сами — текстом, голосом, видео. ИИ потом превращает это в контент.',
+    links: 'Получает сырьё из Снимает на курсе → передаёт в Пишет пост и в Удержание (Просит отзыв)'
+  },
+  d3: {
+    chain: 'Контент',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Пишет пост',
+    now: '«Я использую ChatGPT каждый день. Использую для того, чтобы писать полезные, подробные посты». Уже работает — но темы и инициатива от Ольги, посты лежат неопубликованными.',
+    ai: 'ИИ берёт фото с курса + цитату ученицы + тип техники → за 2 минуты готовый пост, рилс-сценарий, объявление в WA-группу. В стиле Razmaeva Nails (распаковка голоса).',
+    links: 'Принимает сырьё от Снимает на курсе и Берёт обратную связь → передаёт в Публикует серии'
+  },
+  d4: {
+    chain: 'Контент',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Публикует серии',
+    now: '«Публикуется не сразу. Слишком много может получиться контента в единицу времени. Поэтому публикую не сразу, а через время — как раз используем это как рекламу». Логика правильная, но ручная.',
+    ai: 'ИИ распределяет контент по календарю: после курса A — серия из 6 постов на 3 недели, не залпом. Календарь учитывает другие активности (расписание курсов, конференции, праздники).',
+    links: 'Принимает посты от Пишет пост → передаёт в Раскладывает в каналы'
+  },
+  d5: {
+    chain: 'Контент',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Раскладывает в каналы',
+    now: '«Дубляж получается» — в WA, Telegram, Instagram и Max идёт одинаковый контент. Просмотры есть, заявок с конкретного поста — нет.',
+    ai: 'ИИ адаптирует под каждый канал: рилс — для IG, длинный экспертный пост — в Telegram, короткое уведомление с CTA — в WA-группу 902 мастера, прогрев — в Max. Один материал работает на 4 канала.',
+    links: 'Принимает контент от Публикует серии → возвращается в Привлечение (петля «Контент → Создаёт пост»)'
+  },
+
+  // ============ УДЕРЖАНИЕ ============
+  e1: {
+    chain: 'Удержание',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Просит отзыв',
+    now: '«Иногда бывают такие моменты, когда мне уже стыдно, как будто бы мы выпрашиваем». 2ГИС: 4.7/214 отзывов. Яндекс — не собираем. «После курса я ещё могу через несколько дней, а потом фокус пропадает».',
+    ai: 'ИИ автоматически отправляет персональное сообщение через 1 день после курса: «Спасибо за курс! Если понравилось — оставьте отзыв в 2ГИС [ссылка] или Яндекс [ссылка]». Никакого «выпрашивания» — Ольга освобождается от стресса.',
+    links: 'Запускается после Выдаёт документы (Исполнение → Удержание) → передаёт довольных в Запускает рефералов'
+  },
+  e2: {
+    chain: 'Удержание',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Сопровождает после курса',
+    now: '«Дальше больше никак не взаимодействуем. По факту я слышала, что было бы неплохо взаимодействовать после курса, через неделю спросить, как у вас происходит работа, всё ли получается, но пока мы такого не делаем». Цепочки фактически нет.',
+    ai: 'ИИ отслеживает дату выпуска и автоматически связывается через 7/14/30 дней: «Как первые работы? Есть вопросы по технике?» Если ученица ответила — собирает обратную связь, передаёт Ольге. Это снимает один из главных приоритетов делегирования.',
+    links: 'Запускается после Просит отзыв → готовит почву для Допродаёт материалы и Запускает рефералов'
+  },
+  e3: {
+    chain: 'Удержание',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Реактивирует базу 1 200',
+    now: '«У нас есть база. Мы ведём базу — кто в какой день у нас был на курсе. Никак их больше не сегментируем, ничего с ними не делаем. Я делаю это с двадцать первого года, по-моему. Идея была работать с этой базой». 0 % реактивации.',
+    ai: 'ИИ сегментирует базу (учились такому-то курсу N лет назад → выслать предложение на курс повышения). Пишет персональные сообщения от имени Ольги — она только подтверждает отправку. Главный психологический барьер «стыдно выпрашивать» снимается.',
+    links: 'Использует данные из CRM (всех завершённых учениц) → возвращает в цепочку Продажа как тёплых клиентов'
+  },
+  e4: {
+    chain: 'Удержание',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет',
+    title: 'Допродаёт материалы',
+    now: '«В моменте мы не предлагаем. Материалы предлагаем только на курсе. И мы не предлагаем новый курс купить, потому что как бы она же записалась уже вроде на один». Огромная упущенная выгода.',
+    ai: 'ИИ автоматически собирает пакет материалов под технику курса (Black Crow для ламинирования, базовый набор для маникюра) и предлагает в первый день курса со скидкой 10 %. Конверсия из курса в магазин: 10 % → 30 %.',
+    links: 'Запускается после Сопровождает после курса → возвращается в Магазин (главное переплетение «Курс ↔ Магазин»)'
+  },
+  e5: {
+    chain: 'Удержание',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    title: 'Запускает рефералов',
+    now: '«Бонуса нет. Мы не просим [рекомендовать]. Раньше у нас была накопительная система бонусов, но она как-то у нас не завелась». Сарафан 50 %, но без управляемости.',
+    ai: 'ИИ ведёт реферальную программу полностью: благодарит того, кто привёл новую ученицу, начисляет бонус, готовит «текст для пересылки коллеге». Из неуправляемого сарафана — управляемый канал. +10 % к выручке школы.',
+    links: 'Завершает цепочку Удержание → запускает петлю «Удержание → Привлечение» (новые ученицы через сарафан)'
+  }
+};
+
+const popupOverlay = document.getElementById('popupOverlay');
+
+function showPopup(id) {
+  const d = nodeData[id];
+  if (!d) return;
+
+  document.getElementById('popupChain').textContent = d.chain;
+  const status = document.getElementById('popupStatus');
+  status.className = 'popup-status ' + d.status;
+  status.textContent = d.statusText;
+  document.getElementById('popupTitle').textContent = d.title;
+  document.getElementById('popupNow').textContent = d.now;
+  document.getElementById('popupAI').textContent = d.ai;
+
+  const linksSection = document.getElementById('popupLinksSection');
+  if (d.links) {
+    document.getElementById('popupLinks').textContent = d.links;
+    linksSection.style.display = 'block';
+  } else {
+    linksSection.style.display = 'none';
+  }
+
+  popupOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePopup(e) {
+  if (!e || e.target === popupOverlay || e.target.classList.contains('popup-close')) {
+    popupOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+    popupOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+
+</body>
+</html>
