@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — СИЛА ТЕЛА · Туманис Инна</title>
+<style>
+  /* ─────────────────────────────────────────
+     PALETTE — warm editorial wellness
+     Кремово-терракотовая палитра, как в самой студии
+     ───────────────────────────────────────── */
+  :root {
+    --bg:           #faf6f0;
+    --bg-paper:    #ffffff;
+    --bg-soft:     #f3ebe0;
+    --bg-card:     #fdfaf5;
+    --ink:         #2a1f1a;
+    --ink-soft:    #6b594d;
+    --ink-mute:    #9a8775;
+    --line:        #e8dcc9;
+    --line-strong: #d4c2a8;
+    --accent:      #8b3a1f;       /* deep terracotta */
+    --accent-soft: #c4895a;       /* warm caramel */
+    --accent-bg:   #f5e8d8;
+
+    --green:       #4a7c4a;
+    --green-bg:    #ecf3e8;
+    --green-line:  #b8d1a8;
+    --green-ink:   #2f5530;
+
+    --yellow:      #b88323;
+    --yellow-bg:   #faefd6;
+    --yellow-line: #e6c685;
+    --yellow-ink:  #7a5615;
+
+    --red:         #a04040;
+    --red-bg:      #f4e0dd;
+    --red-line:    #d8a39e;
+    --red-ink:     #6b2828;
+
+    --teal:        #0f6b6b;
+    --purple:      #6b4585;
+    --amber:       #b8651a;
+    --blue:        #2a5a8b;
+    --coral:       #c44a3a;
+
+    --shadow-sm:   0 1px 2px rgba(76,52,30,0.06);
+    --shadow-md:   0 4px 16px rgba(76,52,30,0.08), 0 1px 3px rgba(76,52,30,0.05);
+    --shadow-lg:   0 24px 60px rgba(42,31,26,0.18), 0 4px 12px rgba(42,31,26,0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:           #1a1410;
+      --bg-paper:    #221a14;
+      --bg-soft:     #2a1f17;
+      --bg-card:     #261d15;
+      --ink:         #f0e6d8;
+      --ink-soft:    #b6a68f;
+      --ink-mute:    #7a6852;
+      --line:        #3d2f24;
+      --line-strong: #50402f;
+      --accent:      #d4895a;
+      --accent-soft: #e4a87a;
+      --accent-bg:   #3a2517;
+
+      --green:       #88b888;
+      --green-bg:    #1f2e1d;
+      --green-line:  #4a6a4a;
+      --green-ink:   #b5d4b5;
+
+      --yellow:      #e0b85a;
+      --yellow-bg:   #2e2515;
+      --yellow-line: #6a5530;
+      --yellow-ink:  #f0d590;
+
+      --red:         #d88a8a;
+      --red-bg:      #2e1a1a;
+      --red-line:    #6a3a3a;
+      --red-ink:     #f0bcbc;
+
+      --teal:        #5fbcbc;
+      --purple:      #b29ad0;
+      --amber:       #e09848;
+      --blue:        #7da5d4;
+      --coral:       #e08877;
+    }
+  }
+
+  /* ───── BASE ───── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.5;
+    padding: 0;
+    /* subtle paper texture via repeating gradient */
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(196, 137, 90, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(139, 58, 31, 0.04) 0%, transparent 50%);
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 20px 64px;
+  }
+
+  /* ───── MASTHEAD ───── */
+  .masthead {
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+  }
+  .brand-line {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .brand-line::before {
+    content: "◆";
+    margin-right: 8px;
+    color: var(--accent);
+    font-size: 9px;
+    vertical-align: middle;
+  }
+  .masthead h1 {
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-size: clamp(34px, 5.6vw, 50px);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .masthead h1 .amp {
+    color: var(--accent);
+    font-weight: 300;
+    margin: 0 0.1em;
+    opacity: 0.7;
+  }
+  .meta {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .meta .dot { color: var(--accent-soft); margin: 0 8px; }
+  .lede {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 540px;
+    line-height: 1.6;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  /* ───── STATS ROW ───── */
+  .stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid;
+  }
+  .stat-pill .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .stat-green { background: var(--green-bg); color: var(--green-ink); border-color: var(--green-line); }
+  .stat-green .dot { background: var(--green); }
+  .stat-yellow { background: var(--yellow-bg); color: var(--yellow-ink); border-color: var(--yellow-line); }
+  .stat-yellow .dot { background: var(--yellow); }
+  .stat-red { background: var(--red-bg); color: var(--red-ink); border-color: var(--red-line); }
+  .stat-red .dot { background: var(--red); }
+
+  /* ───── POTENTIAL BANNER ───── */
+  .potential {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bg-soft);
+    border-radius: 12px;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 28px;
+  }
+  .potential-num {
+    font-family: Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .potential-text {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .potential-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ───── MAP CONTAINER ───── */
+  .map-frame {
+    background: var(--bg-paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 14px;
+    box-shadow: var(--shadow-md);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 12px;
+  }
+  .map-svg {
+    display: block;
+    min-width: 700px;
+    width: 100%;
+    height: auto;
+  }
+  .scroll-hint {
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 22px;
+    display: none;
+  }
+  @media (max-width: 720px) {
+    .scroll-hint { display: block; }
+  }
+
+  /* ───── NODE INTERACTIONS ───── */
+  .node {
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .node:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+  }
+  .node:hover .node-bg {
+    stroke-width: 2;
+  }
+  .node:focus { outline: none; }
+  .node:focus .node-bg {
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+
+  /* Pulse for "holes" — undone tasks */
+  .hole-marker {
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1; }
+  }
+
+  /* ───── LEGEND ───── */
+  .legend {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .legend-swatch {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .legend-item strong { color: var(--ink); font-weight: 600; display: block; }
+  .legend-item span { color: var(--ink-soft); }
+
+  /* ───── HOLES SECTION ───── */
+  .holes-block {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 22px;
+    margin-bottom: 28px;
+  }
+  .holes-block h2 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .holes-block .hsub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .hole-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .hole-row:first-of-type { border-top: none; padding-top: 0; }
+  .hole-num {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 400;
+    line-height: 1;
+    min-width: 26px;
+    margin-top: 4px;
+  }
+  .hole-text { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+  .hole-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ───── FINAL QUOTE ───── */
+  .signature {
+    text-align: center;
+    padding: 36px 20px 12px;
+    border-top: 1px solid var(--line);
+    margin-top: 8px;
+  }
+  .signature blockquote {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0 auto 12px;
+    position: relative;
+    padding: 0 24px;
+  }
+  .signature blockquote::before,
+  .signature blockquote::after {
+    content: '"';
+    font-size: 36px;
+    color: var(--accent-soft);
+    position: absolute;
+    line-height: 1;
+  }
+  .signature blockquote::before { left: 0; top: -4px; }
+  .signature blockquote::after  { right: 0; bottom: -22px; }
+  .signature .by {
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ───── POPUP ───── */
+  .pop-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 31, 26, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+    animation: fadeIn 0.2s ease;
+  }
+  .pop-overlay.show { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .pop {
+    background: var(--bg-paper);
+    border-radius: 14px;
+    padding: 28px 26px;
+    max-width: 420px;
+    width: 100%;
+    max-height: 86vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    border: 1px solid var(--line);
+    animation: popIn 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .pop-close {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-mute);
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .pop-close:hover { background: var(--bg-soft); color: var(--ink); }
+
+  .pop-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    border: 1px solid;
+  }
+  .pop-status.green  { background: var(--green-bg);  color: var(--green-ink);  border-color: var(--green-line); }
+  .pop-status.yellow { background: var(--yellow-bg); color: var(--yellow-ink); border-color: var(--yellow-line); }
+  .pop-status.red    { background: var(--red-bg);    color: var(--red-ink);    border-color: var(--red-line); }
+  .pop-status .swatch { width: 7px; height: 7px; border-radius: 50%; }
+  .pop-status.green  .swatch { background: var(--green); }
+  .pop-status.yellow .swatch { background: var(--yellow); }
+  .pop-status.red    .swatch { background: var(--red); }
+
+  .pop-chain {
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .pop-title {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+  .pop-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .pop-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+  .pop-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink-mute);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pop-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .pop-text strong { color: var(--ink); font-weight: 600; }
+  .pop-text em { color: var(--accent); font-style: italic; }
+  .pop-quote {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    padding: 12px 14px;
+    border-left: 2px solid var(--accent-soft);
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .pop-hole-tag {
+    display: inline-block;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+
+  /* ───── MOBILE TWEAKS ───── */
+  @media (max-width: 560px) {
+    .wrap { padding: 24px 14px 48px; }
+    .masthead h1 { font-size: 36px; }
+    .stats { gap: 6px; }
+    .stat-pill { font-size: 11.5px; padding: 7px 11px; }
+    .potential { padding: 14px 16px; gap: 12px; }
+    .potential-num { font-size: 30px; }
+    .pop { padding: 22px 18px; }
+    .pop-title { font-size: 19px; }
+    .holes-block { padding: 20px 16px; }
+  }
+
+  /* Footer credit */
+  .credit {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 24px;
+  }
+  .credit::before, .credit::after { content: "—"; margin: 0 10px; color: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ╭───── MASTHEAD ─────╮ -->
+  <header class="masthead">
+    <div class="brand-line">BizChain Map · ИИщенко LAB</div>
+    <h1>СИЛА <span class="amp">·</span> ТЕЛА</h1>
+    <div class="meta">Туманис Инна <span class="dot">·</span> Благовещенск <span class="dot">·</span> Студия эстетики</div>
+    <p class="lede">
+      Карта пяти цепочек бизнеса с цветовым ИИ-аудитом. <strong>Нажми на любое звено</strong> —
+      покажу, что в нём происходит сейчас и какую часть может взять на себя ИИ. Цепочки не изолированы:
+      пунктирные стрелки — это переходы и петли возврата.
+    </p>
+  </header>
+
+  <!-- ╭───── STATS ─────╮ -->
+  <div class="stats">
+    <span class="stat-pill stat-green"><span class="dot"></span>11 звеньев · ИИ автоматизирует</span>
+    <span class="stat-pill stat-yellow"><span class="dot"></span>8 звеньев · ИИ ускоряет в 5–10 раз</span>
+    <span class="stat-pill stat-red"><span class="dot"></span>6 звеньев · экспертиза Инны и мастеров</span>
+  </div>
+
+  <div class="potential">
+    <div class="potential-num">76%</div>
+    <div class="potential-text">
+      <strong>19 из 25 звеньев</strong> бизнеса — кандидаты для ИИ.<br>
+      Это твой реальный резерв времени и денег без новых вложений в трафик.
+    </div>
+  </div>
+
+  <!-- ╭───── MAP ─────╮ -->
+  <div class="map-frame">
+    <svg class="map-svg" viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BizChain Map для студии СИЛА ТЕЛА">
+      <defs>
+        <!-- Arrow markers — neutral and coloured for transitions -->
+        <marker id="arr-grey" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#a89880"/>
+        </marker>
+        <marker id="arr-teal" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0f6b6b"/>
+        </marker>
+        <marker id="arr-purple" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#6b4585"/>
+        </marker>
+        <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#b8651a"/>
+        </marker>
+        <marker id="arr-coral" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#c44a3a"/>
+        </marker>
+
+        <!-- Subtle row backgrounds -->
+        <linearGradient id="row-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(196,137,90,0.10)"/>
+          <stop offset="100%" stop-color="rgba(196,137,90,0)"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Row backgrounds (alternate subtle warm tint) -->
+      <rect x="0" y="6"   width="700" height="84" rx="8" fill="url(#row-grad)" opacity="0.55"/>
+      <rect x="0" y="182" width="700" height="84" rx="8" fill="url(#row-grad)" opacity="0.55"/>
+      <rect x="0" y="358" width="700" height="84" rx="8" fill="url(#row-grad)" opacity="0.55"/>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           ROW 1 — ПРИВЛЕЧЕНИЕ (y_center = 48; box y = 26..70)
+           ═══════════════════════════════════════════════════════════ -->
+      <text x="14" y="42" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">ПРИВЛЕ-</text>
+      <text x="14" y="56" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">ЧЕНИЕ</text>
+
+      <!-- 1.1 Сторис Instagram (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('storis')" onkeydown="if(event.key==='Enter')openPop('storis')">
+        <rect class="node-bg" x="100" y="26" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="100" y="26" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="146" y="46" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Сторис</text>
+        <text x="146" y="60" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">Instagram</text>
+      </g>
+      <text x="200" y="51" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 1.2 Reels-сценарий (жёлтое) -->
+      <g class="node" tabindex="0" onclick="openPop('reels-script')" onkeydown="if(event.key==='Enter')openPop('reels-script')">
+        <rect class="node-bg" x="208" y="26" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2"/>
+        <rect x="208" y="26" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="254" y="46" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Reels-</text>
+        <text x="254" y="60" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">сценарий</text>
+      </g>
+      <text x="308" y="51" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 1.3 Ответ в Direct (красное — Инна) -->
+      <g class="node" tabindex="0" onclick="openPop('direct')" onkeydown="if(event.key==='Enter')openPop('direct')">
+        <rect class="node-bg" x="316" y="26" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="316" y="26" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="362" y="46" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Ответ</text>
+        <text x="362" y="60" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">в Direct</text>
+      </g>
+      <text x="416" y="51" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 1.4 Запрос отзыва 2ГИС (жёлтое + дыра) -->
+      <g class="node" tabindex="0" onclick="openPop('reviews')" onkeydown="if(event.key==='Enter')openPop('reviews')">
+        <rect class="node-bg" x="424" y="26" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <rect x="424" y="26" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="470" y="46" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Запрос</text>
+        <text x="470" y="60" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">отзывов</text>
+        <circle class="hole-marker" cx="513" cy="29" r="3.5" fill="#8b3a1f"/>
+      </g>
+      <text x="524" y="51" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 1.5 Онлайн-запись DikiDi (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('dikidi')" onkeydown="if(event.key==='Enter')openPop('dikidi')">
+        <rect class="node-bg" x="532" y="26" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="532" y="26" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="578" y="46" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Онлайн-</text>
+        <text x="578" y="60" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">запись DikiDi</text>
+      </g>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           ROW 2 — ПРОДАЖА (y_center = 136; box 114..158)
+           ═══════════════════════════════════════════════════════════ -->
+      <text x="14" y="138" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">ПРОДАЖА</text>
+
+      <!-- 2.1 FAQ-проверка (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('faq')" onkeydown="if(event.key==='Enter')openPop('faq')">
+        <rect class="node-bg" x="100" y="114" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="100" y="114" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="146" y="134" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Противо-</text>
+        <text x="146" y="148" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">показания</text>
+      </g>
+      <text x="200" y="139" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 2.2 Подбор окошка (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('slot')" onkeydown="if(event.key==='Enter')openPop('slot')">
+        <rect class="node-bg" x="208" y="114" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="208" y="114" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="254" y="134" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Подбор</text>
+        <text x="254" y="148" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">окошка</text>
+      </g>
+      <text x="308" y="139" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 2.3 Запись в CRM (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('crm')" onkeydown="if(event.key==='Enter')openPop('crm')">
+        <rect class="node-bg" x="316" y="114" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="316" y="114" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="362" y="134" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Запись</text>
+        <text x="362" y="148" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">в Beauty Pro</text>
+      </g>
+      <text x="416" y="139" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 2.4 Дожим админа (жёлтое + дыра) -->
+      <g class="node" tabindex="0" onclick="openPop('followup')" onkeydown="if(event.key==='Enter')openPop('followup')">
+        <rect class="node-bg" x="424" y="114" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <rect x="424" y="114" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="470" y="134" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Дожим</text>
+        <text x="470" y="148" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">админа</text>
+        <circle class="hole-marker" cx="513" cy="117" r="3.5" fill="#8b3a1f"/>
+      </g>
+      <text x="524" y="139" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 2.5 Оплата в студии (красное) -->
+      <g class="node" tabindex="0" onclick="openPop('payment')" onkeydown="if(event.key==='Enter')openPop('payment')">
+        <rect class="node-bg" x="532" y="114" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="532" y="114" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="578" y="134" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Оплата</text>
+        <text x="578" y="148" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">в студии</text>
+      </g>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           ROW 3 — ИСПОЛНЕНИЕ (y_center = 224; box 202..246)
+           ═══════════════════════════════════════════════════════════ -->
+      <text x="14" y="220" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">ИСПОЛ-</text>
+      <text x="14" y="234" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">НЕНИЕ</text>
+
+      <!-- 3.1 Анкета клиента (жёлтое) -->
+      <g class="node" tabindex="0" onclick="openPop('anketa')" onkeydown="if(event.key==='Enter')openPop('anketa')">
+        <rect class="node-bg" x="100" y="202" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2"/>
+        <rect x="100" y="202" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="146" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Анкета</text>
+        <text x="146" y="236" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">+ карта</text>
+      </g>
+      <text x="200" y="227" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 3.2 Диагностика (красное) -->
+      <g class="node" tabindex="0" onclick="openPop('diag')" onkeydown="if(event.key==='Enter')openPop('diag')">
+        <rect class="node-bg" x="208" y="202" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="208" y="202" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="254" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Диагностика</text>
+        <text x="254" y="236" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">дыхания</text>
+      </g>
+      <text x="308" y="227" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 3.3 Сам массаж (красное — экспертиза) -->
+      <g class="node" tabindex="0" onclick="openPop('massage')" onkeydown="if(event.key==='Enter')openPop('massage')">
+        <rect class="node-bg" x="316" y="202" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="316" y="202" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="362" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Сеанс</text>
+        <text x="362" y="236" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">массажа · 1,5 ч</text>
+      </g>
+      <text x="416" y="227" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 3.4 Коллаж до/после (жёлтое + дыра) -->
+      <g class="node" tabindex="0" onclick="openPop('collage')" onkeydown="if(event.key==='Enter')openPop('collage')">
+        <rect class="node-bg" x="424" y="202" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <rect x="424" y="202" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="470" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Коллаж</text>
+        <text x="470" y="236" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">до / после</text>
+        <circle class="hole-marker" cx="513" cy="205" r="3.5" fill="#8b3a1f"/>
+      </g>
+      <text x="524" y="227" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 3.5 Запрос ОС (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('feedback')" onkeydown="if(event.key==='Enter')openPop('feedback')">
+        <rect class="node-bg" x="532" y="202" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="532" y="202" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="578" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Запрос</text>
+        <text x="578" y="236" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">обратной связи</text>
+      </g>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           ROW 4 — КОНТЕНТ (y_center = 312; box 290..334)
+           ═══════════════════════════════════════════════════════════ -->
+      <text x="14" y="308" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">КОНТЕНТ</text>
+
+      <!-- 4.1 Контент-план (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('plan')" onkeydown="if(event.key==='Enter')openPop('plan')">
+        <rect class="node-bg" x="100" y="290" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="100" y="290" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="146" y="310" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Контент-</text>
+        <text x="146" y="324" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">план</text>
+      </g>
+      <text x="200" y="315" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 4.2 Тексты постов (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('posts')" onkeydown="if(event.key==='Enter')openPop('posts')">
+        <rect class="node-bg" x="208" y="290" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="208" y="290" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="254" y="310" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Тексты</text>
+        <text x="254" y="324" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">постов</text>
+      </g>
+      <text x="308" y="315" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 4.3 Сценарии Reels (жёлтое) -->
+      <g class="node" tabindex="0" onclick="openPop('reels-content')" onkeydown="if(event.key==='Enter')openPop('reels-content')">
+        <rect class="node-bg" x="316" y="290" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2"/>
+        <rect x="316" y="290" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="362" y="310" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Сценарии</text>
+        <text x="362" y="324" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">Reels</text>
+      </g>
+      <text x="416" y="315" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 4.4 Съёмка видео (красное) -->
+      <g class="node" tabindex="0" onclick="openPop('shoot')" onkeydown="if(event.key==='Enter')openPop('shoot')">
+        <rect class="node-bg" x="424" y="290" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="424" y="290" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="470" y="310" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Съёмка</text>
+        <text x="470" y="324" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">видео</text>
+      </g>
+      <text x="524" y="315" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 4.5 Аналитика (зелёное + дыра — никто не делает) -->
+      <g class="node" tabindex="0" onclick="openPop('analytics')" onkeydown="if(event.key==='Enter')openPop('analytics')">
+        <rect class="node-bg" x="532" y="290" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <rect x="532" y="290" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="578" y="310" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Аналитика</text>
+        <text x="578" y="324" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">метрик</text>
+        <circle class="hole-marker" cx="621" cy="293" r="3.5" fill="#8b3a1f"/>
+      </g>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           ROW 5 — УДЕРЖАНИЕ (y_center = 400; box 378..422)
+           ═══════════════════════════════════════════════════════════ -->
+      <text x="14" y="396" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">УДЕРЖА-</text>
+      <text x="14" y="410" font-size="11" font-weight="700" fill="#8b3a1f" letter-spacing="1.5">НИЕ</text>
+
+      <!-- 5.1 Авто-напоминание (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('reminder')" onkeydown="if(event.key==='Enter')openPop('reminder')">
+        <rect class="node-bg" x="100" y="378" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="100" y="378" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="146" y="398" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Авто-</text>
+        <text x="146" y="412" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">напоминание</text>
+      </g>
+      <text x="200" y="403" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 5.2 Бонусная программа (зелёное) -->
+      <g class="node" tabindex="0" onclick="openPop('bonus')" onkeydown="if(event.key==='Enter')openPop('bonus')">
+        <rect class="node-bg" x="208" y="378" width="92" height="44" rx="8" fill="#ecf3e8" stroke="#b8d1a8" stroke-width="1.2"/>
+        <rect x="208" y="378" width="4" height="44" rx="2" fill="#4a7c4a"/>
+        <text x="254" y="398" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2f5530">Бонусы</text>
+        <text x="254" y="412" text-anchor="middle" font-size="10" font-weight="500" fill="#2f5530" opacity="0.85">+ ДР</text>
+      </g>
+      <text x="308" y="403" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 5.3 Реактивация спящих (жёлтое + ГЛАВНАЯ ДЫРА) -->
+      <g class="node" tabindex="0" onclick="openPop('reactivate')" onkeydown="if(event.key==='Enter')openPop('reactivate')">
+        <rect class="node-bg" x="316" y="378" width="92" height="44" rx="8" fill="#faefd6" stroke="#b88323" stroke-width="2" stroke-dasharray="5,2.5"/>
+        <rect x="316" y="378" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="362" y="398" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7a5615">Реактивация</text>
+        <text x="362" y="412" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">спящих</text>
+        <!-- Strong hole marker (главная дыра) -->
+        <g class="hole-marker">
+          <circle cx="404" cy="382" r="5" fill="#8b3a1f"/>
+          <text x="404" y="385.5" text-anchor="middle" font-size="7" font-weight="700" fill="#fff">!</text>
+        </g>
+      </g>
+      <text x="416" y="403" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 5.4 Допродажа курса (красное) -->
+      <g class="node" tabindex="0" onclick="openPop('upsell')" onkeydown="if(event.key==='Enter')openPop('upsell')">
+        <rect class="node-bg" x="424" y="378" width="92" height="44" rx="8" fill="#f4e0dd" stroke="#d8a39e" stroke-width="1.2"/>
+        <rect x="424" y="378" width="4" height="44" rx="2" fill="#a04040"/>
+        <text x="470" y="398" text-anchor="middle" font-size="10.5" font-weight="600" fill="#6b2828">Курс</text>
+        <text x="470" y="412" text-anchor="middle" font-size="10" font-weight="500" fill="#6b2828" opacity="0.85">в моменте</text>
+      </g>
+      <text x="524" y="403" text-anchor="middle" font-size="14" fill="#a89880">›</text>
+
+      <!-- 5.5 Сбор рекомендаций (жёлтое + дыра) -->
+      <g class="node" tabindex="0" onclick="openPop('refer')" onkeydown="if(event.key==='Enter')openPop('refer')">
+        <rect class="node-bg" x="532" y="378" width="92" height="44" rx="8" fill="#faefd6" stroke="#e6c685" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <rect x="532" y="378" width="4" height="44" rx="2" fill="#b88323"/>
+        <text x="578" y="398" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5615">Сбор</text>
+        <text x="578" y="412" text-anchor="middle" font-size="10" font-weight="500" fill="#7a5615" opacity="0.85">рекомендаций</text>
+        <circle class="hole-marker" cx="621" cy="381" r="3.5" fill="#8b3a1f"/>
+      </g>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           CROSS-CHAIN TRANSITIONS (пунктирные)
+           ═══════════════════════════════════════════════════════════ -->
+
+      <!-- T1: Продажа → Исполнение (бирюзовый) — авто-триггер CRM -->
+      <path d="M 362,158 L 362,178 L 146,178 L 146,202"
+            stroke="#0f6b6b" stroke-width="1.4" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-teal)" opacity="0.85"/>
+      <text x="254" y="174" font-size="9" font-style="italic" fill="#0f6b6b" opacity="0.85">авто через CRM</text>
+
+      <!-- T2: Исполнение (Коллаж) → Контент (Тексты) — фиолетовый, СЛОМАН -->
+      <path d="M 470,246 L 470,266 L 254,266 L 254,290"
+            stroke="#6b4585" stroke-width="1.4" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-purple)" opacity="0.75"/>
+      <text x="362" y="262" font-size="9" font-style="italic" fill="#6b4585" opacity="0.85">истории / коллажи → посты</text>
+
+      <!-- T3: Исполнение (Запрос ОС) → Удержание (Авто-напоминание) — янтарный -->
+      <path d="M 578,246 L 578,355 L 146,355 L 146,378"
+            stroke="#b8651a" stroke-width="1.4" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-amber)" opacity="0.85"/>
+      <text x="362" y="350" font-size="9" font-style="italic" fill="#b8651a" opacity="0.85">обратная связь → удержание</text>
+
+      <!-- T4: Удержание (Рекомендации) → Привлечение (правая петля, коралловый) -->
+      <path d="M 624,400 L 668,400 L 668,48 L 624,48"
+            stroke="#c44a3a" stroke-width="1.4" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-coral)" opacity="0.9"/>
+      <text x="678" y="226" font-size="9" font-style="italic" fill="#c44a3a" opacity="0.85" transform="rotate(90 678 226)">петля сарафана</text>
+
+      <!-- T5: Контент → Привлечение (левая петля, синий) -->
+      <path d="M 100,312 L 70,312 L 70,48 L 100,48"
+            stroke="#2a5a8b" stroke-width="1.4" stroke-dasharray="5,3"
+            fill="none" marker-end="url(#arr-grey)" opacity="0.7"/>
+
+    </svg>
+  </div>
+  <p class="scroll-hint">↔ карта прокручивается по горизонтали</p>
+
+  <!-- ╭───── LEGEND ─────╮ -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#4a7c4a"></div>
+      <div><strong>Зелёное звено</strong><span>ИИ автоматизирует — настроил один раз</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#b88323"></div>
+      <div><strong>Жёлтое звено</strong><span>ИИ ускоряет в 5–10 раз — Инна или мастер одобряет</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#a04040"></div>
+      <div><strong>Красное звено</strong><span>Экспертиза руками или живой контакт</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="border:1.5px dashed #8b3a1f; background:transparent;"></div>
+      <div><strong>Пунктир + ●</strong><span>Дыра — задача важная, но никто не делает</span></div>
+    </div>
+  </div>
+
+  <!-- ╭───── HOLES BLOCK ─────╮ -->
+  <section class="holes-block">
+    <h2>Шесть дыр, которые видно сквозь карту</h2>
+    <p class="hsub">Это не «слабые места». Это твой ближайший резерв роста — без новых вложений в трафик.</p>
+
+    <div class="hole-row">
+      <div class="hole-num">01</div>
+      <div class="hole-text">
+        <strong>База спящих клиенток.</strong> Главная и твоя собственная формулировка:
+        <em>«очень много потерянных клиентов, очень много потерянных денег, которых можно вернуть и поднять оборот без дополнительных привлечений»</em>.
+        Это самый быстрый источник роста на ближайшие 3 месяца.
+      </div>
+    </div>
+
+    <div class="hole-row">
+      <div class="hole-num">02</div>
+      <div class="hole-text">
+        <strong>Запрос отзывов на 2ГИС / Яндекс.</strong> Формально просим — никто не пишет.
+        Нет работающей механики, которая «не била бы по бюджету и была бы эффективная». ИИ строит автоматическую цепочку с напоминанием, благодарностью и плюшкой.
+      </div>
+    </div>
+
+    <div class="hole-row">
+      <div class="hole-num">03</div>
+      <div class="hole-text">
+        <strong>Дожим админа на следующий день.</strong> Админ узнаёт, как самочувствие — и НЕ предлагает записаться.
+        Скрипт + ИИ-помощник для админа = +X записей в месяц на той же базе входящих.
+      </div>
+    </div>
+
+    <div class="hole-row">
+      <div class="hole-num">04</div>
+      <div class="hole-text">
+        <strong>Коллаж до/после после первого сеанса.</strong> Делается только после пятого. После первого — нет.
+        А это «крючок» для разовой клиентки, чтобы записаться на курс. ИИ описывает коллаж текстом и админ отправляет.
+      </div>
+    </div>
+
+    <div class="hole-row">
+      <div class="hole-num">05</div>
+      <div class="hole-text">
+        <strong>Аналитика контента.</strong> Никто не отслеживает, какие посты заходят, какие нет. Контент-фабрика крутится вслепую.
+        ИИ собирает охваты раз в неделю и показывает, что сработало — куда углубляться, а что прекратить.
+      </div>
+    </div>
+
+    <div class="hole-row">
+      <div class="hole-num">06</div>
+      <div class="hole-text">
+        <strong>Благодарность подруге, которая привела.</strong> Сарафан — твой главный канал привлечения, но никак не усилен.
+        Нужна простая механика «привела подругу → бонус обеим». Это превращает неуправляемый сарафан в управляемый поток с метриками.
+      </div>
+    </div>
+  </section>
+
+  <!-- ╭───── FINAL EMOTIONAL QUOTE ─────╮ -->
+  <footer class="signature">
+    <blockquote>
+      Если бы не ты и не твои руки, я бы сейчас была сморщенная, скукоженная, отёчная женщина с вечно больной головой.
+      Только благодаря тебе у меня прекрасная длинная шея, нет отёков на лице, и я больше не красная.
+    </blockquote>
+    <div class="by">отзыв постоянной клиентки</div>
+  </footer>
+
+  <div class="credit">подготовлено ИИщенко LAB · май 2026</div>
+
+</div>
+
+<!-- ╭───── POPUP ─────╮ -->
+<div class="pop-overlay" id="popOverlay" onclick="closePop(event)" role="dialog" aria-modal="true" aria-labelledby="popTitle">
+  <article class="pop" id="popContent" onclick="event.stopPropagation()">
+    <button class="pop-close" onclick="closePop()" aria-label="Закрыть">×</button>
+    <div id="popHoleTag" class="pop-hole-tag" style="display:none">⚠ дыра</div>
+    <div id="popStatus" class="pop-status"><span class="swatch"></span><span id="popStatusText"></span></div>
+    <div id="popChain" class="pop-chain"></div>
+    <h3 id="popTitle" class="pop-title"></h3>
+
+    <div class="pop-section">
+      <div class="pop-label">Что сейчас</div>
+      <div id="popDesc" class="pop-text"></div>
+    </div>
+
+    <div class="pop-section">
+      <div class="pop-label">Что делает ИИ</div>
+      <div id="popAi" class="pop-text"></div>
+    </div>
+
+    <div class="pop-section" id="popLinkSec">
+      <div class="pop-label">Связь с другими цепочками</div>
+      <div id="popLinks" class="pop-text"></div>
+    </div>
+  </article>
+</div>
+
+<script>
+/* ─────────────────────────────────────────
+   ДАННЫЕ ЗВЕНЬЕВ — голосом Инны и под её бизнес
+   ───────────────────────────────────────── */
+const NODES = {
+  /* ════════ ПРИВЛЕЧЕНИЕ ════════ */
+  'storis': {
+    chain: 'Привлечение · 1 / 5',
+    title: 'Сторис в Instagram',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Стабильно 5–6 дней в неделю по 4–5 сторис. Сторителлинг, кейсы, акции. Закреп в шапке + хайлайты «Для чего нужен массаж тела/лица», результаты. Ты пишешь сторис с нейросетью, помощник публикует.',
+    ai: 'Контент-агент пишет сценарий сторис на неделю под задачу месяца («продвигаем коррекцию осанки») — заголовки, последовательность, призыв. Тебе остаётся снять и одобрить.',
+    links: '◇ Питается от <strong>Контент-плана</strong> (Контент → Привлечение)<br>◇ Кормит <strong>Ответ в Direct</strong> — клиентка отвечает «кодовым словом»'
+  },
+  'reels-script': {
+    chain: 'Привлечение · 2 / 5',
+    title: 'Сценарий Reels',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    desc: 'Темы берутся из задач месяца. Контент-план в вордовском формате — конкретно прописано, какой Reels в какой день. Текст пишет нейросеть, ты правишь на 50%, иногда «10–15 раз переделываю, пока выдаст то, что хочу».',
+    ai: 'Сильный контент-агент с твоим стилем сразу выдаёт черновик, который требует 10% правок, не 50%. Это твой главный личный запрос — освободить от 10–15 ч/нед на тексты Instagram.',
+    links: '◇ Связан с <strong>Съёмкой видео</strong> (Контент)<br>◇ Питает <strong>Ответ в Direct</strong> — клиентки пишут после Reels'
+  },
+  'direct': {
+    chain: 'Привлечение · 3 / 5',
+    title: 'Ответ в Direct Instagram',
+    status: 'red', statusText: 'Лично Инна',
+    desc: 'Direct ведёшь ты лично — «там отвечаю я как руководитель». Видишь не всегда, бывают провалы — «запросы падают вскрытые и не всегда показываются».',
+    ai: 'Полностью отдать Direct ИИ нельзя — это твоя живая коммуникация. Но FAQ-черновики (противопоказания, цены, длительность) ИИ готовит, ты быстрее одобряешь.',
+    links: '◇ Подпитывается <strong>Сторис</strong> и <strong>Reels</strong><br>◇ Передаёт в <strong>Подбор окошка</strong> (Продажа)'
+  },
+  'reviews': {
+    chain: 'Привлечение · 4 / 5',
+    title: 'Запрос отзывов на 2ГИС / Яндекс',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    isHole: true,
+    desc: 'После первого сеанса админ просит оставить отзыв, даёт две ссылки. По твоим словам: «никто это не делает из клиентов. Даже если предложили плюшку — практически мало кто пишет».',
+    ai: 'Автоматическая цепочка: SMS через 2 дня → напоминание через 5 дней с шаблоном текста → благодарность с бонусом. ИИ собирает развёрнутые отзывы и превращает в посты автоматически.',
+    links: '◇ Прямо влияет на <strong>проходящий трафик 2ГИС</strong><br>◇ Кормит <strong>Тексты постов</strong> (Контент)'
+  },
+  'dikidi': {
+    chain: 'Привлечение · 5 / 5',
+    title: 'Онлайн-запись DikiDi',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Уже работает: клиент выбирает мастера/вид сеанса/время, подтверждает номер, записывается. Ты в этом не участвуешь.',
+    ai: 'Здесь ИИ ничего не должен трогать — система уже хорошо настроена. Точка интеграции: связать с CRM Beauty Pro и базой клиентов так, чтобы новая запись сразу триггерила коллажную цепочку.',
+    links: '◇ Прямо передаёт в <strong>Запись в Beauty Pro</strong> (Продажа)'
+  },
+
+  /* ════════ ПРОДАЖА ════════ */
+  'faq': {
+    chain: 'Продажа · 1 / 5',
+    title: 'Проверка противопоказаний',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Админ уточняет, на какой сеанс хочет клиент, спрашивает противопоказания. Это типовой скрипт, который должен звучать одинаково от любого админа.',
+    ai: 'ИИ-помощник админа: при каждом входящем подсказывает чек-лист вопросов под конкретный вид сеанса. Админ нажимает — сообщение готово. Скорость ответа растёт, ошибок нет.',
+    links: '◇ Принимает из <strong>Direct</strong> и <strong>WhatsApp/Telegram</strong>'
+  },
+  'slot': {
+    chain: 'Продажа · 2 / 5',
+    title: 'Подбор окошка',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Админ предлагает свободные окошки. Клиент соглашается. По твоим словам — «от первого сообщения до записи 2–3 часа, иногда долгие диалоги по 2–3 дня».',
+    ai: 'ИИ-агент видит расписание Beauty Pro, мастеров и предложения, формирует подсказку: «Удобно среда 14:00 у Романа или пятница 11:00 у Арины?» — и админ просто отправляет.',
+    links: '◇ Передаёт в <strong>Запись в Beauty Pro</strong>'
+  },
+  'crm': {
+    chain: 'Продажа · 3 / 5',
+    title: 'Запись в Beauty Pro',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'CRM Beauty Pro: запись фиксируется, клиент получает подтверждение. Уже работает.',
+    ai: 'Точка интеграции: запись в CRM = триггер для запуска цепочки исполнения и для пометки «новый/постоянный клиент». ИИ автоматически готовит карточку клиента на основе истории.',
+    links: '◇ <em>Триггер вниз</em> → запускает <strong>Анкету</strong> (Исполнение)'
+  },
+  'followup': {
+    chain: 'Продажа · 4 / 5',
+    title: 'Дожим админа на следующий день',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    isHole: true,
+    desc: 'Твоя самая болезненная цитата: «админ узнаёт, как они себя чувствуют после сеанса, и в этот момент НЕ предлагает записаться. Это печально. Здесь прямо кошмар кошмарный».',
+    ai: 'ИИ-помощник админа на следующий день после сеанса: подсказывает скрипт под конкретный кейс («первый сеанс лица — предложить курс с расчётом эффекта», «жалоба на боль — успокоить + объяснить». Админ нажимает — отправляет.',
+    links: '◇ Должен передавать в <strong>Курс в моменте</strong> (Удержание)<br>◇ Связан с <strong>Реактивацией спящих</strong>'
+  },
+  'payment': {
+    chain: 'Продажа · 5 / 5',
+    title: 'Оплата в студии',
+    status: 'red', statusText: 'Физически на месте',
+    desc: 'Картой через терминал или наличными. Предоплаты за курс не берёте. Расчёт ведёт мастер.',
+    ai: 'Не автоматизируется и не должно — это физический момент в студии. Точка роста — ввести опциональную предоплату курса со скидкой через онлайн-эквайринг (это про деньги, не про автоматизацию).',
+    links: '◇ Закрывает Продажу<br>◇ <em>Триггер</em> → <strong>Бонусы</strong> (Удержание): начисление 2%'
+  },
+
+  /* ════════ ИСПОЛНЕНИЕ ════════ */
+  'anketa': {
+    chain: 'Исполнение · 1 / 5',
+    title: 'Анкета и карта клиента',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    desc: 'Клиентка приходит, заполняет анкету и карту клиента, согласие на рассылки. Это часть твоего ритуала перед сеансом — заходит в кабинет, заполняет, потом начинаем работу.',
+    ai: 'Цифровая анкета на планшете в кабинете → ответы автоматически в карточку клиента в Beauty Pro. ИИ перед сеансом готовит мастеру короткую сводку: «у этой клиентки был такой-то отклик в прошлый раз, такие-то жалобы, акцент на это».',
+    links: '◇ Принимает <em>триггер</em> от <strong>Записи в Beauty Pro</strong><br>◇ Питает <strong>Диагностику</strong>'
+  },
+  'diag': {
+    chain: 'Исполнение · 2 / 5',
+    title: 'Диагностика дыхания + кинезио-тест',
+    status: 'red', statusText: 'Экспертиза мастера',
+    desc: 'Авторская часть твоей методики. Перед сеансом — диагностика дыхания, кинезиологический тест, фотофиксация со всех 4 сторон. Это про «не навреди».',
+    ai: 'Не автоматизируется — это живая работа мастера. Но: ИИ может вести структурированную карту наблюдений мастера и сравнивать «было / стало» по сеансам автоматически.',
+    links: '◇ Питает <strong>Сеанс массажа</strong>'
+  },
+  'massage': {
+    chain: 'Исполнение · 3 / 5',
+    title: 'Сеанс массажа · 1,5 часа',
+    status: 'red', statusText: '5 лет твоей экспертизы',
+    desc: 'Это сердце бизнеса. Авторская методика «тело → шея → лицо», сухая техника без масла, длительность строго 1,5 ч. Принципы: «не навреди» и «не делай больно».',
+    ai: 'Здесь ИИ молчит. Сеанс — это руки мастера и 5+ лет практики после обучения в институте сплит-массажа. Это твоё красное звено и должно оставаться красным — именно за это платят клиентки.',
+    links: '◇ Финал — <strong>Коллаж до/после</strong>'
+  },
+  'collage': {
+    chain: 'Исполнение · 4 / 5',
+    title: 'Коллаж до / после',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    isHole: true,
+    desc: 'Делается после пятого сеанса. После первого — НЕ делается, хотя должно. Твоя цитата: «эти коллажи нужно описать и отправить через администратора клиенту — чтобы посадить его на крючок. Но этого никто не делает, и это печально».',
+    ai: 'Мастер скидывает фото в бот → ИИ сразу пишет описание изменений твоим голосом + админ отправляет коллаж клиентке. Та видит результат после первого сеанса — крючок захлопывается, идёт на курс. Параллельно — материал для контента.',
+    links: '◇ <em>Триггер вниз</em> → <strong>Тексты постов</strong> (Контент) — но СЛОМАН<br>◇ Питает <strong>Курс в моменте</strong>'
+  },
+  'feedback': {
+    chain: 'Исполнение · 5 / 5',
+    title: 'Запрос обратной связи на след. день',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Админ запрашивает обратную связь после первого сеанса. Если всё понравилось — даёт ссылки на отзывы. Часть процесса — но по твоим словам, мало кто пишет.',
+    ai: 'Автоматический скрипт от ИИ-агента: «Здравствуйте, [имя], как самочувствие после вчерашнего сеанса?» — реакция → следующий шаг (запись на курс / просьба отзыва / запрос фото).',
+    links: '◇ <em>Триггер</em> → <strong>Авто-напоминание</strong> (Удержание)<br>◇ Кормит <strong>Запрос отзывов</strong>'
+  },
+
+  /* ════════ КОНТЕНТ ════════ */
+  'plan': {
+    chain: 'Контент · 1 / 5',
+    title: 'Контент-план',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'У тебя контент-план в Word — день недели + что в Reels, что в сторис. Темы — «исходя из того, что нам надо продвигать в этом месяце». Уже делается с нейросетью, ~2 ч/нед.',
+    ai: 'Контент-агент держит твой стиль, тематический календарь и сезонность. На вход — твоя задача месяца («продвигаем коррекцию осанки»). На выход — план на 4 недели с черновиками всех единиц контента.',
+    links: '◇ Питает <strong>Тексты, Reels, Сторис</strong><br>◇ Получает данные из <strong>Аналитики</strong>'
+  },
+  'posts': {
+    chain: 'Контент · 2 / 5',
+    title: 'Тексты постов Instagram',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Самое больное место — 10–15 ч/нед, «бесит». Сейчас пишешь с нейросетью, правишь на 50%. Стабильно 4 единицы в ленте в неделю.',
+    ai: 'Цель — снизить с 50% правок до 10% за счёт глубокой настройки агента на твой голос (готов файл 01_Личность). Освободит ~10 ч/нед напрямую — это и есть твой главный личный запрос на ИИ.',
+    links: '◇ Должен питаться от <strong>Коллажей</strong> и <strong>Отзывов</strong> (сейчас не питается)'
+  },
+  'reels-content': {
+    chain: 'Контент · 3 / 5',
+    title: 'Сценарии Reels',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    desc: 'Сложнее всего — «сценариями сижу долго, прямо не нравится, что пишет. И раз на десятый-пятнадцатый он мне выдаёт то, что я хочу после правок».',
+    ai: 'Тонкая настройка отдельного Reels-агента: ты даёшь идею в голосовом + он держит формат «крючок 3 сек → польза → CTA». Через 2–3 недели обучения на твоих правках выдаёт черновик с 10% корректировок.',
+    links: '◇ Питается от <strong>Контент-плана</strong><br>◇ Идёт в <strong>Съёмку видео</strong>'
+  },
+  'shoot': {
+    chain: 'Контент · 4 / 5',
+    title: 'Съёмка видео',
+    status: 'red', statusText: 'Лично Инна (или видеомейкер)',
+    desc: 'Снимаешь сама, телефон + петличка + кольцевой свет + штатив. Если нужны красивые работы — нанимаешь видеомейкера. Монтаж делает помощник.',
+    ai: 'Съёмка — твоя живая работа, ИИ не трогает. Но: ИИ-агент может составлять чёткое ТЗ для видеомейкера и расписывать раскадровки, чтобы ты тратила меньше времени на постановку.',
+    links: '◇ Питается от <strong>Сценариев Reels</strong>'
+  },
+  'analytics': {
+    chain: 'Контент · 5 / 5',
+    title: 'Аналитика метрик',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    isHole: true,
+    desc: 'НИКТО не отслеживает охваты и реакции. Твоя цитата: «слишком много времени занимает. Аврал большой, я написала и забыла». Контент-фабрика крутится вслепую.',
+    ai: 'ИИ-агент раз в неделю собирает охваты, реакции, сохранения по постам, Reels и сторис → одной табличкой показывает: «лучшие 3 темы недели → углубляемся, худшие 3 → стоп». Это меняет следующий контент-план.',
+    links: '◇ Замыкает обратную связь на <strong>Контент-план</strong> — критическая петля'
+  },
+
+  /* ════════ УДЕРЖАНИЕ ════════ */
+  'reminder': {
+    chain: 'Удержание · 1 / 5',
+    title: 'Авто-напоминание через 2 недели',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Уже работает в Beauty Pro: если клиент не записался — через 2 недели приходит «пора бы записаться на массаж». Это часть успеха в 80% повторных.',
+    ai: 'Здесь — точка эволюции: вместо одного типового напоминания ИИ выбирает повод под клиентку (последний сеанс был на лицо → «давно не видела ваш отёк, пора?»; на тело → «3 недели — пора закрепить»).',
+    links: '◇ Принимает <em>триггер</em> от <strong>Запроса ОС</strong>'
+  },
+  'bonus': {
+    chain: 'Удержание · 2 / 5',
+    title: 'Бонусная программа + ДР',
+    status: 'green', statusText: 'ИИ автоматизирует',
+    desc: 'Уже работает: 2% от каждой оплаты на бонусный счёт, 300 баллов на день рождения, оплата до 15% сеанса бонусами. Beauty Pro делает это автоматически.',
+    ai: 'ИИ-агент усиливает: за день до ДР отправляет тёплое поздравление от тебя голосом + персональный оффер; раз в квартал напоминает про накопленные баллы тем, кто полгода не приходил.',
+    links: '◇ Связан с <strong>Реактивацией спящих</strong>'
+  },
+  'reactivate': {
+    chain: 'Удержание · 3 / 5',
+    title: '⚠ Реактивация спящих',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    isHole: true,
+    desc: 'Главная дыра твоего бизнеса твоими же словами: «эта история с работой с базой полностью у меня выпадает из поля зрения. Дыра. Там очень много потерянных клиентов, очень много потерянных денег, которых можно вернуть и поднять оборот без дополнительных привлечений».',
+    ai: 'ИИ-агент работы с базой: раз в неделю выгружает из Beauty Pro «спящих» (нет визита 60+ дней) → сегментирует по истории визитов → для каждой пишет персональное сообщение голосом Инны → админ просматривает и отправляет. Ожидаемый эффект — возврат части потерянной выручки без затрат на трафик. Конкретные цифры станут видны после первого месяца работы агента.',
+    links: '◇ ДОЛЖЕН питаться от <strong>Аналитики базы</strong> (которой пока нет)<br>◇ Возвращает в <strong>Привлечение</strong> — петля возврата'
+  },
+  'upsell': {
+    chain: 'Удержание · 4 / 5',
+    title: 'Курс в моменте сеанса',
+    status: 'red', statusText: 'Мастер вживую',
+    desc: 'Главный механизм роста чека: мастер в течение сеанса разговаривает с клиенткой и в конце предлагает расписаться на курс. 80% постоянных клиенток автоматически расписываются на следующий месяц.',
+    ai: 'ИИ не трогает сам разговор — это работа мастера. Но готовит почву: до сеанса присылает мастеру карточку «у этой клиентки X сеансов, профиль Y, задача Z, правильный аргумент за курс — такой».',
+    links: '◇ Принимает от <strong>Сеанса массажа</strong><br>◇ Закрывает в <strong>Авто-напоминание</strong>'
+  },
+  'refer': {
+    chain: 'Удержание · 5 / 5',
+    title: 'Сбор рекомендаций',
+    status: 'yellow', statusText: 'ИИ ускоряет',
+    isHole: true,
+    desc: '«Мы НЕ просим постоянных клиенток рекомендовать нас. Бонуса за приведённую подругу нет». При этом сарафан — твой главный канал привлечения.',
+    ai: 'Простая механика «привела подругу»: постоянной клиентке после успешного курса — оффер с уникальным кодом или ссылкой («приведи подругу — обеим по бонусу/сертификату на следующий сеанс»). ИИ автоматически отслеживает приходы по коду и начисляет вознаграждение в Beauty Pro. Это превращает неуправляемый сарафан в управляемый канал. Конкретный размер и тип бонуса определяешь ты, исходя из юнит-экономики.',
+    links: '◇ <em>Главная петля возврата</em> → <strong>Сторис</strong> и <strong>Direct</strong> (Привлечение)'
+  }
+};
+
+/* ─────────────────────────────────────────
+   POPUP CONTROL
+   ───────────────────────────────────────── */
+const overlay = document.getElementById('popOverlay');
+const elStatus = document.getElementById('popStatus');
+const elStatusText = document.getElementById('popStatusText');
+const elChain = document.getElementById('popChain');
+const elTitle = document.getElementById('popTitle');
+const elDesc = document.getElementById('popDesc');
+const elAi = document.getElementById('popAi');
+const elLinks = document.getElementById('popLinks');
+const elLinkSec = document.getElementById('popLinkSec');
+const elHoleTag = document.getElementById('popHoleTag');
+
+function openPop(id) {
+  const d = NODES[id];
+  if (!d) return;
+
+  // Status
+  elStatus.className = 'pop-status ' + d.status;
+  elStatusText.textContent = d.statusText;
+
+  // Hole tag
+  elHoleTag.style.display = d.isHole ? 'inline-block' : 'none';
+
+  // Content
+  elChain.textContent = d.chain;
+  elTitle.textContent = d.title;
+  elDesc.innerHTML = d.desc;
+  elAi.innerHTML = d.ai;
+
+  if (d.links) {
+    elLinks.innerHTML = d.links;
+    elLinkSec.style.display = 'block';
+  } else {
+    elLinkSec.style.display = 'none';
+  }
+
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePop(e) {
+  if (!e || e.target === overlay || (e.target && e.target.classList.contains('pop-close'))) {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && overlay.classList.contains('show')) {
+    closePop({target: overlay});
+  }
+});
+</script>
+
+</body>
+</html>
