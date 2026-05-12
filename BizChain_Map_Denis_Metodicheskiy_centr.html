@@ -1,0 +1,2477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — Денис, ООО «Методический центр»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef4f0;
+  --bg2:#f0f4f2;
+  --card:rgba(255,255,255,0.78);
+  --card-border:rgba(15,186,106,0.08);
+  --text:#0e1e1a;
+  --text2:#475569;
+  --text3:#94a3b8;
+  --border:rgba(0,0,0,0.06);
+  --green:#1db87a;
+  --green2:#16a368;
+  --green-soft:rgba(15,186,106,0.06);
+  --yellow:#e8a308;
+  --yellow2:#c08609;
+  --red:#e04848;
+  --red2:#c43838;
+  --blue:#2196f3;
+  --blue2:#1565c0;
+  --purple:#7c3aed;
+  --teal:#0d9488;
+  --amber:#d97706;
+  --orange:#f97316;
+  --pink:#ec4899;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  font-size:14px;
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+}
+
+/* ── Фоновый Canvas нейросети ── */
+#netCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  opacity:0.55;
+  pointer-events:none;
+}
+
+/* Фоновый градиент */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at top left, rgba(122,182,72,0.10), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(26,82,118,0.08), transparent 55%),
+    radial-gradient(ellipse at center, rgba(42,161,152,0.05), transparent 60%);
+  z-index:1;
+  pointer-events:none;
+}
+
+/* HUD-сетка перспективная */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(15,186,106,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,186,106,0.04) 1px, transparent 1px);
+  background-size:48px 48px;
+  z-index:1;
+  pointer-events:none;
+  mask-image: radial-gradient(ellipse 80% 60% at center, black, transparent);
+}
+
+.wrap{
+  position:relative;
+  z-index:5;
+  max-width:1480px;
+  margin:0 auto;
+  padding:36px 28px 80px;
+}
+
+/* ═════════ ХЕДЕР ═════════ */
+.header{
+  text-align:center;
+  margin-bottom:42px;
+  animation:fadeUp 0.8s ease;
+}
+.brand-row{
+  display:inline-flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:24px;
+}
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #7ab648, #2aa198 60%, #1a5276);
+  box-shadow:0 4px 14px rgba(15,186,106,0.30), inset 0 1px 2px rgba(255,255,255,0.45);
+  position:relative;
+}
+.logo-icon::before{
+  content:'';
+  position:absolute;
+  inset:6px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), transparent 60%);
+}
+.brand-text{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.16em;
+  color:var(--text);
+  text-transform:uppercase;
+}
+
+.badge-row{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:7px 16px;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(15,186,106,0.18);
+  border-radius:99px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--green2);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:22px;
+  box-shadow:0 2px 12px rgba(15,186,106,0.10);
+}
+.orb{
+  width:8px;height:8px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #4ade80, #1db87a);
+  box-shadow:0 0 10px rgba(15,186,106,0.55);
+  animation:orbPulse 2s ease-in-out infinite;
+}
+@keyframes orbPulse{
+  0%,100%{box-shadow:0 0 8px rgba(15,186,106,0.40); transform:scale(1)}
+  50%{box-shadow:0 0 18px rgba(15,186,106,0.85); transform:scale(1.18)}
+}
+
+.h1{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:48px;
+  letter-spacing:-0.02em;
+  margin-bottom:8px;
+  background:linear-gradient(135deg, #1db87a 0%, #06b6d4 45%, #2196f3 85%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradShift 5s ease-in-out infinite;
+  line-height:1.05;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+.h1-sub{
+  font-family:'Unbounded',sans-serif;
+  font-weight:500;
+  font-size:18px;
+  color:var(--text2);
+  margin-top:6px;
+  letter-spacing:0.01em;
+}
+.h1-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--text3);
+  margin-top:14px;
+  letter-spacing:0.04em;
+}
+.h1-meta b{color:var(--green2);font-weight:600}
+
+/* ═════════ БЛОКИ ═════════ */
+.section{
+  margin-bottom:36px;
+  animation:fadeUp 0.7s ease both;
+}
+.section-title{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.10em;
+  color:var(--text3);
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-title::before{
+  content:'';
+  width:3px;height:18px;
+  background:linear-gradient(180deg, #1db87a, #06b6d4);
+  border-radius:2px;
+}
+
+/* === КАРТОЧКА БИЗНЕСА (8 карточек) === */
+.biz-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+}
+.biz-card{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:16px 18px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.03), 0 4px 18px rgba(15,186,106,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+  position:relative;
+  overflow:hidden;
+}
+.biz-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:30px;height:3px;
+  background:linear-gradient(90deg, #1db87a, #06b6d4);
+  border-radius:0 0 3px 0;
+}
+.biz-val{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  line-height:1.1;
+}
+.biz-val.small{font-size:17px}
+.biz-lbl{
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--text3);
+  margin-top:6px;
+}
+.biz-sub{
+  font-size:11px;
+  color:var(--text2);
+  margin-top:4px;
+  line-height:1.4;
+}
+
+/* === 6 ЗАДАЧ === */
+.tasks-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+}
+.task{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:16px 18px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  box-shadow:0 1px 3px rgba(0,0,0,0.03), 0 3px 14px rgba(15,186,106,0.03);
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.task:hover{transform:translateY(-2px); box-shadow:0 6px 22px rgba(15,186,106,0.08)}
+.task-num{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;
+  font-size:24px;
+  color:var(--green);
+  line-height:1;
+  flex-shrink:0;
+  min-width:36px;
+}
+.task-txt{font-size:13px; color:var(--text); line-height:1.5}
+.task-txt b{color:var(--green2)}
+
+/* === ПАНЕЛЬ ЦЕЛИ === */
+.goal-panel{
+  background:linear-gradient(135deg, rgba(15,186,106,0.08), rgba(33,150,243,0.06));
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(15,186,106,0.18);
+  border-radius:16px;
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+  box-shadow:0 4px 20px rgba(15,186,106,0.06);
+}
+.goal-icon{font-size:20px}
+.goal-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13.5px;
+  color:var(--text);
+  letter-spacing:0.01em;
+  font-weight:600;
+}
+.goal-text b{color:var(--green2)}
+.goal-sep{color:var(--text3); font-weight:400; padding:0 6px}
+
+/* === СТАТИСТИКА === */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:12px;
+}
+.stat{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:14px 16px;
+  text-align:center;
+}
+.stat-val{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:28px;
+  line-height:1;
+}
+.stat-val.g{color:var(--green2)}
+.stat-val.y{color:var(--yellow2)}
+.stat-val.r{color:var(--red)}
+.stat-val.p{
+  background:linear-gradient(135deg, #1db87a, #06b6d4, #2196f3);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.stat-lbl{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-top:8px;
+}
+
+/* === ВЕТКИ РОСТА === */
+.branches-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+.branch-card{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:15px 18px;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.branch-card:hover{transform:translateY(-3px); box-shadow:0 8px 28px rgba(15,186,106,0.10)}
+.branch-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg, #1db87a, #06b6d4);
+}
+.branch-card.b2::before{background:linear-gradient(180deg, #a78bfa, #ec4899)}
+.branch-card.b3::before{background:linear-gradient(180deg, #fbbf24, #f97316)}
+.branch-card.b4::before{background:linear-gradient(180deg, #f87171, #f97316)}
+.branch-card.b5::before{background:linear-gradient(180deg, #60a5fa, #06b6d4)}
+.branch-card.b6::before{background:linear-gradient(180deg, #34d399, #06b6d4)}
+
+.branch-name{
+  font-family:'Unbounded',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  color:var(--text);
+  margin-bottom:4px;
+  padding-left:6px;
+}
+.branch-pot{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  font-size:13px;
+  color:var(--green2);
+  padding-left:6px;
+  margin-bottom:6px;
+}
+.branch-desc{
+  font-size:11.5px;
+  color:var(--text2);
+  line-height:1.5;
+  padding-left:6px;
+}
+
+/* ═════════════ ОСНОВНАЯ КАРТА ═════════════ */
+.map-wrap{
+  margin:14px 0;
+}
+.chain-row{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:18px;
+  padding:18px 22px;
+  margin-bottom:14px;
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:18px;
+  align-items:center;
+  position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,0.03), 0 4px 18px rgba(15,186,106,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+  animation:fadeUp 0.7s ease both;
+}
+.chain-row.c1{animation-delay:0.05s}
+.chain-row.c2{animation-delay:0.15s}
+.chain-row.c3{animation-delay:0.25s}
+.chain-row.c4{animation-delay:0.35s}
+.chain-row.c5{animation-delay:0.45s}
+
+.chain-row::before{
+  content:'';
+  position:absolute;
+  left:0;top:18px;bottom:18px;
+  width:4px;
+  border-radius:0 4px 4px 0;
+}
+.chain-row.c1::before{background:linear-gradient(180deg, #4ade80, #1db87a, #06b6d4)}
+.chain-row.c2::before{background:linear-gradient(180deg, #a78bfa, #7c3aed, #ec4899)}
+.chain-row.c3::before{background:linear-gradient(180deg, #fbbf24, #e8a308, #f97316)}
+.chain-row.c4::before{background:linear-gradient(180deg, #60a5fa, #2196f3, #06b6d4)}
+.chain-row.c5::before{background:linear-gradient(180deg, #f87171, #e04848, #f97316)}
+
+.chain-label{
+  padding-left:14px;
+}
+.chain-emo{font-size:18px; margin-bottom:4px; display:block}
+.chain-name{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color:var(--text);
+  letter-spacing:-0.005em;
+}
+.chain-sub{font-size:11px; color:var(--text3); margin-top:2px}
+.chain-gain{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  font-weight:600;
+  color:var(--green2);
+  margin-top:7px;
+  padding:3px 8px;
+  background:rgba(15,186,106,0.07);
+  border-radius:6px;
+  display:inline-block;
+}
+.chain-time{
+  font-size:10px;
+  color:var(--text3);
+  margin-top:5px;
+  font-style:italic;
+}
+
+.chain-steps{
+  display:flex;
+  align-items:stretch;
+  gap:8px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  padding:4px 2px;
+}
+.chain-steps::-webkit-scrollbar{height:6px}
+.chain-steps::-webkit-scrollbar-thumb{background:rgba(15,186,106,0.18); border-radius:3px}
+
+/* === ЗВЕНО === */
+.step{
+  position:relative;
+  flex:1 1 0;
+  min-width:118px;
+  padding:13px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:transform 0.28s cubic-bezier(.2,.6,.2,1), box-shadow 0.28s, border-color 0.28s;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid;
+}
+.step.full{
+  background:linear-gradient(180deg, rgba(15,186,106,0.10), rgba(15,186,106,0.03));
+  border-color:rgba(15,186,106,0.22);
+}
+.step.boost{
+  background:linear-gradient(180deg, rgba(232,163,8,0.10), rgba(232,163,8,0.02));
+  border-color:rgba(232,163,8,0.22);
+}
+.step.human{
+  background:linear-gradient(180deg, rgba(224,72,72,0.08), rgba(224,72,72,0.02));
+  border-color:rgba(224,72,72,0.20);
+}
+.step.hole{
+  border-style:dashed !important;
+  border-width:1.5px !important;
+}
+.step.hole .sname::after{
+  content:' ⚠';
+  font-size:9px;
+  vertical-align:top;
+}
+
+.step:hover{
+  transform:translateY(-4px) scale(1.02);
+}
+.step.full:hover{box-shadow:0 8px 28px rgba(15,186,106,0.18), 0 2px 6px rgba(15,186,106,0.10)}
+.step.boost:hover{box-shadow:0 8px 28px rgba(232,163,8,0.15), 0 2px 6px rgba(232,163,8,0.08)}
+.step.human:hover{box-shadow:0 8px 28px rgba(224,72,72,0.13), 0 2px 6px rgba(224,72,72,0.08)}
+
+/* Shimmer-блик */
+.step::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.45) 45%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0.45) 55%, transparent 60%);
+  transform:translateX(-100%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.step:hover::after{
+  opacity:1;
+  animation:shimmer 1.6s ease;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+
+/* Энергетическая полоска сверху */
+.step::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  width:0;height:2px;
+  border-radius:2px;
+  transform:translateX(-50%);
+  transition:width 0.3s;
+}
+.step.full::before{background:linear-gradient(90deg, transparent, #1db87a, #06b6d4, transparent)}
+.step.boost::before{background:linear-gradient(90deg, transparent, #e8a308, #f97316, transparent)}
+.step.human::before{background:linear-gradient(90deg, transparent, #e04848, #f97316, transparent)}
+.step:hover::before{width:60px}
+
+.sname{
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:11.5px;
+  color:var(--text);
+  line-height:1.3;
+  white-space:pre-line;
+  margin-bottom:8px;
+  position:relative;
+  z-index:2;
+}
+.sbadge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:8.5px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  padding:2px 6px;
+  border-radius:5px;
+  display:inline-block;
+  align-self:flex-start;
+  position:relative;
+  z-index:2;
+}
+.step.full .sbadge{
+  background:rgba(15,186,106,0.14);
+  color:var(--green2);
+}
+.step.boost .sbadge{
+  background:rgba(232,163,8,0.14);
+  color:var(--yellow2);
+}
+.step.human .sbadge{
+  background:rgba(224,72,72,0.12);
+  color:var(--red2);
+}
+
+/* Иконка агента */
+.sagent{
+  position:absolute;
+  top:6px;right:8px;
+  font-size:11px;
+  opacity:0.6;
+  z-index:3;
+}
+
+/* Стрелка между звеньями (SVG) */
+.arr{
+  flex-shrink:0;
+  width:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.arr svg{width:18px; height:18px}
+
+/* ═════ ПЕРЕПЛЕТЕНИЯ МЕЖДУ ЦЕПОЧКАМИ ═════ */
+.conn-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:8px 22px;
+  margin:-4px 0 6px;
+  justify-content:center;
+}
+.conn{
+  background:rgba(255,255,255,0.65);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(15,186,106,0.10);
+  border-radius:10px;
+  padding:6px 12px 6px 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  font-weight:500;
+  color:var(--text2);
+  cursor:pointer;
+  transition:transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.conn:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,0.85);
+  box-shadow:0 4px 14px rgba(0,0,0,0.06);
+}
+.conn-dot{
+  width:9px;height:9px;
+  border-radius:50%;
+  box-shadow:0 0 9px currentColor;
+}
+.conn-icon{font-size:11px}
+
+/* === ПОТЕНЦИАЛ ПО ЦЕПОЧКАМ === */
+.pot-grid{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:12px;
+}
+.pot-card{
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:14px 16px;
+  position:relative;
+  overflow:hidden;
+}
+.pot-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+}
+.pot-card.p1::before{background:linear-gradient(90deg, #4ade80, #06b6d4)}
+.pot-card.p2::before{background:linear-gradient(90deg, #a78bfa, #ec4899)}
+.pot-card.p3::before{background:linear-gradient(90deg, #fbbf24, #f97316)}
+.pot-card.p4::before{background:linear-gradient(90deg, #60a5fa, #06b6d4)}
+.pot-card.p5::before{background:linear-gradient(90deg, #f87171, #f97316)}
+
+.pot-name{
+  font-family:'Unbounded',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  color:var(--text);
+}
+.pot-val{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;
+  font-size:14px;
+  color:var(--green2);
+  margin:6px 0 4px;
+}
+.pot-val.exp{color:var(--text3); font-size:12px}
+.pot-desc{
+  font-size:10.5px;
+  color:var(--text2);
+  line-height:1.45;
+}
+
+/* === ИТОГОВЫЙ ПОТЕНЦИАЛ === */
+.fin-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+.fin-card{
+  background:linear-gradient(135deg, rgba(15,186,106,0.07), rgba(33,150,243,0.04));
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(15,186,106,0.16);
+  border-radius:16px;
+  padding:18px 20px;
+  text-align:center;
+}
+.fin-val{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;
+  font-size:24px;
+  color:var(--green2);
+  line-height:1.1;
+}
+.fin-val.b{
+  background:linear-gradient(135deg, #1db87a, #06b6d4, #2196f3);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.fin-lbl{
+  font-size:10.5px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  color:var(--text2);
+  margin-top:8px;
+}
+
+/* === ДИСКЛЕЙМЕР === */
+.disclaimer{
+  background:rgba(232,163,8,0.07);
+  border:1px dashed rgba(232,163,8,0.45);
+  border-radius:14px;
+  padding:15px 20px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+}
+.disc-icon{font-size:20px; flex-shrink:0}
+.disc-text{
+  font-size:12px;
+  color:var(--text2);
+  line-height:1.55;
+}
+.disc-text b{color:var(--yellow2)}
+
+/* === ЛЕГЕНДА === */
+.legend{
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+  padding:14px 18px;
+  background:var(--card);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+}
+.leg-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:var(--text2);
+}
+.leg-dot{
+  width:11px;height:11px;
+  border-radius:50%;
+}
+.leg-dot.g{background:var(--green); box-shadow:0 0 10px rgba(15,186,106,0.5)}
+.leg-dot.y{background:var(--yellow); box-shadow:0 0 10px rgba(232,163,8,0.5)}
+.leg-dot.r{background:var(--red); box-shadow:0 0 10px rgba(224,72,72,0.5)}
+
+/* === ФУТЕР === */
+.footer{
+  text-align:center;
+  font-size:11px;
+  color:var(--text3);
+  margin-top:36px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  line-height:1.7;
+}
+.footer b{color:var(--green2)}
+
+/* ═════════════ МОДАЛЬНОЕ ОКНО ═════════════ */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(14,30,26,0.55);
+  backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s;
+  z-index:1000;
+}
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.modal{
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(15,186,106,0.12);
+  border-radius:20px;
+  box-shadow:0 24px 64px rgba(0,0,0,0.14), 0 8px 26px rgba(15,186,106,0.10);
+  max-width:560px;
+  width:100%;
+  max-height:88vh;
+  overflow-y:auto;
+  padding:24px 26px;
+  transform:translateY(20px);
+  transition:transform 0.3s cubic-bezier(.2,.6,.2,1);
+}
+.overlay.show .modal{transform:translateY(0)}
+.modal::-webkit-scrollbar{width:6px}
+.modal::-webkit-scrollbar-thumb{background:rgba(15,186,106,0.2); border-radius:3px}
+
+.mclose{
+  position:absolute;
+  top:14px;right:14px;
+  width:32px;height:32px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.04);
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+  color:var(--text2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.2s;
+  z-index:5;
+}
+.mclose:hover{background:rgba(0,0,0,0.08)}
+
+.mbadge{
+  display:inline-block;
+  padding:4px 11px;
+  border-radius:99px;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.mbadge.full{background:rgba(15,186,106,0.12); color:var(--green2)}
+.mbadge.boost{background:rgba(232,163,8,0.12); color:var(--yellow2)}
+.mbadge.human{background:rgba(224,72,72,0.10); color:var(--red2)}
+.mbadge.hole{background:rgba(232,163,8,0.15); color:var(--yellow2); border:1px dashed rgba(232,163,8,0.45)}
+
+.mtitle{
+  font-family:'Unbounded',sans-serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--text);
+  line-height:1.2;
+  margin-bottom:6px;
+}
+.mchain{
+  font-size:11px;
+  color:var(--text3);
+  margin-bottom:14px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-weight:600;
+}
+.mchain b{color:var(--text)}
+
+.mdesc{
+  font-size:13px;
+  color:var(--text);
+  line-height:1.6;
+  margin-bottom:6px;
+}
+.mdesc b{color:var(--green2)}
+.mdesc strong{color:var(--text); font-weight:700}
+
+.mquote{
+  font-size:12.5px;
+  font-style:italic;
+  color:var(--text2);
+  padding:9px 13px;
+  margin:8px 0;
+  border-left:3px solid var(--green);
+  background:rgba(15,186,106,0.05);
+  border-radius:0 8px 8px 0;
+  line-height:1.55;
+}
+.msrc{font-size:9.5px; color:var(--text3); margin:3px 0 8px; font-family:'JetBrains Mono',monospace}
+
+.mai{
+  margin-top:14px;
+  padding:11px 13px;
+  border-radius:10px;
+  border-left:3px solid;
+}
+.mai.full{background:rgba(15,186,106,0.05); border-color:var(--green)}
+.mai.boost{background:rgba(232,163,8,0.05); border-color:var(--yellow)}
+.mai.human{background:rgba(224,72,72,0.05); border-color:var(--red)}
+.mai-t{
+  font-size:9.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  color:var(--text3);
+  margin-bottom:5px;
+}
+.mai-txt{font-size:12.5px; color:var(--text); line-height:1.55}
+
+.msec{
+  font-size:9px;
+  font-weight:700;
+  color:var(--text3);
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  margin:14px 0 7px;
+  padding-top:11px;
+  border-top:1px solid var(--border);
+}
+
+.magent{padding:10px 12px; background:rgba(33,150,243,0.05); border-radius:10px}
+.magent-name{font-weight:700; font-size:13px; color:var(--text); margin-bottom:3px}
+.magent-desc{font-size:11.5px; color:var(--text2); line-height:1.55}
+.magent-mod{font-size:10px; color:var(--blue2); margin-top:5px; font-weight:600; font-family:'JetBrains Mono',monospace}
+
+.mbranch{padding:10px 12px; background:rgba(15,186,106,0.05); border-radius:10px}
+.mbranch-name{font-weight:700; font-size:13px; color:var(--green2)}
+.mbranch-pot{font-family:'JetBrains Mono',monospace; font-size:12px; margin:4px 0; font-weight:600; color:var(--text)}
+.mbranch-pot b{color:var(--green2)}
+.mbranch-link{font-size:11.5px; color:var(--text2); line-height:1.5}
+
+.munit{padding:10px 12px; background:rgba(0,0,0,0.025); border-radius:10px}
+.munit-row{font-size:12px; color:var(--text2); padding:3px 0; display:flex; gap:8px; align-items:flex-start}
+.munit-row span{flex-shrink:0; font-size:13px}
+.munit-row.hl{font-weight:600; color:var(--green2)}
+
+.mtool{padding:10px 12px; background:rgba(124,58,237,0.05); border-radius:10px; border-left:3px solid var(--purple)}
+.mtool-name{font-weight:700; font-size:13px; color:var(--purple)}
+.mtool-steps{font-size:11.5px; color:var(--text2); line-height:1.65; margin:4px 0}
+.mtool-time{font-size:10px; color:var(--text3); font-family:'JetBrains Mono',monospace}
+
+.mgoal{padding:10px 12px}
+.mgoal-name{font-weight:700; font-size:12.5px; color:var(--text); margin-bottom:8px}
+.mgoal-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.mgoal-before, .mgoal-after{padding:8px 10px; border-radius:8px; font-size:11px; line-height:1.5}
+.mgoal-before{background:rgba(224,72,72,0.06); color:var(--red2)}
+.mgoal-after{background:rgba(15,186,106,0.06); color:var(--green2)}
+.mgoal-lbl{font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px}
+
+.mlinks{display:flex; flex-direction:column; gap:8px}
+.ml{display:flex; gap:10px; align-items:flex-start; padding:8px 10px; background:rgba(0,0,0,0.02); border-radius:8px}
+.ml-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; box-shadow:0 0 7px currentColor}
+.ml-lbl{font-weight:700; font-size:11px}
+.ml > div:last-child{flex:1}
+.ml > div:last-child > div:nth-child(2){font-size:11.5px; color:var(--text2); line-height:1.4; margin-top:2px}
+.ml-sub{font-size:9.5px; color:var(--text3); margin-top:3px; text-transform:uppercase; letter-spacing:0.05em; font-weight:600}
+
+.mmets{display:grid; grid-template-columns:repeat(auto-fit, minmax(115px,1fr)); gap:8px; margin-top:12px}
+.mmet{background:rgba(0,0,0,0.025); padding:9px 11px; border-radius:9px; text-align:center}
+.mmet-val{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:15px; color:var(--text); line-height:1.1}
+.mmet-lbl{font-size:9.5px; color:var(--text3); margin-top:3px; font-weight:500}
+
+/* === АНИМАЦИИ === */
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(15px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* === АДАПТИВНОСТЬ === */
+@media (max-width:1100px){
+  .biz-grid{grid-template-columns:repeat(2, 1fr)}
+  .branches-grid{grid-template-columns:repeat(2, 1fr)}
+  .pot-grid{grid-template-columns:repeat(2, 1fr)}
+  .fin-grid{grid-template-columns:repeat(2, 1fr)}
+  .stats{grid-template-columns:repeat(2, 1fr)}
+}
+@media (max-width:780px){
+  .wrap{padding:24px 16px 60px}
+  .h1{font-size:34px}
+  .chain-row{grid-template-columns:1fr; gap:14px}
+  .chain-label{padding-left:0}
+  .biz-grid, .tasks-grid, .branches-grid, .pot-grid, .fin-grid, .stats{grid-template-columns:1fr}
+  .step{min-width:140px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="netCanvas"></canvas>
+
+<div class="wrap">
+
+<!-- ═══════════ ХЕДЕР ═══════════ -->
+<header class="header">
+  <div class="brand-row">
+    <div class="logo-icon"></div>
+    <div class="brand-text">ИИщенко LAB</div>
+  </div>
+  <div class="badge-row">
+    <span class="orb"></span>
+    BizChain Map · AI-аудит потенциала
+  </div>
+  <h1 class="h1">Денис · Методический центр</h1>
+  <div class="h1-sub">Независимая оценка и судебная экспертиза · Благовещенск</div>
+  <div class="h1-meta">
+    <b>25 ЛЕТ НА РЫНКЕ</b> · <b>10 ЧЕЛОВЕК В ОФИСЕ</b> · <b>ПО ВСЕЙ АМУРСКОЙ ОБЛАСТИ</b> · <b>2 ОТДЕЛА</b>
+  </div>
+</header>
+
+<!-- ═══════════ БЛОК 2: КАРТОЧКА БИЗНЕСА ═══════════ -->
+<section class="section">
+  <div class="section-title">Карточка бизнеса</div>
+  <div class="biz-grid">
+    <div class="biz-card">
+      <div class="biz-val small">Методический центр</div>
+      <div class="biz-lbl">Компания</div>
+      <div class="biz-sub">Денис, основатель и руководитель</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">25 лет</div>
+      <div class="biz-lbl">На рынке</div>
+      <div class="biz-sub">С 2008 руководит, с 2011 — самостоятельно</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">1.200–1.500</div>
+      <div class="biz-lbl">Отчётов в год</div>
+      <div class="biz-sub">Снижение из-за ипотечного рынка</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">~15–20 млн ₽</div>
+      <div class="biz-lbl">Выручка/год</div>
+      <div class="biz-sub">Расчётно (отчёты × ср. чек)</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">10К–35К ₽</div>
+      <div class="biz-lbl">Средний чек</div>
+      <div class="biz-sub">Квартира 10К · Авто 25К · Суд 35К+</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">10 чел.</div>
+      <div class="biz-lbl">Команда офис</div>
+      <div class="biz-sub">+ удалённые по всей области</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">4,8 ★ <span style="font-size:13px; color:var(--text3); font-family:Inter">/</span> 1</div>
+      <div class="biz-lbl">2ГИС / Яндекс</div>
+      <div class="biz-sub">40 отзывов 2ГИС vs <b style="color:var(--red)">1 на Яндексе</b></div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-val">№1</div>
+      <div class="biz-lbl">В Амурской области</div>
+      <div class="biz-sub">Самая крупная оценочная организация</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 3: 6 ЗАДАЧ ═══════════ -->
+<section class="section">
+  <div class="section-title">6 задач для карты</div>
+  <div class="tasks-grid">
+    <div class="task">
+      <div class="task-num">01</div>
+      <div class="task-txt"><b>Автоматизация приёма заявок</b> — приоритет №1. Освобождает Дениса и жену от потока звонков с 9:00.</div>
+    </div>
+    <div class="task">
+      <div class="task-num">02</div>
+      <div class="task-txt"><b>Автоматизация составления отчёта</b> — перенос данных из документов в Word. Дом сейчас ~6 часов на отчёт.</div>
+    </div>
+    <div class="task">
+      <div class="task-num">03</div>
+      <div class="task-txt"><b>Уйти с работы в 15:00</b> — личный KPI Дениса. Сейчас приходит к 11:00, сидит до вечера.</div>
+    </div>
+    <div class="task">
+      <div class="task-num">04</div>
+      <div class="task-txt"><b>Развить судебное направление</b> — ограничение: трудоёмкость, нет скорости. Эксперты в реестре МАК.</div>
+    </div>
+    <div class="task">
+      <div class="task-num">05</div>
+      <div class="task-txt"><b>Запустить SaaS-платформу</b> для оценщиков России — начать с типового объекта «дом с землёй».</div>
+    </div>
+    <div class="task">
+      <div class="task-num">06</div>
+      <div class="task-txt"><b>Создать контент-присутствие</b> — Telegram для юристов, ВКонтакте, сайт. Сейчас 0 своих действий в соцсетях.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 4: ПАНЕЛЬ ЦЕЛИ ═══════════ -->
+<section class="section">
+  <div class="section-title">Цель на 12 месяцев</div>
+  <div class="goal-panel">
+    <span class="goal-icon">🎯</span>
+    <div class="goal-text">
+      <b>100+ отчётов/мес</b><span class="goal-sep">•</span>
+      <b>ср. чек ↑ 15К</b><span class="goal-sep">•</span>
+      <b>+30% выручки от автоматизации</b><span class="goal-sep">•</span>
+      <b>Денис уходит в 15:00</b><span class="goal-sep">•</span>
+      <b>60+ отзывов на Яндекс</b><span class="goal-sep">•</span>
+      <b>Telegram-канал для юристов</b>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 5: СТАТИСТИКА ═══════════ -->
+<section class="section">
+  <div class="section-title">Статистика цепочек · 25 звеньев</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val g">12</div>
+      <div class="stat-lbl">🟢 ИИ делает сам</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val y">8</div>
+      <div class="stat-lbl">🟡 ИИ ускоряет ×5–10</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val r">5</div>
+      <div class="stat-lbl">🔴 Нужен человек</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val p">76%</div>
+      <div class="stat-lbl">ИИ-потенциал</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 6: ВЕТКИ РОСТА ═══════════ -->
+<section class="section">
+  <div class="section-title">Ветки роста — куда направлять ИИ-агентов</div>
+  <div class="branches-grid">
+    <div class="branch-card">
+      <div class="branch-name">🚀 Лидогенерация</div>
+      <div class="branch-pot">+1.2–2 млн ₽/год</div>
+      <div class="branch-desc">Закрыть дыру с Яндекс.Картами (1 vs 40 отзывов), развить заливы через Яндекс. Telegram-канал для юристов = новые B2B-клиенты.</div>
+    </div>
+    <div class="branch-card b2">
+      <div class="branch-name">📱 Контент-машина</div>
+      <div class="branch-pot">+500К–1 млн ₽/год</div>
+      <div class="branch-desc">Telegram + ВКонтакте + сайт. Сейчас 0 своих действий. Лицо контента — сам Денис. Готов снимать, но не умеет писать тексты.</div>
+    </div>
+    <div class="branch-card b3">
+      <div class="branch-name">⚡ Оптимизация продажи</div>
+      <div class="branch-pot">+800К–1.5 млн ₽/год</div>
+      <div class="branch-desc">CRM + скрипт + ИИ-ассистент ночью/в выходные. «Просто забываем выставить счёт» — забыли = деньги потеряны.</div>
+    </div>
+    <div class="branch-card b4">
+      <div class="branch-name">💎 Удержание / LTV</div>
+      <div class="branch-pot">+700К–1.2 млн ₽/год</div>
+      <div class="branch-desc">База клиентов, напоминания (грузовики в Китай — ежегодно!), допродажи юристам. «Контактируем редко, очень редко».</div>
+    </div>
+    <div class="branch-card b5">
+      <div class="branch-name">⚙️ Автоматизация отчётов</div>
+      <div class="branch-pot">+30% к мощности</div>
+      <div class="branch-desc">Дом с землёй 6ч → 2ч. ИИ переносит данные из PDF в Word. На 67% больше отчётов без найма. Шаг к SaaS-платформе.</div>
+    </div>
+    <div class="branch-card b6">
+      <div class="branch-name">🛡 Репутация</div>
+      <div class="branch-pot">№1 в поиске Амурской области</div>
+      <div class="branch-desc">Ответы на отзывы (включая негативные от виновников ДТП), системный сбор. Цель: «технологичный игрок, открыто заявляющий, что использует ИИ».</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 7: ОСНОВНАЯ КАРТА ═══════════ -->
+<section class="section">
+  <div class="section-title">Карта цепочек · 5 × 5 = 25 звеньев</div>
+
+  <div class="map-wrap" id="mapWrap"></div>
+
+</section>
+
+<!-- ═══════════ БЛОК 8: ПОТЕНЦИАЛ ПО ЦЕПОЧКАМ ═══════════ -->
+<section class="section">
+  <div class="section-title">Потенциал по цепочкам</div>
+  <div class="pot-grid">
+    <div class="pot-card p1">
+      <div class="pot-name">📢 ПРИВЛЕЧЕНИЕ</div>
+      <div class="pot-val">+1.2–2 млн ₽/год</div>
+      <div class="pot-desc">Яндекс.Карты, Telegram, посты, ответы на отзывы. Сейчас 50% трафика — сарафан, 5% — Яндекс. Есть пространство для роста.</div>
+    </div>
+    <div class="pot-card p2">
+      <div class="pot-name">💼 ПРОДАЖА</div>
+      <div class="pot-val">+800К–1.5 млн ₽/год</div>
+      <div class="pot-desc">Скрипт + чек-лист квалификации + ночной ИИ-ассистент + автосчёт. Дебиторка по судебным ~1.5 млн (по оценке) — закрыть.</div>
+    </div>
+    <div class="pot-card p3">
+      <div class="pot-name">📋 ИСПОЛНЕНИЕ</div>
+      <div class="pot-val exp">Экспертиза</div>
+      <div class="pot-desc">25 лет опыта, реестр МАК, программа для трасологии. Это ядро бизнеса. ИИ ускоряет рутину: перенос данных в Word.</div>
+    </div>
+    <div class="pot-card p4">
+      <div class="pot-name">🎬 КОНТЕНТ</div>
+      <div class="pot-val">+500К–1 млн ₽/год</div>
+      <div class="pot-desc">Сейчас 0 ч/нед Дениса на контент. ДЫРА. Telegram + ВКонтакте + сайт + ответы на отзывы → пул юристов.</div>
+    </div>
+    <div class="pot-card p5">
+      <div class="pot-name">🔁 УДЕРЖАНИЕ</div>
+      <div class="pot-val">+700К–1.2 млн ₽/год</div>
+      <div class="pot-desc">База клиентов → напоминания (грузовики в Китай!). Системный сбор отзывов → рост рейтинга → топ в выдаче.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 9: ИТОГОВЫЙ ПОТЕНЦИАЛ ═══════════ -->
+<section class="section">
+  <div class="section-title">Итоговый ИИ-потенциал</div>
+  <div class="fin-grid">
+    <div class="fin-card">
+      <div class="fin-val b">+3.2–5.7 млн ₽/год</div>
+      <div class="fin-lbl">Суммарный потенциал автоматизации</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-val">+15–30%</div>
+      <div class="fin-lbl">Рост выручки за 12 мес</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-val">−12 ч/нед</div>
+      <div class="fin-lbl">Время Дениса (KPI: уйти в 15:00)</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-val">76%</div>
+      <div class="fin-lbl">ИИ-потенциал цепочек</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-val">11 дыр</div>
+      <div class="fin-lbl">Можно закрыть ИИ-агентами</div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-val">6 веток</div>
+      <div class="fin-lbl">Куда направлять ресурсы</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ БЛОК 10: ДИСКЛЕЙМЕР + ЛЕГЕНДА + ФУТЕР ═══════════ -->
+<section class="section">
+  <div class="disclaimer">
+    <span class="disc-icon">⚠️</span>
+    <div class="disc-text">
+      <b>Прогнозы носят ориентировочный характер</b> и основаны на данных распаковки + диагностики бизнеса. Реальные результаты зависят от темпов внедрения, дисциплины команды и внешних факторов рынка (ключевая ставка, ипотечный рынок, переход банков на автооценку). Карта обновляется по мере прохождения модулей программы. Цвета звеньев — это <b>потенциал автоматизации на ИИ</b>, а не оценка «хорошо/плохо»: красное звено — это зона экспертизы Дениса, которая должна оставаться красной, потому что именно за это платит клиент.
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="legend">
+    <div class="leg-item"><span class="leg-dot g"></span> <b>Зелёный:</b> ИИ автоматизирует полностью (~100%)</div>
+    <div class="leg-item"><span class="leg-dot y"></span> <b>Жёлтый:</b> ИИ ускоряет в 5–10 раз, человек контролирует</div>
+    <div class="leg-item"><span class="leg-dot r"></span> <b>Красный:</b> Требуется живой человек (экспертиза, физика, доверие)</div>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2026 <b>ИИщенко LAB</b> · BizChain Map v4.2 · Подготовлено для Дениса · ООО «Методический центр» · Благовещенск<br>
+  Карта построена на основе распаковки бизнеса (10 контекстных файлов) и диагностики ниши «оценка и экспертиза»
+</footer>
+
+</div>
+
+<!-- ═══════════ МОДАЛЬНОЕ ОКНО ═══════════ -->
+<div class="overlay" id="overlay" onclick="closeM(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM()">×</button>
+    <div id="mBadge" class="mbadge">🟢 ИИ делает сам</div>
+    <div id="mTitle" class="mtitle">Заголовок</div>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════ ДАННЫЕ ЦЕПОЧЕК ═══════════════════
+const CHAINS = [
+  // ════════ ЦЕПОЧКА 1: ПРИВЛЕЧЕНИЕ ════════
+  {
+    cls:'c1', emoji:'📢', name:'Привлечение', sub:'клиентов',
+    gain:'50% сарафан · 15% Яндекс/2ГИС',
+    time:'8 каналов трафика',
+    steps:[
+      {
+        name:'Сарафан\nюристы / нотариусы', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Сарафан — юристы, нотариусы, банки',
+        chain:'Привлечение', ai:'boost', hole:false,
+        desc:'<strong>50%</strong> всего трафика — главный канал. Юристы (Юлия Борисовна и др.) направляют клиентов по ДТП и судебным экспертизам. Нотариусы дают телефон бабулям по наследству. Банки направляют на ипотеку и залог.',
+        desc_quote:'«Юлия отправляет к нам, мы отправляем к ней. Водители грузовиков — коллеги, водители такие же, закажут у нас, передают своим коллегам.»',
+        desc_source:'из распаковки, файл 02 + 06 + Исходник Раздел 2',
+        ai_text:'ИИ-агент готовит для юристов-партнёров короткие памятки/чек-листы по их делам (какие документы собрать, какая методика, какие сроки). Это даёт юристу повод писать клиенту: «Свяжитесь с Методическим центром». Эффект — больше повторных направлений + меньше телефонных консультаций «как лучше сделать».',
+        agent:'Копирайтер + Ген Агент',
+        agent_desc:'Готовит мини-памятки и шаблоны для юристов-партнёров: «Что взять с клиента для оценки залива», «Чек-лист для судебной экспертизы», «Какой документ нужен для ипотеки в Сбере».',
+        agent_mod:'Модуль 02 · Контент + Модуль 03 · Воронки',
+        branch:'Лидогенерация · B2B-партнёрский канал',
+        branch_pot:'+700К–1.2 млн ₽/год',
+        branch_link:'Сарафан = 50% трафика. Систематизируем работу с юристами — не теряем тёплые рекомендации, не зависим только от одной Юлии.',
+        unit_money:'~0 ₽/мес расход (партнёрский канал)',
+        unit_time:'~4 ч/нед — звонки и консультации юристам/нотариусам',
+        unit_pot:'С ИИ-памятками: 1.5 ч/нед на юристов вместо 4 ч/нед, +30–50% повторных направлений.',
+        tool:'Claude AI + база знаний по типовым делам',
+        tool_steps:'1) Собрать 10 типовых сценариев юристов (залив, ДТП, наследство). 2) Сделать шаблоны памяток для клиента юриста. 3) Отдать пул юристам — пусть рассылают своим клиентам.',
+        tool_time:'4 часа настройки + 2 часа в неделю на пополнение базы',
+        goal:'Развить судебное направление',
+        goal_before:'Зависимость от одной Юли. Юристы звонят с типовыми вопросами — тратим время.',
+        goal_after:'10 юристов работают по нашим памяткам. Меньше звонков, больше клиентов, меньше времени Дениса на «расскажи как».',
+        links:[
+          {color:'#f97316', lbl:'← Удержание', txt:'Хорошая работа для юриста → новые направления', sub:'Петля сарафана'},
+          {color:'#2196f3', lbl:'← Контент', txt:'Telegram-канал → читают юристы → новые партнёры', sub:'Петля возврата'}
+        ],
+        metrics:[
+          {val:'50%', lbl:'всего трафика'},
+          {val:'B2B', lbl:'основной тип'},
+          {val:'25 лет', lbl:'репутации'}
+        ]
+      },
+      {
+        name:'Карты\n2ГИС + Яндекс', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'2ГИС и Яндекс.Бизнес — карточки и посты',
+        chain:'Привлечение', ai:'full', hole:false,
+        desc:'<strong>15%</strong> трафика суммарно. Платный профиль в 2ГИС (40 отзывов, 4.8★). Яндекс.Бизнес — <strong>57 постов</strong>, пошёл поток по заливам после оплаты доступа. Посты ведёт фирма из Владивостока, дублирует в 2ГИС.',
+        desc_quote:'«Яндекс.Бизнес — стал пошёл поток по заливам с Яндекса именно.»',
+        desc_source:'из распаковки, файл 02 + Исходник Раздел 2',
+        ai_text:'ИИ создаёт 30+ постов в месяц на 4 направления (ипотека, ДТП, залив, наследство), включая сезонные (гололёд → ДТП, ремонт крыш → заливы). Подбирает фото из шаблонной библиотеки. Денис согласует пакет раз в неделю — больше не нужно «не открывать через VPN».',
+        agent:'Копирайтер + Ген Агент',
+        agent_desc:'Генерирует серию постов по 4 направлениям, адаптирует под сезон и инфоповоды. Сначала параллельно с фирмой из Владивостока, потом полностью заменяет.',
+        agent_mod:'Модуль 02 · Контент',
+        branch:'Лидогенерация + Контент-машина',
+        branch_pot:'+500К–800К ₽/год',
+        branch_link:'2ГИС/Яндекс уже работают. Усиление контента → больше заявок без увеличения рекламного бюджета.',
+        unit_money:'~5–8К ₽/мес (платный профиль 2ГИС + Яндекс + фирма из Владивостока)',
+        unit_time:'~0 ч/нед Дениса (полностью на аутсорсе)',
+        unit_pot:'С ИИ: 1 ч/нед на согласование вместо «не открываю». 30 постов/мес вместо ~5.',
+        tool:'Claude AI + шаблон поста по направлениям',
+        tool_steps:'1) Сделать 4 базовых шаблона (ипотека / ДТП / залив / наследство). 2) Тест 10 постов — Денис согласует. 3) Поставить на конвейер.',
+        tool_time:'3 часа на шаблоны + 1 ч/нед на согласование',
+        goal:'Технологичный игрок №1 в Амурской области',
+        goal_before:'57 постов за весь период, фирма из Владивостока, Денис не открывает на согласование.',
+        goal_after:'30 постов/мес по 4 направлениям, Денис согласует пакет за 30 минут раз в неделю.',
+        links:[
+          {color:'#7c3aed', lbl:'← Контент', txt:'Готовые посты → размещение', sub:'Информационный'},
+          {color:'#f97316', lbl:'← Удержание', txt:'Отзывы клиентов → рост рейтинга', sub:'Петля сарафана'}
+        ],
+        metrics:[
+          {val:'57', lbl:'постов Яндекс'},
+          {val:'40', lbl:'отзывов 2ГИС'},
+          {val:'4.8★', lbl:'рейтинг'}
+        ]
+      },
+      {
+        name:'Telegram\nсоцсети', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Telegram-канал + ВКонтакте — НЕ ВЕДУТСЯ',
+        chain:'Привлечение', ai:'full', hole:true,
+        desc:'<strong>0%</strong> трафика. Нет ни Telegram, ни ВКонтакте. <strong>Чистая дыра.</strong> При этом Денис сам говорит: «Telegram-канал для юристов» — это потенциально мощный B2B-канал. Темы кипят (заливы, ДТП без страховки, наследство).',
+        desc_quote:'«Для развития автоэкспертизы — какой-то новостной Telegram-канал. Для заливов — Яндекс. В общем, мне сложно ответить на этот вопрос.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 2',
+        ai_text:'ИИ ведёт Telegram-канал «Экспертиза в Благовещенске»: 3 поста в неделю — разборы реальных кейсов (без идентификации), новости рынка, мифы про оценку, ответы на типовые вопросы. Целевая аудитория — юристы города. Денис записывает голосовое — ИИ превращает в пост.',
+        agent:'Копирайтер + Ген Агент',
+        agent_desc:'Генерирует пост из голосового Дениса или из кейса. Создаёт серию «Что важно знать юристу: 7 признаков сильной экспертизы». Поддерживает регулярность 3 поста/нед.',
+        agent_mod:'Модуль 02 · Контент-машина',
+        branch:'Контент-машина · Telegram для юристов',
+        branch_pot:'+500К–1 млн ₽/год',
+        branch_link:'1 хороший юрист в подписчиках = 5–10 направлений в год. 30 юристов в канале = заметный рост B2B-сегмента.',
+        unit_money:'0 ₽/мес (Telegram бесплатно)',
+        unit_time:'⚠ 0 ч/нед — ДЫРА, не делается',
+        unit_pot:'С ИИ: 30 мин/нед Дениса (голосовое) + ИИ генерирует пост. 12 постов/мес.',
+        tool:'Claude AI + Telegram-канал + 2ГИС-карточка ссылка',
+        tool_steps:'1) Создать канал «Экспертиза Благовещенск». 2) Денис записывает 3 голосовых в неделю. 3) ИИ превращает в посты. 4) Юристы добавляются органически + приглашение в подпись email.',
+        tool_time:'2 часа запуск + 30 мин/нед поддержка',
+        goal:'Telegram-канал для юристов · 30+ подписчиков-партнёров',
+        goal_before:'0 каналов, 0 постов, 0 подписчиков. Юристы узнают о новых направлениях только при звонке.',
+        goal_after:'Канал с 50+ юристами читает каждый пост. Заходят с вопросом, остаются клиентом.',
+        links:[
+          {color:'#7c3aed', lbl:'← Контент', txt:'Голосовое Дениса → пост в канале', sub:'Информационный'},
+          {color:'#2196f3', lbl:'→ Карты 2ГИС', txt:'Канал → доверие → 2ГИС', sub:'Петля возврата'}
+        ],
+        metrics:[
+          {val:'0', lbl:'каналов сейчас'},
+          {val:'B2B', lbl:'цель аудитории'},
+          {val:'3×нед', lbl:'план постов'}
+        ]
+      },
+      {
+        name:'Сайт\nи лендинги', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Сайт компании + посадочные — ОТСУТСТВУЮТ',
+        chain:'Привлечение', ai:'full', hole:true,
+        desc:'<strong>Нет сайта.</strong> Есть только мини-сайты 2ГИС и Яндекс.Бизнес. <strong>Дыра.</strong> Для аккредитации в банках, для B2B-юристов, для контекстной рекламы — сайт критичен. Денис говорит: «Хотелось бы знали, что мы самая крупная оценочная организация в области».',
+        desc_quote:'«Сайта нет. Есть только Яндекс.Бизнес и 2ГИС.»',
+        desc_source:'из распаковки, Исходник Раздел 2',
+        ai_text:'ИИ генерирует структуру одностраничника: блок «25 лет на рынке», 4 направления услуг с примерами кейсов, аккредитации, команда (без имён — фотограф, оценщики СРО, трасологи), форма заявки → CRM. Версия для юристов: «Партнёрство», блок с типовыми материалами для юристов.',
+        agent:'Посадочные + Копирайтер',
+        agent_desc:'Создаёт структуру сайта, тексты блоков, FAQ-блок (10 типовых вопросов), форму квалификации. Готовит лендинги под Яндекс.Директ для заливов, ДТП, наследства.',
+        agent_mod:'Модуль 02 + Модуль 04 · Посадочные',
+        branch:'Лидогенерация · Контекстная реклама',
+        branch_pot:'+400К–700К ₽/год',
+        branch_link:'Сайт = база для рекламы Яндекс.Директ. Заливы через Яндекс уже работают. Сайт усилит конверсию.',
+        unit_money:'~3–5К ₽/мес (хостинг + домен) + одноразово ~30К на разработку',
+        unit_time:'⚠ 0 ч/нед — ДЫРА',
+        unit_pot:'С ИИ: одностраничник готов за 2 недели. Денис отвечает на 20 вопросов ИИ — остальное генерируется.',
+        tool:'Tilda / Webflow + Claude AI для текстов',
+        tool_steps:'1) Купить домен + Tilda Pro. 2) ИИ генерирует тексты по 4 направлениям. 3) Денис согласует и фото. 4) Запуск.',
+        tool_time:'2 недели на запуск',
+        goal:'Самая крупная оценочная организация в Амурской области — должно быть видно',
+        goal_before:'Нет сайта. Юристы не могут отправить ссылку. В рекламу не зайти.',
+        goal_after:'Одностраничник с кейсами и формой → ссылка в подпись email и в Telegram-канал → больше квалифицированных заявок.',
+        links:[
+          {color:'#2196f3', lbl:'← Контент', txt:'Кейсы из работы → блок «Кейсы» на сайте', sub:'Информационный'},
+          {color:'#0d9488', lbl:'→ Продажа', txt:'Форма на сайте → заявка → квалификация', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'0', lbl:'сайтов сейчас'},
+          {val:'4', lbl:'направления'},
+          {val:'1', lbl:'одностраничник'}
+        ]
+      },
+      {
+        name:'Партнёры\nбанки', type:'human', badge:'Человек', agent_icon:'👤',
+        title:'Партнёры — банки, СРО, страховые',
+        chain:'Привлечение', ai:'human', hole:false,
+        desc:'<strong>10%</strong> трафика — банки направляют клиентов на оценку. Аккредитация в большинстве банков города. Это <strong>живые отношения</strong>: «банк уверен, что мы партнёры». Сбербанк уже 2 года не даёт (ушёл в автооценку) — главная угроза.',
+        desc_quote:'«Есть банки, которые отправляют только к нам, потому что банк уверен в том, что мы партнёры банка и учитываем интересы банка.»',
+        desc_source:'из распаковки, файл 06 + Исходник Раздел 2',
+        ai_text:'ИИ напрямую с банками не работает — это территория Дениса. НО: ИИ готовит отчётность для банков (полугодовая активность, конверсия, средний срок отчёта), памятку для аккредитации, материалы для встречи с новым банком. ИИ помогает ДО встречи, не на встрече.',
+        agent:'Аналитик (подготовка ДО)',
+        agent_desc:'Готовит данные для встречи с банком: сколько отчётов делали для этого банка за период, средний срок, количество доработок. Помогает Денису формулировать ценность для банка.',
+        agent_mod:'Модуль 03–04 · Аналитика',
+        branch:null, branch_pot:null, branch_link:null,
+        unit_money:'~1 ч/нед Дениса — работа с банками + аккредитации',
+        unit_time:'~1 ч/нед',
+        unit_pot:'С ИИ-подготовкой: 30 мин/нед, выше качество встреч.',
+        tool:'Excel + Claude AI для отчётов',
+        tool_steps:'1) Собрать данные за полугодие по каждому банку. 2) ИИ генерирует отчёт-памятку. 3) Использовать на встрече.',
+        tool_time:'1 час на отчёт раз в полгода',
+        goal:'Не потерять аккредитации, добавить новых партнёров',
+        goal_before:'Денис помнит про банки, но не системно. Сбер уже ушёл.',
+        goal_after:'Раз в полгода Денис заходит в каждый банк с конкретными цифрами. Прозрачно, как партнёр.',
+        links:[
+          {color:'#0d9488', lbl:'→ Продажа', txt:'Банк направил → клиент в работе', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'10%', lbl:'трафика'},
+          {val:'~6', lbl:'банков активно'},
+          {val:'1', lbl:'ушёл (Сбер)'}
+        ]
+      }
+    ]
+  },
+
+  // ════════ ЦЕПОЧКА 2: ПРОДАЖА ════════
+  {
+    cls:'c2', emoji:'💼', name:'Продажа', sub:'заявок',
+    gain:'~1.5 млн ₽ дебиторки судебных (по оценке)',
+    time:'нет CRM, нет скрипта',
+    steps:[
+      {
+        name:'Приём\nзвонка', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Приём входящего звонка',
+        chain:'Продажа', ai:'boost', hole:false,
+        desc:'<strong>Утром поток с 9:00.</strong> Отвечают Денис, жена, по очереди. Администратора в отделе оценки нет. <strong>Сборы Дениса растягиваются до 11:00.</strong> Тренировки бокса 2×нед утром делают ситуацию ещё острее.',
+        desc_quote:'«Ещё утром идёт поток звонков с 9:00 прямо поток поток звонков, на которые отвечаем... админа же нет, отвечаем я, жена. По очереди пока там отвечаешь, естественно, сборы растягиваются. И вот часам к 10:00 на работу только прихожу, чаще к одиннадцати.»',
+        desc_source:'из распаковки, файл 01 + Исходник Раздел 3',
+        ai_text:'ИИ-ассистент на номере 24/7. Отвечает на вопросы «сколько стоит оценка квартиры для Сбера», «нужна ли оценка для наследства», «как делается экспертиза по заливу». Фиксирует горячих в очередь к Денису/жене. Звонит обратно на пропущенные.',
+        agent:'Воронки (ИИ-ассистент звонков)',
+        agent_desc:'Принимает входящие 24/7, отвечает на 20 типовых вопросов из голоса Дениса. Квалифицирует: горячий / тёплый / FAQ. Передаёт горячих в WhatsApp Дениса с готовой карточкой.',
+        agent_mod:'Модуль 03 · Воронки',
+        branch:'Оптимизация продажи · ИИ-приём заявок',
+        branch_pot:'+800К–1.2 млн ₽/год',
+        branch_link:'Текущие заявки теряются ночью и в выходные. ИИ-ассистент = +20–30% к закрытию заявок без найма администратора.',
+        unit_money:'~3–5К ₽/мес (сервис ИИ-обзвона)',
+        unit_time:'10 ч/нед Денис + жена (общение с клиентами + звонки)',
+        unit_pot:'С ИИ: 4–5 ч/нед на горячих лидов. 5 ч/нед освобождается.',
+        tool:'ChatPlace.ai / Avito Pro Voice / Voximplant + Claude AI',
+        tool_steps:'1) Записать 20 типовых ответов голосом Дениса. 2) Настроить ИИ-ассистента на голос. 3) Тест 2 недели в параллель. 4) Перевод 100% ночных и выходных на ИИ.',
+        tool_time:'1 неделя настройки + 2 недели теста',
+        goal:'Уйти с работы в 15:00',
+        goal_before:'Денис до 11:00 на телефоне. Жена параллельно. Каждая заявка — переключение контекста.',
+        goal_after:'Утром ИИ принял 80% звонков, Денис видит 2–3 горячих заявки в WhatsApp с готовой карточкой.',
+        links:[
+          {color:'#0d9488', lbl:'→ Квалификация', txt:'Принятый звонок → чек-лист', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'9:00', lbl:'старт потока'},
+          {val:'11:00', lbl:'Денис на работе'},
+          {val:'10 ч/нед', lbl:'общение клиенты'}
+        ]
+      },
+      {
+        name:'Квалификация\nзаявки', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Квалификация — что за объект, какой банк, какая цель',
+        chain:'Продажа', ai:'boost', hole:true,
+        desc:'Текущая схема: «уточняем объект → цель → банк → нужные документы → ст-ть → фиксируем на бумажке». <strong>Нет скрипта. Нет CRM.</strong> «Просто забываем выставить счёт» — главный тормоз. Заявки теряются.',
+        desc_quote:'«Просто тормозом — забываем выставить счёт или написать клиенту куда оплатить. Просто забываем это сделать.»',
+        desc_source:'из распаковки, файл 02 + Исходник Раздел 2',
+        ai_text:'ИИ ведёт квалификацию по чек-листу из 12 пунктов: объект, цель, банк, есть ли документы, срок, бюджет. Заполняет карточку клиента в CRM. Не даёт «забыть выставить счёт» — триггер на счёт через 1 час после квалификации.',
+        agent:'Воронки + Аналитик',
+        agent_desc:'Формирует карточку заявки в CRM. Триггерит «через 1 час выставить счёт». Считает статистику конверсии по типам заявок и каналам.',
+        agent_mod:'Модуль 03 · Воронки',
+        branch:'Оптимизация продажи · CRM + скрипт',
+        branch_pot:'~1.5 млн ₽ по оценке (закрыть дебиторку судебных)',
+        branch_link:'Дебиторка по судебным ~1.5 млн (со слов Дениса — «1.500 точно есть», единица не уточнялась) вышла из-за того, что предыдущий администратор не выставлял счета. Скрипт + триггер = ноль таких потерь.',
+        unit_money:'~5–7К ₽/мес (Битрикс24 / amoCRM минимальный план)',
+        unit_time:'~2 ч/нед — потери из-за «забыли» (восстанавливаем задним числом)',
+        unit_pot:'С CRM + скриптом: 0 потерь. Время Дениса на повторные звонки «не забыли ли мы» — 0.',
+        tool:'Битрикс24 / amoCRM + Claude AI для скриптов',
+        tool_steps:'1) Внедрить CRM, импорт текущих заявок. 2) ИИ написать скрипт квалификации по 4 типам. 3) Триггер «через 1ч выставить счёт». 4) Денис проверяет 1 раз в день.',
+        tool_time:'1 неделя на CRM + 3 дня на скрипты',
+        goal:'Уйти с работы в 15:00 + закрыть дебиторку 1.5 млн',
+        goal_before:'Записываем «на бумажке», забываем выставить счёт, дебиторка растёт.',
+        goal_after:'Карточка в CRM, триггер на счёт, ноль забытых заявок. Через 3 мес — закрыта дебиторка 1.5 млн.',
+        links:[
+          {color:'#0d9488', lbl:'→ Договор', txt:'Карточка → автосчёт через 1 час', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'~1.5 млн', lbl:'дебиторка'},
+          {val:'12', lbl:'пунктов скрипта'},
+          {val:'0', lbl:'CRM сейчас'}
+        ]
+      },
+      {
+        name:'Расчёт\nстоимости', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Расчёт предварительной стоимости по прайсу',
+        chain:'Продажа', ai:'full', hole:false,
+        desc:'Сейчас Денис/жена/администратор устно называют по памяти: «квартира 10К, дом с землёй 11К, авто 25К, залив 25К, суд 35К+». Простые случаи. Сложные — Денис прикидывает по объёму.',
+        desc_quote:'«Называем предварительную стоимость по прайсу.»',
+        desc_source:'из распаковки, файл 03 + Исходник Раздел 2',
+        ai_text:'ИИ-калькулятор по типу объекта + сложность + удалённость + срочность. Учитывает: за город +20%, ночной выезд +30%, срочно +15%. Сразу отдаёт клиенту через WhatsApp с разбивкой стоимости.',
+        agent:'Воронки (калькулятор) + Посадочные',
+        agent_desc:'Калькулятор на сайте + в чат-боте. Берёт ответы на 5 вопросов клиента, возвращает «от ... до ...» с разбивкой. Денис может корректировать вручную.',
+        agent_mod:'Модуль 03–04 · Воронки + Посадочные',
+        branch:'Оптимизация продажи · Прозрачное ценообразование',
+        branch_pot:'+200К–400К ₽/год',
+        branch_link:'Прозрачная цена → меньше отказов на этапе «дорого». Меньше времени Дениса на «как мы считаем».',
+        unit_money:'~0 ₽/мес (виджет калькулятора)',
+        unit_time:'~3 ч/нед (часть процесса квалификации)',
+        unit_pot:'С калькулятором: клиент сам считает, Денис только сложные случаи (~30 мин/нед).',
+        tool:'Claude AI + калькулятор на Tilda / Bot в WhatsApp',
+        tool_steps:'1) Денис диктует логику ценообразования. 2) ИИ создаёт калькулятор. 3) Внедрение в WhatsApp-бота. 4) Виджет на будущий сайт.',
+        tool_time:'2 дня на калькулятор',
+        goal:'Прозрачность для клиента + экономия времени',
+        goal_before:'Клиент звонит «сколько стоит?», Денис прикидывает.',
+        goal_after:'Клиент видит «ваша квартира 10К + банк Сбер +0 = 10К» в WhatsApp за 2 минуты.',
+        links:[
+          {color:'#0d9488', lbl:'→ Договор', txt:'Расчёт → выставляем счёт', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'5', lbl:'типов услуг'},
+          {val:'10–35К', lbl:'диапазон чека'},
+          {val:'+20%', lbl:'за город'}
+        ]
+      },
+      {
+        name:'Договор\nи счёт', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Договор и счёт — генерация и отправка',
+        chain:'Продажа', ai:'full', hole:false,
+        desc:'Физлицам — счёт. Юрлицам — договор + ЭДО через Контурдиалог. Шаблоны есть, но генерация ручная. <strong>Главная боль:</strong> «забываем выставить счёт» → дебиторка.',
+        desc_quote:'«Выставляем счёт / договор (физлицам — счёт, юрлицам — договор + ЭДО через Контурдиалог).»',
+        desc_source:'из распаковки, файл 02 + Исходник Раздел 2',
+        ai_text:'CRM по триггеру «карточка заполнена» автоматически создаёт счёт из шаблона, заполняет реквизиты из 1С, отправляет клиенту в WhatsApp/Email/Telegram. Для юрлиц — карточка пакет документов через Контурдиалог автоматически.',
+        agent:'Воронки + Посадочные (документооборот)',
+        agent_desc:'Автогенерация счёта/договора из CRM. Шаблоны под физлиц и юрлиц. Интеграция с 1С (юрлица) и Контурдиалогом. Отправка клиенту автоматически.',
+        agent_mod:'Модуль 03–04',
+        branch:'Оптимизация продажи · Автодокументооборот',
+        branch_pot:'~1.5 млн ₽ по оценке (дебиторка) + +500К ₽/год (ускорение)',
+        branch_link:'Дебиторка по судебным ~1.5 млн (со слов Дениса — «1.500 точно есть», единица не уточнялась) ушла из-за «забыли выставить». Автоматизация = эта проблема решена раз и навсегда.',
+        unit_money:'~3К ₽/мес (плагин CRM + Контурдиалог уже есть)',
+        unit_time:'~3 ч/нед Дениса на договоры/счета',
+        unit_pot:'С автогенерацией: 30 мин/нед на проверку. 2.5 ч/нед освобождается.',
+        tool:'CRM (Битрикс24) + интеграция 1С + Контурдиалог',
+        tool_steps:'1) Шаблоны счетов в CRM. 2) Триггер: «карточка заполнена» → автосчёт. 3) Для юрлиц — пакет в Контурдиалог.',
+        tool_time:'2 недели на полную настройку',
+        goal:'Уйти с работы в 15:00 + 0 забытых счетов',
+        goal_before:'Денис/жена помнят и пишут. Забываем — клиент уходит, дебиторка растёт.',
+        goal_after:'CRM сама выставляет счёт через 1 час после квалификации. Денис проверяет 1 раз в день.',
+        links:[
+          {color:'#0d9488', lbl:'→ Оплата', txt:'Счёт → клиент платит → исполнение', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'3 ч/нед', lbl:'на договоры'},
+          {val:'ЭДО', lbl:'есть юрлица'},
+          {val:'~1.5 млн', lbl:'дебиторка'}
+        ]
+      },
+      {
+        name:'Оплата\nи запуск', type:'human', badge:'Человек', agent_icon:'👤',
+        title:'Оплата → запуск работы',
+        chain:'Продажа', ai:'human', hole:false,
+        desc:'Срок до оплаты: квартира/авто — день. Судебка — деньги на депозит суда. <strong>Особенность Дениса:</strong> «часто начинаем работать ещё без оплаты». Есть отказы, неоплаты, но их немного. Решает человек на основе доверия и контекста.',
+        desc_quote:'«У нас оплата не всегда является побуждением для каких-то действий. То есть мы часто начинаем работать ещё без оплаты. У нас есть потом отказы, неоплаты, но их немного.»',
+        desc_source:'из распаковки, Исходник Раздел 5',
+        ai_text:'ИИ не принимает решений по оплате. Но: ИИ отслеживает статус «выставлен счёт → не оплачен 3 дня» → напоминание клиенту автоматически. ИИ передаёт триггер «оплачено» → запуск исполнения автоматически (без участия Дениса).',
+        agent:'Воронки (мониторинг + триггер)',
+        agent_desc:'Мониторит статус оплаты в банке/CRM. Напоминает клиенту через WhatsApp на 3-й день. Триггерит запуск исполнения по факту оплаты.',
+        agent_mod:'Модуль 03',
+        branch:null, branch_pot:null, branch_link:null,
+        unit_money:'основной денежный поток бизнеса',
+        unit_time:'~30 мин/нед — отслеживание оплат',
+        unit_pot:'С автотриггером: 0 ч/нед на отслеживание.',
+        tool:'CRM + банк-эквайринг + Telegram-бот для напоминаний',
+        tool_steps:'1) Подключить эквайринг к CRM. 2) Триггер «оплачено» → исполнение. 3) Триггер «3 дня без оплаты» → напоминание.',
+        tool_time:'3 дня настройки',
+        goal:'Стабильный денежный поток + меньше неоплат',
+        goal_before:'Делаем без оплаты, часть теряется, считаем потери.',
+        goal_after:'Автонапоминание → меньше «забыли заплатить», без потери человечности.',
+        links:[
+          {color:'#0d9488', lbl:'→ ИСПОЛНЕНИЕ', txt:'Оплата → запуск исполнения', sub:'Триггерный · ключевой'}
+        ],
+        metrics:[
+          {val:'1 день', lbl:'до оплаты (квартира)'},
+          {val:'депозит', lbl:'суда'},
+          {val:'мало', lbl:'неоплат'}
+        ]
+      }
+    ]
+  },
+
+  // ════════ ЦЕПОЧКА 3: ИСПОЛНЕНИЕ ════════
+  {
+    cls:'c3', emoji:'📋', name:'Исполнение', sub:'работ',
+    gain:'1.200–1.500 отчётов/год',
+    time:'дом ~6 ч / квартира ~2 ч',
+    steps:[
+      {
+        name:'Приёмка\nдокументов', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Приёмка документов — выписка ЕГРН, ДКП, техпаспорт',
+        chain:'Исполнение', ai:'boost', hole:false,
+        desc:'Сейчас: «Получены документы → проверяем → собираем в папку → если не хватает — дозапрашиваем». Часть проверки ручная. На сложные объекты (дом) набор больше.',
+        desc_quote:'«Ждём документы → проверяем → если чего-то не хватает — дозапрашиваем.»',
+        desc_source:'из распаковки, Исходник Раздел 2',
+        ai_text:'ИИ проверяет полноту пакета по чек-листу для каждого типа объекта (квартира/дом/авто/суд). Сравнивает с эталоном. Помечает «не хватает: техпаспорта», отправляет автоматическое сообщение клиенту с конкретным запросом.',
+        agent:'Воронки (документооборот)',
+        agent_desc:'Чек-листы по 4 типам объектов. Распознавание PDF/фото. Автозапрос недостающих документов. Создание папки клиента.',
+        agent_mod:'Модуль 03',
+        branch:'Автоматизация отчётов',
+        branch_pot:'+200К–300К ₽/год',
+        branch_link:'Дозапрос документов = задержка отчёта. Автопроверка = ноль задержек по этой причине.',
+        unit_money:'~0 ₽/мес (часть CRM)',
+        unit_time:'~2 ч/нед — проверка пакетов',
+        unit_pot:'С ИИ: 30 мин/нед, остальное автоматически.',
+        tool:'CRM + Claude Vision (распознавание документов)',
+        tool_steps:'1) Сделать чек-листы по 4 типам объектов. 2) ИИ распознаёт прислоенный пакет. 3) Сравнение → автозапрос.',
+        tool_time:'1 неделя настройки',
+        goal:'Ускорить срок отчёта без потери качества',
+        goal_before:'Часть отчётов задерживается, потому что дозапрашиваем документы.',
+        goal_after:'Пакет проверен ИИ за 1 минуту. Клиент дослал → запускается оценщик.',
+        links:[
+          {color:'#0d9488', lbl:'← Оплата', txt:'Оплата → пакет в работу', sub:'Триггерный'},
+          {color:'#0d9488', lbl:'→ Выезд', txt:'Пакет полон → выезд фотографа', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'4', lbl:'типа объектов'},
+          {val:'~30%', lbl:'требуют дозапроса'},
+          {val:'1 мин', lbl:'проверка ИИ'}
+        ]
+      },
+      {
+        name:'Выезд\nфотограф', type:'human', badge:'Человек', agent_icon:'👤',
+        title:'Выезд на объект — фотограф / оценщик',
+        chain:'Исполнение', ai:'human', hole:false,
+        desc:'<strong>Физическая работа.</strong> Фотограф едет на квартиру, договаривается, фотографирует, присылает фото на email. Дом — ~1 час осмотра. Залив — выезд оценщика. Суд — выезд эксперта (бывают командировки в другие регионы).',
+        desc_quote:'«Фотограф договаривается с клиентом → выезжает → фотографирует → присылает фото на почту.»',
+        desc_source:'из распаковки, Исходник Раздел 2',
+        ai_text:'ИИ оптимизирует расписание выездов: группирует по районам, считает оптимальный маршрут на день. Напоминает клиенту за час до выезда. После выезда — триггер «фото загружены» → передача оценщику.',
+        agent:'Ген Агент (логистика выездов)',
+        agent_desc:'Календарь выездов с группировкой по районам. Напоминания клиентам. Триггер «фотограф вернулся» → передача оценщику.',
+        agent_mod:'Модуль 02–03',
+        branch:null, branch_pot:null, branch_link:null,
+        unit_money:'основная себестоимость (зарплата фотографа + ГСМ)',
+        unit_time:'~1 ч на квартиру, ~1 ч на дом, до 1 дня на командировку',
+        unit_pot:'С ИИ-расписанием: 2–3 объекта в день вместо 1–2. Меньше километража.',
+        tool:'Google Calendar + Claude AI + Maps API',
+        tool_steps:'1) Календарь выездов с геолокацией. 2) ИИ группирует по районам. 3) Автонапоминания клиентам.',
+        tool_time:'3 дня настройки',
+        goal:'Больше отчётов без найма + развить судебное направление',
+        goal_before:'Фотограф едет вразброс. 1–2 квартиры в день.',
+        goal_after:'2–3 квартиры за полдня. Денис освобождается от логистики.',
+        links:[
+          {color:'#7c3aed', lbl:'→ Контент', txt:'Фото объекта → возможно контент', sub:'Информационный'},
+          {color:'#0d9488', lbl:'→ Отчёт', txt:'Фото готовы → оценщик берёт в работу', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'~1 ч', lbl:'квартира'},
+          {val:'~1 ч', lbl:'дом (осмотр)'},
+          {val:'фотограф', lbl:'+ оценщики'}
+        ]
+      },
+      {
+        name:'Составление\nотчёта', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Составление отчёта — Word, методика, расчёт, фото',
+        chain:'Исполнение', ai:'boost', hole:true,
+        desc:'<strong>Главная боль Дениса.</strong> Квартира — ~2 ч. Дом с землёй — <strong>~6 ч (130 листов, только Word)</strong>. Информация дублируется в нескольких местах. Перенос данных из документов в Word — топ-2 пожиратель времени.',
+        desc_quote:'«Большая часть времени занимает внесение информации с документов в сам отчёт, в вордовский вариант. Дома делаются только в ворде. И в отчёте эти строки повторяются несколько раз.»',
+        desc_source:'из распаковки, файл 03 + Исходник Раздел 3',
+        ai_text:'ИИ берёт пакет документов (ЕГРН, ДКП, техпаспорт) → распознаёт → автоматически заполняет шаблон отчёта Word. Все повторяющиеся блоки — один раз. Фотографии — автоподписи и привязка к комнатам. Оценщик дополняет методикой и проверяет — отчёт готов в 2–3 раза быстрее.',
+        agent:'Аналитик + Копирайтер',
+        agent_desc:'Распознавание PDF/EGRN → структура. Шаблон Word с переменными. Автозаполнение. Подписи фото. Базовый расчёт по методике. Финальная проверка остаётся на оценщике.',
+        agent_mod:'Модуль 03 + Модуль 04 · Кастомные ИИ-агенты',
+        branch:'Автоматизация отчётов · Шаг к SaaS-платформе',
+        branch_pot:'+30% мощности без найма (1.500 → 2.000 отчётов/год)',
+        branch_link:'Если дом 6ч → 2ч, на 67% больше отчётов без найма. Это прямая ступень к SaaS-платформе для оценщиков России.',
+        unit_money:'~0 ₽/мес (внутренняя автоматизация)',
+        unit_time:'команда тратит ~50% всего времени на отчёты. Дом — топ-2 пожиратель Дениса (он сам редко делает, но контролирует)',
+        unit_pot:'С ИИ: дом 6ч → 2ч, квартира 2ч → 1ч. На 67% больше мощности.',
+        tool:'Claude AI + Python-скрипт + шаблон Word',
+        tool_steps:'1) Разобрать шаблон дома по блокам (что повторяется). 2) ИИ-скрипт: PDF/EGRN → переменные → Word. 3) Тест на 5 объектах. 4) Внедрение оценщикам.',
+        tool_time:'3–4 недели разработки + 1 неделя теста',
+        goal:'Развить судебное направление + SaaS для оценщиков России',
+        goal_before:'Дом — 6 часов трудоёмкости. Оценщик пишет в Word вручную. Денис не может масштабировать.',
+        goal_after:'Дом — 2 часа. На 67% больше объектов без найма. Через год — SaaS для других оценщиков России.',
+        links:[
+          {color:'#0d9488', lbl:'→ Контроль', txt:'Отчёт готов → проверка', sub:'Триггерный'},
+          {color:'#7c3aed', lbl:'→ Контент', txt:'Кейс из отчёта → пост (анонимный)', sub:'Информационный'}
+        ],
+        metrics:[
+          {val:'~6 ч', lbl:'дом сейчас'},
+          {val:'~2 ч', lbl:'квартира'},
+          {val:'130 лист.', lbl:'отчёт дома'}
+        ]
+      },
+      {
+        name:'Контроль\nкачества', type:'human', badge:'Человек', agent_icon:'👤',
+        title:'Контроль качества — проверка отчёта Денисом / женой',
+        chain:'Исполнение', ai:'human', hole:false,
+        desc:'<strong>Жена в основном проверяет</strong> (~2 ч/нед Дениса на контроль). Денис — на сложные/судебные. Это <strong>экспертная роль:</strong> «Если это типовые стандартные отчёты, нет такого, что делаю, что нельзя делегировать» — но финальный взгляд остаётся.',
+        desc_quote:'«Если как бы всё-таки та экспертиза плохая, то мы там поможем сделать рецензию. Если мы говорим, что да, мы беремся за это дело, результат будет — мы свои слова держим.»',
+        desc_source:'из распаковки, файл 06 + Исходник Раздел 3',
+        ai_text:'ИИ не подписывает отчёт. НО: ИИ-агент «Контролёр» делает предпроверку — сверяет цифры, ищет арифметические ошибки, проверяет соответствие методике ФСО. Денис/жена смотрят отчёт с уже найденными возможными проблемами.',
+        agent:'Аналитик (предпроверка ДО)',
+        agent_desc:'Сверка цифр между блоками отчёта, проверка соответствия методике, поиск арифметических ошибок. Выдаёт список «потенциальные ошибки» — человек проверяет.',
+        agent_mod:'Модуль 03',
+        branch:null, branch_pot:null, branch_link:null,
+        unit_money:'красная зона экспертизы — основной актив',
+        unit_time:'~2 ч/нед Денис + жена',
+        unit_pot:'С предпроверкой ИИ: те же 2 ч/нед, но меньше ошибок до клиента и банка.',
+        tool:'Claude AI + Excel + база типовых ошибок',
+        tool_steps:'1) Денис диктует 20 типовых ошибок «которые ловлю». 2) ИИ-чек-лист предпроверки. 3) Перед финальной — отчёт прогоняется через ИИ.',
+        tool_time:'1 неделя на чек-лист',
+        goal:'Безупречная репутация + развитие сложных направлений',
+        goal_before:'2 часа в неделю на проверку + иногда ошибки уходят к клиенту/в банк.',
+        goal_after:'2 часа на проверку, но в 80% случаев ИИ уже поймал арифметику.',
+        links:[
+          {color:'#d97706', lbl:'→ Выдача', txt:'Утверждённый отчёт → выдача', sub:'Триггерный'}
+        ],
+        metrics:[
+          {val:'~2 ч/нед', lbl:'контроль'},
+          {val:'жена', lbl:'основная роль'},
+          {val:'25 лет', lbl:'экспертизы'}
+        ]
+      },
+      {
+        name:'Выдача\nЭЦП / банк', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Выдача отчёта — ЭЦП, программы банков, бумага',
+        chain:'Исполнение', ai:'full', hole:false,
+        desc:'Уже частично автоматизировано: ЭЦП для подписания, программы банков для загрузки. Бумага — печатаем, везём (вахта, автовокзал) или клиент забирает.',
+        desc_quote:'«Если для банка — загружаем в программу банка + ЭЦП. Если в бумаге — печатаем → клиент забирает или оставляем на вахте, или везём на автовокзал.»',
+        desc_source:'из распаковки, файл 03 + Исходник Раздел 4',
+        ai_text:'ИИ запускает финальный поток: ЭЦП-подпись отчёта, загрузка в программу банка, отправка клиенту в WhatsApp ссылки на скачивание + уведомление «отчёт готов». Триггер на УДЕРЖАНИЕ — через сутки запрос отзыва.',
+        agent:'Ген Агент + Удержание',
+        agent_desc:'Финальный пайплайн: ЭЦП → банк → клиент. Запуск удержания: через 24ч после выдачи — запрос отзыва.',
+        agent_mod:'Модуль 02–04',
+        branch:'Автоматизация отчётов · полный цикл',
+        branch_pot:'+0.3 ч на отчёт сэкономлено · масштабируемо',
+        branch_link:'Сэкономленное время × 1.500 отчётов в год = 450 часов команды освобождается.',
+        unit_money:'~5К ₽/мес (ЭЦП абонплата)',
+        unit_time:'~10 мин на отчёт сейчас',
+        unit_pot:'С автопайплайном: 2–3 мин на отчёт. Триггер на удержание автоматический.',
+        tool:'1С + Контурдиалог + WhatsApp Bot + Битрикс24',
+        tool_steps:'1) Связка CRM → ЭЦП → банк. 2) Автоуведомление клиенту. 3) Триггер «через сутки» → запрос отзыва.',
+        tool_time:'1 неделя интеграций',
+        goal:'Закрыть цикл и запустить удержание автоматически',
+        goal_before:'Выдали отчёт → забыли запросить отзыв. 40 на 2ГИС, 1 на Яндексе.',
+        goal_after:'Выдали → через 24ч клиент получает «спасибо, оцените нас» → отзывы растут.',
+        links:[
+          {color:'#d97706', lbl:'→ УДЕРЖАНИЕ', txt:'Выдача → через 24ч запрос отзыва', sub:'Триггерный · ключевой'}
+        ],
+        metrics:[
+          {val:'ЭЦП', lbl:'есть'},
+          {val:'~10 мин', lbl:'выдача сейчас'},
+          {val:'2–3 мин', lbl:'с автоматикой'}
+        ]
+      }
+    ]
+  },
+
+  // ════════ ЦЕПОЧКА 4: КОНТЕНТ ════════
+  {
+    cls:'c4', emoji:'🎬', name:'Контент', sub:'материалы',
+    gain:'57 постов есть · 0 своих площадок',
+    time:'0 ч/нед Дениса · ДЫРА',
+    steps:[
+      {
+        name:'Темы\nи идеи', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Темы и идеи для контента',
+        chain:'Контент', ai:'boost', hole:false,
+        desc:'Темы есть и горячие: <strong>заливы</strong> (ремонт крыш), ДТП без страховки, наследство, кейсы. Сезонность: гололёд → ДТП, капремонт крыш → заливы. Но: «не понимаю, что писать», Денис не выбирает темы сам.',
+        desc_quote:'«Главная причина — нет времени. Второе — я не умею делать картинки, не умею писать тексты. Ну, как бы я не понимаю, что писать.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 2',
+        ai_text:'ИИ генерирует контент-план на месяц: 4 направления × 3 поста = 12 тем. Учитывает сезонность (август — крыши, ноябрь — гололёд), новостной фон Благовещенска, типовые вопросы из звонков клиентов. Денис согласует список за 15 минут.',
+        agent:'Ген Агент (контент-стратег)',
+        agent_desc:'Генерирует месячный контент-план: темы, форматы (текст/Reels/видео), приоритеты по сезонности. Опирается на 5 портретов клиента (ипотека/ДТП/залив/наследство/юрист).',
+        agent_mod:'Модуль 02 · Контент-машина',
+        branch:'Контент-машина',
+        branch_pot:'+300К–500К ₽/год',
+        branch_link:'Без тем нет постов. С планом — конвейер. Денис согласует — ИИ создаёт.',
+        unit_money:'~0 ₽/мес',
+        unit_time:'⚠ 0 ч/нед (тем нет, потому что Денис не думает о контенте)',
+        unit_pot:'С ИИ: 30 мин/мес на согласование плана.',
+        tool:'Claude AI + календарь контента',
+        tool_steps:'1) Загрузить в ИИ файлы 02 + 08 (миссия + контент-стратегия). 2) Генерация плана на месяц. 3) Денис согласует.',
+        tool_time:'2 часа на первый план + 30 мин/мес',
+        goal:'Технологичный игрок · Telegram для юристов',
+        goal_before:'«Не понимаю что писать». 57 постов за весь период.',
+        goal_after:'12 тем в месяц. План на 3 месяца вперёд. Постоянный конвейер.',
+        links:[
+          {color:'#7c3aed', lbl:'→ Пост', txt:'Тема → текст поста', sub:'Информационный'}
+        ],
+        metrics:[
+          {val:'4', lbl:'направления'},
+          {val:'12/мес', lbl:'план'},
+          {val:'~5 порт.', lbl:'аватаров'}
+        ]
+      },
+      {
+        name:'Пост\nи текст', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Пост — текст для Telegram, Яндекс.Бизнес, 2ГИС, ВК',
+        chain:'Контент', ai:'full', hole:false,
+        desc:'Сейчас фирма из Владивостока пишет посты для Яндекс.Бизнес и 2ГИС (57 постов). Денис не открывает на согласование. ВКонтакте, Telegram — не ведут.',
+        desc_quote:'«Я этим не занимаюсь. Главная причина — нет времени. Я не умею писать тексты.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 2',
+        ai_text:'ИИ пишет посты на голос Дениса (по материалу из 10 файлов распаковки): экспертно, без воды, с конкретикой и кейсами. По теме «залив летом» — пост за 5 минут с готовой структурой: проблема → почему важно → что делать → когда обращаться. Готовый текст под Telegram (длинный) и под 2ГИС (короткий).',
+        agent:'Копирайтер',
+        agent_desc:'Генерирует текст поста под каждую площадку (Telegram, 2ГИС, Яндекс, ВК) из одной темы. Стиль — экспертный, голос Дениса, как в распаковке.',
+        agent_mod:'Модуль 02 · Контент',
+        branch:'Контент-машина',
+        branch_pot:'+200К–400К ₽/год',
+        branch_link:'12 постов/мес × 4 площадки = 48 единиц контента из одного источника. Конвейер без участия Дениса.',
+        unit_money:'~0 ₽/мес (внутренняя автоматизация)',
+        unit_time:'⚠ 0 ч/нед (фирма из Владивостока пишет, Денис не вовлечён)',
+        unit_pot:'С ИИ: 1 ч/нед Дениса (только согласование пакета). 48 единиц контента/мес.',
+        tool:'Claude AI + контекстная библиотека (10 файлов ДНК)',
+        tool_steps:'1) Загрузить в ИИ файлы 01–10. 2) Шаблон поста под каждую площадку. 3) Тест: 5 постов = 1 час. 4) На конвейер.',
+        tool_time:'3 часа на шаблоны',
+        goal:'Технологичный игрок + Telegram для юристов',
+        goal_before:'5 постов в месяц от Владивостока, Денис не открывает.',
+        goal_after:'12 тем × 4 площадки = 48 постов/мес. Денис согласует за 1 час.',
+        links:[
+          {color:'#2196f3', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Пост → читают юристы → клиенты', sub:'Петля возврата'}
+        ],
+        metrics:[
+          {val:'57', lbl:'постов есть'},
+          {val:'12/мес', lbl:'цель текстов'},
+          {val:'4', lbl:'площадки'}
+        ]
+      },
+      {
+        name:'Reels\nи видео', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Reels и короткие видео',
+        chain:'Контент', ai:'boost', hole:true,
+        desc:'<strong>Нет видео, нет Reels.</strong> Денис говорит: «лицо контента — я. Готов снимать голосовые и видео — не умею, боюсь, но готов». <strong>Дыра.</strong> Один Reels с разбором кейса = пул юристов.',
+        desc_quote:'«Наверное, всё-таки я пока буду лицом контента. Как бы готов, не умею. Боюсь, но готов.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 2',
+        ai_text:'ИИ готовит сценарий 30-секундного Reels: формула «зацепка-тезис-кейс-CTA». Например: «Соседи залили — что делать первые 24 часа?» Денис снимает на телефон за 5 минут. ИИ + CapCut монтирует, добавляет субтитры, превью.',
+        agent:'Копирайтер + Ген Агент',
+        agent_desc:'Сценарий 30-секундного Reels по 4 направлениям. Список «10 ключевых тем для видео» (мифы про оценку, что делать при заливе, как нанять эксперта). Инструкции по съёмке для Дениса.',
+        agent_mod:'Модуль 02 · Контент-машина',
+        branch:'Контент-машина · Видео',
+        branch_pot:'+300К–600К ₽/год',
+        branch_link:'1 Reels с разбором кейса = охват в 5–10 раз больше текста. Доверие юристов растёт от лица.',
+        unit_money:'~0 ₽/мес (CapCut бесплатно)',
+        unit_time:'⚠ 0 ч/нед — ДЫРА',
+        unit_pot:'С ИИ: 1 ч/нед на 2 видео (5 мин съёмка × 2 + 50 мин монтаж). Постепенно — конвейер.',
+        tool:'Claude AI (сценарии) + CapCut + Телефон',
+        tool_steps:'1) ИИ напишет 4 сценария-эталона (1 на направление). 2) Денис снимет на телефон 5 минут. 3) CapCut + субтитры. 4) Публикация в Reels VK / Telegram.',
+        tool_time:'3 часа на 4 сценария + 1 час на первое видео',
+        goal:'Telegram для юристов + Технологичный игрок',
+        goal_before:'0 видео, страх съёмки.',
+        goal_after:'2 Reels/нед в Telegram-канале + ВК. Лицо Дениса узнаваемо.',
+        links:[
+          {color:'#2196f3', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Reels → новые юристы в канал', sub:'Петля возврата'}
+        ],
+        metrics:[
+          {val:'0', lbl:'видео сейчас'},
+          {val:'2/нед', lbl:'цель'},
+          {val:'30 сек', lbl:'формат Reels'}
+        ]
+      },
+      {
+        name:'Публикация\nна площадках', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Публикация на 4 площадках',
+        chain:'Контент', ai:'full', hole:true,
+        desc:'Сейчас фирма из Владивостока публикует только в Яндекс.Бизнес + дублирует в 2ГИС. <strong>Telegram, ВК — пусто.</strong> Сайта нет. Каждая площадка требует своего формата (длина, превью, хэштеги).',
+        desc_quote:'«57 постов на Яндексе, дублируются в 2ГИС. ВКонтакте не ведём. Telegram-канал не ведём.»',
+        desc_source:'из распаковки, Исходник Раздел 2',
+        ai_text:'ИИ + расписание публикаций (Telegram-бот, отложенные посты в ВК): расписание на неделю, автопубликация в нужное время, адаптация под площадку (Telegram длиннее, 2ГИС короче, ВК с эмодзи). Денис уже не участвует.',
+        agent:'Удержание + Ген Агент (планировщик)',
+        agent_desc:'Календарь публикаций. Адаптация поста под каждую площадку (длина, формат, хэштеги). Автопостинг по расписанию.',
+        agent_mod:'Модуль 02–04',
+        branch:'Контент-машина · Multi-channel',
+        branch_pot:'+150К–300К ₽/год',
+        branch_link:'4 площадки вместо 1 = 4× охват. Один пост → 4 публикации автоматически.',
+        unit_money:'~2К ₽/мес (планировщик постов)',
+        unit_time:'⚠ 0 ч/нед — публикуют только в 2ГИС/Яндекс',
+        unit_pot:'С автопостингом: 0 ч/нед Дениса. Все 4 площадки актуальны.',
+        tool:'SMMplanner / Telegram-bot + Claude AI',
+        tool_steps:'1) Подключить все 4 площадки к планировщику. 2) ИИ адаптирует пост. 3) Расписание на 2 недели вперёд.',
+        tool_time:'2 дня настройки',
+        goal:'Технологичный игрок №1 в Амурской области',
+        goal_before:'2 площадки активны, Telegram/ВК спят.',
+        goal_after:'4 площадки активны. 30+ юристов в Telegram. Узнаваемость растёт.',
+        links:[
+          {color:'#f97316', lbl:'→ Ответы на отзывы', txt:'Опубликовали → читают → отзыв', sub:'Информационный'}
+        ],
+        metrics:[
+          {val:'2', lbl:'активных'},
+          {val:'2', lbl:'не ведутся'},
+          {val:'30+', lbl:'постов/мес цель'}
+        ]
+      },
+      {
+        name:'Ответы\nна отзывы', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Ответы на отзывы — 2ГИС, Яндекс, в т.ч. негативные',
+        chain:'Контент', ai:'full', hole:true,
+        desc:'Сейчас «не знаем, что отвечать», особенно на негатив от виновников ДТП без страховки. <strong>Отвечают редко.</strong> 40 отзывов 2ГИС vs 1 на Яндексе → нет систематического ответа.',
+        desc_quote:'«Отзывы пишут виновники ДТП без страховки... У нас в расчёте стоимость бампера 150.000. А человек смотрит на Дроме и видит, что там бампер стоит 30.000. После этого нам пишут отзывы, что оценщики завысили.»',
+        desc_source:'из распаковки, файл 06 + Исходник Раздел 2',
+        ai_text:'ИИ генерирует ответы на каждый отзыв в стиле Дениса: на положительные — благодарность + сезонное предложение. На негативные виновников ДТП — спокойный ответ с разъяснением методики ОСАГО (РСА, новые запчасти). Денис согласует.',
+        agent:'Удержание + Копирайтер',
+        agent_desc:'Шаблоны ответов: 1) положительные, 2) негатив от виновников ДТП, 3) запросы информации, 4) благодарности юристов. Стиль Дениса — спокойный, аргументированный.',
+        agent_mod:'Модуль 04',
+        branch:'Репутация',
+        branch_pot:'+100К–200К ₽/год · №1 в поиске',
+        branch_link:'Ответы на отзывы = рост рейтинга в выдаче 2ГИС/Яндекс. Спокойный ответ на негатив = аргумент для будущих клиентов.',
+        unit_money:'~0 ₽/мес',
+        unit_time:'⚠ 0 ч/нед — отвечают редко',
+        unit_pot:'С ИИ: 30 мин/нед на одобрение. 100% ответов.',
+        tool:'Claude AI + база типовых ответов + уведомления 2ГИС/Яндекс',
+        tool_steps:'1) Денис диктует логику ответов на 4 типа отзывов. 2) ИИ генерирует шаблоны. 3) Уведомление в Telegram при новом отзыве. 4) Денис согласует — публикация.',
+        tool_time:'2 часа на шаблоны',
+        goal:'Технологичный игрок №1 в Амурской области',
+        goal_before:'Отвечают редко. «Не знаем, что отвечать». Негатив без ответа.',
+        goal_after:'100% ответов в течение суток. Спокойная аргументация на негатив = доверие.',
+        links:[
+          {color:'#f97316', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Ответы → рост рейтинга → выдача', sub:'Петля сарафана'}
+        ],
+        metrics:[
+          {val:'40', lbl:'отзывов 2ГИС'},
+          {val:'1', lbl:'на Яндексе'},
+          {val:'~10%', lbl:'отвечали'}
+        ]
+      }
+    ]
+  },
+
+  // ════════ ЦЕПОЧКА 5: УДЕРЖАНИЕ ════════
+  {
+    cls:'c5', emoji:'🔁', name:'Удержание', sub:'клиентов',
+    gain:'40 vs 1 отзыв — ДЫРА',
+    time:'нет рассылок, нет напоминаний',
+    steps:[
+      {
+        name:'Сбор\nотзывов', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Сбор отзывов после выдачи отчёта',
+        chain:'Удержание', ai:'full', hole:true,
+        desc:'<strong>40 отзывов на 2ГИС, 1 на Яндекс.Картах</strong> — критический дисбаланс. Стойка с QR на столах. Автоэкспертиза вкладывает QR в пакет. Большинство 2ГИС — через Юлю Борисовну. <strong>Дыра в Яндексе.</strong>',
+        desc_quote:'«Люди не часто оставляют отзывы. Большинство отзывов 2ГИС пришло через Юлю Борисовну.»',
+        desc_source:'из распаковки, файл 05 + Исходник Раздел 2',
+        ai_text:'Через 24 часа после выдачи отчёта (триггер из ИСПОЛНЕНИЕ → Выдача) — клиент получает WhatsApp/SMS: «Денис, Методический центр. Спасибо! Оставьте отзыв за 1 минуту: 2ГИС / Яндекс / выбор». А/B-тест: 50% получают ссылку на Яндекс (закрываем дыру), 50% — на 2ГИС.',
+        agent:'Удержание (Менеджер удержания)',
+        agent_desc:'Автотриггер «через 24ч после выдачи». Сообщение с ссылкой. Балансировка между 2ГИС и Яндексом (нам нужно закрыть дыру на Яндекс).',
+        agent_mod:'Модуль 04 · Удержание',
+        branch:'Удержание / LTV + Репутация',
+        branch_pot:'+250К ₽/год (рост рейтинга = рост выдачи)',
+        branch_link:'40 отзывов 2ГИС → 60. На Яндексе 1 → 30. Поиск Яндекса выдаёт нас по «оценка Благовещенск». Это органический трафик.',
+        unit_money:'~1К ₽/мес (WhatsApp Business API)',
+        unit_time:'⚠ 0 ч/нед — отзывы собираются эпизодически (через Юлю)',
+        unit_pot:'С автотриггером: 100% клиентов получают запрос. Конверсия в отзыв ~15–20%.',
+        tool:'WhatsApp Bot + CRM-триггер + Claude AI для текстов',
+        tool_steps:'1) Триггер в CRM «через 24ч после выдачи». 2) Шаблон сообщения с ссылкой. 3) Логика выбора площадки (50/50, потом перекос на Яндекс).',
+        tool_time:'3 дня настройки',
+        goal:'60+ отзывов на Яндекс.Картах за 12 месяцев',
+        goal_before:'1 отзыв на Яндексе. Поиск нас не выдаёт.',
+        goal_after:'30+ отзывов на Яндексе за 6 мес. Рост в выдаче по 5 ключевым запросам.',
+        links:[
+          {color:'#d97706', lbl:'← ИСПОЛНЕНИЕ', txt:'Выдача отчёта → через 24ч запрос отзыва', sub:'Триггерный · ключевой'},
+          {color:'#f97316', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Отзывы → рейтинг → выдача → клиенты', sub:'Петля сарафана'}
+        ],
+        metrics:[
+          {val:'40 vs 1', lbl:'2ГИС / Яндекс'},
+          {val:'~5%', lbl:'конверсия сейчас'},
+          {val:'~20%', lbl:'цель с ИИ'}
+        ]
+      },
+      {
+        name:'Напоминания\nи возврат', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Напоминания клиентам · база возвратных',
+        chain:'Удержание', ai:'full', hole:true,
+        desc:'<strong>Нет напоминаний.</strong> Грузовики для Китая — оценка нужна каждый год — ноль автонапоминаний. Коммерческая недвижимость под залог — через 1-3 года. Юридические клиенты приходят повторно сами.',
+        desc_quote:'«Нет напоминания грузовикам через год.» «Нет рассылок. Нет напоминаний.»',
+        desc_source:'из распаковки, Исходник Раздел 2 + 5',
+        ai_text:'CRM ведёт базу клиентов с триггерами: «грузовик для Китая — оценка через 12 мес» → автонапоминание клиенту за 30 дней. «Коммерческая недвижимость → через 2 года напоминание». «Юристы → раз в квартал — материал, что нового».',
+        agent:'Удержание + Аналитик',
+        agent_desc:'База клиентов с типами. Триггеры по типам объектов. Шаблоны напоминаний. Сегментация: разовый клиент / возвратный / B2B-юрист.',
+        agent_mod:'Модуль 04',
+        branch:'Удержание / LTV',
+        branch_pot:'+500К–800К ₽/год',
+        branch_link:'Грузовики для Китая — ежегодная история. Сейчас часть теряем (клиент уходит к конкурентам). Возврат 50–80% = новые ~600К ₽/год.',
+        unit_money:'~2К ₽/мес (CRM + WhatsApp API)',
+        unit_time:'⚠ 0 ч/нед — напоминаний нет',
+        unit_pot:'С автоматизацией: 0 ч/нед Дениса. Каждый клиент получает релевантное напоминание.',
+        tool:'Битрикс24 + WhatsApp Bot + Claude AI для текстов',
+        tool_steps:'1) Сегментация базы (грузовик / коммерческая / юрист). 2) Триггеры по срокам. 3) Шаблоны напоминаний под каждый сегмент.',
+        tool_time:'2 недели на сегментацию + 1 неделя на триггеры',
+        goal:'Удержание / LTV · возвратные клиенты',
+        goal_before:'Грузовики уходят к другим. «Случайно попадают к нам снова».',
+        goal_after:'Грузовики возвращаются на 80%. Юристы получают квартальные материалы.',
+        links:[
+          {color:'#f97316', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Напоминание → клиент возвращается', sub:'Петля сарафана'}
+        ],
+        metrics:[
+          {val:'0', lbl:'напоминаний сейчас'},
+          {val:'~год', lbl:'грузовик Китай'},
+          {val:'~3 года', lbl:'коммерческая'}
+        ]
+      },
+      {
+        name:'Допродажа\nюристам', type:'boost', badge:'ИИ ускоряет', agent_icon:'🤖',
+        title:'Допродажа юристам — расширение направлений',
+        chain:'Удержание', ai:'boost', hole:true,
+        desc:'<strong>Юристы знают нас по одному направлению</strong>, не знают про другие. «Подскажи, кто занимается?» — а это сам Денис. <strong>Дыра.</strong> Один юрист может давать в 2–3 раза больше клиентов, если знает обо всех 4 направлениях.',
+        desc_quote:'«Часто юристы обращаются, которые с нами работают по какому-то одному направлению, а потом звонят: "Подскажи, кто этим занимается?" Я говорю: "Так, я этим занимаюсь". Юристы думают, что мы каким-то одним направлением занимаемся.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 5',
+        ai_text:'Раз в квартал ИИ генерирует материал для рассылки юристам-партнёрам: «4 направления Методического центра», «Кейсы квартала», «Что нового». Персонализирует по направлению, с которым юрист работает (зашёл по ДТП — получает «А ещё мы делаем заливы и наследство»).',
+        agent:'Удержание + Копирайтер',
+        agent_desc:'Сегментация юристов по их рабочему направлению. Шаблон квартального материала с акцентом на «соседние» направления. Персонализация.',
+        agent_mod:'Модуль 04 + Модуль 02',
+        branch:'Удержание / LTV · B2B',
+        branch_pot:'+400К–700К ₽/год',
+        branch_link:'10 юристов знают про все 4 направления = в 2× больше направлений от каждого. Юристы — топ источник 50% трафика.',
+        unit_money:'~0 ₽/мес',
+        unit_time:'⚠ 0 ч/нед — материалы юристам не рассылаются',
+        unit_pot:'С ИИ: 1 ч/мес Дениса на согласование. Квартальная рассылка на 30 юристов.',
+        tool:'Claude AI + Email/Telegram-бот для рассылки',
+        tool_steps:'1) Список юристов с их направлением. 2) ИИ генерирует материал. 3) Рассылка раз в квартал. 4) Отзывы от юристов.',
+        tool_time:'1 неделя на запуск + 1 ч/квартал',
+        goal:'Развить судебное направление + расширение B2B',
+        goal_before:'Юристы знают одно направление. «Подскажи кто занимается?» — мы. Теряется выручка.',
+        goal_after:'10 юристов знают про 4 направления. Каждый направляет в 2× больше клиентов.',
+        links:[
+          {color:'#f97316', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Юрист знает все направления → больше клиентов', sub:'Петля сарафана'}
+        ],
+        metrics:[
+          {val:'4', lbl:'направления'},
+          {val:'~10', lbl:'юристов B2B'},
+          {val:'×2', lbl:'потенциал'}
+        ]
+      },
+      {
+        name:'Сезонные\nакции', type:'full', badge:'ИИ сам', agent_icon:'🤖',
+        title:'Сезонные акции и инфоповоды',
+        chain:'Удержание', ai:'full', hole:true,
+        desc:'Денис знает сезонность: <strong>гололёд → ДТП, ремонт крыш → заливы.</strong> Но: «не используем». <strong>Дыра.</strong> Каждый сезон уходит без специальной рассылки/акции. Возможна допродажа: после оценки квартиры → через 6 мес «бесплатная консультация по заливу для всех клиентов».',
+        desc_quote:'«Гололёд на улице — наплыв ДТП. Капитальные ремонты крыш — наплыв заливов.»',
+        desc_source:'из распаковки, файл 08 + Исходник Раздел 2',
+        ai_text:'ИИ ведёт календарь сезонных кампаний: октябрь — гололёд, готовим серию постов про ДТП. Июнь–август — крыши, рассылка прошлым клиентам «если затопило — пишите, проконсультируем». Каждый инфоповод (новости города, ДТП на трассе) — повод для контакта с базой.',
+        agent:'Удержание + Ген Агент',
+        agent_desc:'Календарь сезонов. Готовые серии постов + email/whatsapp-рассылок. Реакция на инфоповоды (крупные ДТП, аварии управляек).',
+        agent_mod:'Модуль 02 + Модуль 04',
+        branch:'Удержание / LTV',
+        branch_pot:'+200К–400К ₽/год',
+        branch_link:'Сезонные истории — это +10–15% к выручке в пик-сезон. Сейчас этот потенциал упускается.',
+        unit_money:'~0 ₽/мес',
+        unit_time:'⚠ 0 ч/нед — сезонные акции не делаются',
+        unit_pot:'С ИИ: 30 мин/мес Дениса на согласование. 4 сезонные кампании в год.',
+        tool:'Claude AI + календарь + WhatsApp/Telegram-рассылка',
+        tool_steps:'1) Календарь сезонов на год. 2) ИИ готовит серии под каждый сезон. 3) Запуск перед началом каждого сезона.',
+        tool_time:'1 день на годовой календарь',
+        goal:'Технологичный игрок + Удержание / LTV',
+        goal_before:'Сезон проходит мимо. Базы клиентов нет — некому рассылать.',
+        goal_after:'4 сезонные волны в год. Каждая = +15–20 заявок от базы.',
+        links:[
+          {color:'#7c3aed', lbl:'← Контент', txt:'Календарь сезонов → темы постов', sub:'Информационный'}
+        ],
+        metrics:[
+          {val:'2', lbl:'явных сезона'},
+          {val:'4', lbl:'возможных кампаний'},
+          {val:'0', lbl:'делается сейчас'}
+        ]
+      },
+      {
+        name:'Реферальная\nсистема', type:'human', badge:'Человек', agent_icon:'👤',
+        title:'Реферальная программа — отношения с Юлей и другими',
+        chain:'Удержание', ai:'human', hole:false,
+        desc:'<strong>Живые отношения.</strong> «Юлия отправляет к нам, мы отправляем к ней». Грузовики — водители рекомендуют коллегам. Это <strong>не алгоритм</strong>, это репутация и личные связи. ИИ это не заменит.',
+        desc_quote:'«Юлия отправляет к нам, мы отправляем к ней. Юристы отправляют сарафан, которые когда-то работали с нами или против нас в судах.»',
+        desc_source:'из распаковки, файл 05 + 06 + Исходник Раздел 5',
+        ai_text:'ИИ не управляет отношениями. НО: ИИ помогает поддерживать — присылает Денису «через 3 месяца не общался с Юлей, напиши ей в ВК», готовит для него «что нового у нас за квартал». Денис → Юле → выгода для обеих сторон.',
+        agent:'Аналитик (мониторинг отношений)',
+        agent_desc:'Список ключевых партнёров. Срок «давно не общались». Напоминания Денису. Готовые «темы для разговора» (что нового, какие кейсы).',
+        agent_mod:'Модуль 04',
+        branch:null, branch_pot:null, branch_link:null,
+        unit_money:'~0 ₽ — нет реферальной программы (нет процента)',
+        unit_time:'~4 ч/нед — работа с юристами/нотариусами',
+        unit_pot:'С ИИ-напоминаниями: те же 4 ч/нед, но равномерно распределены, ни одного партнёра не теряем.',
+        tool:'CRM (партнёрский модуль) + Claude AI',
+        tool_steps:'1) Список 20 ключевых партнёров. 2) Дата последнего контакта. 3) Триггер «не общались 3 мес». 4) Денис связывается.',
+        tool_time:'1 неделя на базу',
+        goal:'Удержание / LTV · сохранить ключевых партнёров',
+        goal_before:'Денис помнит про Юлю, но другие — реже. Часть партнёров «остывает».',
+        goal_after:'20 партнёров в активном контакте. Ни один не «остыл» без причины.',
+        links:[
+          {color:'#f97316', lbl:'→ ПРИВЛЕЧЕНИЕ', txt:'Партнёр направил → новый клиент', sub:'Петля сарафана · ключевая'}
+        ],
+        metrics:[
+          {val:'~20', lbl:'ключевых'},
+          {val:'4 ч/нед', lbl:'Денис'},
+          {val:'50%', lbl:'трафика'}
+        ]
+      }
+    ]
+  }
+];
+
+// ═══════════════════ ПЕРЕПЛЕТЕНИЯ ═══════════════════
+const CONNS = [
+  { after:1, items:[
+    {color:'#0d9488', label:'Продажа → Исполнение · Оплата запускает работу', icon:'⚡',
+     desc:'Триггерный. Денис часто начинает без оплаты — это надо удержать как человеческий фактор, но автоматизировать запуск работ при оплате (автотриггер «оплачено → задача оценщику»).'}
+  ]},
+  { after:2, items:[
+    {color:'#7c3aed', label:'Исполнение → Контент · Кейс → материал', icon:'📸',
+     desc:'Информационный. После выдачи отчёта — материал для кейса (анонимизированный). Сейчас почти не используется. С ИИ: автотриггер «выдача → тема для поста».'},
+    {color:'#d97706', label:'Исполнение → Удержание · Выдача → отзыв', icon:'⭐',
+     desc:'Триггерный · ключевой. Через 24 часа после выдачи отчёта — автоматический запрос отзыва. Это закроет дыру 1 vs 40 на Яндексе.'}
+  ]},
+  { after:3, items:[
+    {color:'#2196f3', label:'Контент → Привлечение · Пост → лид', icon:'🔄',
+     desc:'Петля возврата. Telegram-канал, ВК, Reels → юристы и физлица читают → новые клиенты в директ и звонок.'}
+  ]},
+  { after:4, items:[
+    {color:'#f97316', label:'Удержание → Привлечение · Рекомендация → новый клиент', icon:'🚀',
+     desc:'Петля сарафана. Главная петля Дениса: 50% трафика через сарафан. Юристы, нотариусы, водители грузовиков → новые направления.'}
+  ]}
+];
+
+// ═══════════════════ РЕНДЕРИНГ КАРТЫ ═══════════════════
+function renderMap(){
+  const wrap = document.getElementById('mapWrap');
+  let h = '';
+  CHAINS.forEach((ch, ci) => {
+    // Карточка цепочки
+    h += `<div class="chain-row ${ch.cls}">`;
+    h += `<div class="chain-label">
+      <span class="chain-emo">${ch.emoji}</span>
+      <div class="chain-name">${ch.name}</div>
+      <div class="chain-sub">${ch.sub}</div>
+      <div class="chain-gain">${ch.gain}</div>
+      <div class="chain-time">${ch.time}</div>
+    </div>`;
+
+    // Звенья
+    h += `<div class="chain-steps">`;
+    ch.steps.forEach((s, si) => {
+      const holeClass = s.hole ? ' hole' : '';
+      h += `<div class="step ${s.type}${holeClass}" onclick="openM(${ci}, ${si})">
+        <div class="sagent">${s.agent_icon || ''}</div>
+        <div class="sname">${s.name}</div>
+        <div class="sbadge">${s.badge}</div>
+      </div>`;
+      if (si < ch.steps.length - 1) {
+        h += `<div class="arr">
+          <svg viewBox="0 0 18 18">
+            <line x1="2" y1="9" x2="16" y2="9" stroke="rgba(15,186,106,0.28)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cy="9" r="2.3" fill="#1db87a" opacity="0.75">
+              <animate attributeName="cx" from="2" to="16" dur="2.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>`;
+      }
+    });
+    h += '</div></div>';
+
+    // Переплетения после этой строки
+    const conn = CONNS.find(c => c.after === ci);
+    if (conn) {
+      h += '<div class="conn-strip">';
+      conn.items.forEach((it, ix) => {
+        h += `<div class="conn" onclick="openConn(${ci}, ${ix})">
+          <span class="conn-dot" style="color:${it.color}; background:${it.color}"></span>
+          <span class="conn-icon">${it.icon}</span>
+          <span>${it.label}</span>
+        </div>`;
+      });
+      h += '</div>';
+    }
+  });
+  wrap.innerHTML = h;
+}
+
+// ═══════════════════ ПОПАП ═══════════════════
+function openM(ci, si){
+  const s = CHAINS[ci].steps[si];
+  const L = {
+    full:'🟢 ИИ делает сам',
+    boost:'🟡 ИИ ускоряет ×5–10',
+    human:'🔴 Нужен человек'
+  };
+  const T = {
+    full:'⚡ Что конкретно делает ИИ',
+    boost:'⚡ Как ИИ ускоряет',
+    human:'👤 Роль человека и поддержка ИИ'
+  };
+
+  const badge = document.getElementById('mBadge');
+  if (s.hole) {
+    badge.className = 'mbadge hole';
+    badge.textContent = '⚠️ ДЫРА · ' + L[s.ai];
+  } else {
+    badge.className = `mbadge ${s.ai}`;
+    badge.textContent = L[s.ai];
+  }
+  document.getElementById('mTitle').textContent = s.title;
+
+  let h = '';
+  // 1. Текущее состояние
+  h += `<div class="mchain">Цепочка: <b>${s.chain}</b></div>`;
+  h += `<div class="mdesc">${s.desc}</div>`;
+  if (s.desc_quote) h += `<div class="mquote">${s.desc_quote}</div>`;
+  if (s.desc_source) h += `<div class="msrc">📋 ${s.desc_source}</div>`;
+
+  // 2. Что делает ИИ
+  h += `<div class="mai ${s.ai}">
+    <div class="mai-t">${T[s.ai]}</div>
+    <div class="mai-txt">${s.ai_text}</div>
+  </div>`;
+
+  // 3. Агент
+  if (s.agent) {
+    h += `<div class="msec">🤖 Ответственный агент</div>`;
+    h += `<div class="magent">
+      <div class="magent-name">${s.agent}</div>
+      <div class="magent-desc">${s.agent_desc || ''}</div>
+      <div class="magent-mod">${s.agent_mod || ''}</div>
+    </div>`;
+  }
+
+  // 4. Ветка роста
+  if (s.branch) {
+    h += `<div class="msec">🚀 Ветка роста</div>`;
+    h += `<div class="mbranch">
+      <div class="mbranch-name">${s.branch}</div>
+      <div class="mbranch-pot">₽-потенциал: <b>${s.branch_pot || ''}</b></div>
+      <div class="mbranch-link">${s.branch_link || ''}</div>
+    </div>`;
+  }
+
+  // 5. Ресурсы и потенциал
+  if (s.unit_money || s.unit_time) {
+    h += `<div class="msec">📊 Ресурсы и потенциал</div>`;
+    h += `<div class="munit">`;
+    if (s.unit_money) h += `<div class="munit-row"><span>💰</span><div>${s.unit_money}</div></div>`;
+    if (s.unit_time) h += `<div class="munit-row"><span>⏱</span><div>${s.unit_time}</div></div>`;
+    if (s.unit_pot) h += `<div class="munit-row hl"><span>📈</span><div>${s.unit_pot}</div></div>`;
+    h += '</div>';
+  }
+
+  // 6. Рекомендация
+  if (s.tool) {
+    h += `<div class="msec">🛠 Рекомендация по внедрению</div>`;
+    h += `<div class="mtool">
+      <div class="mtool-name">${s.tool}</div>
+      <div class="mtool-steps">${s.tool_steps || ''}</div>
+      <div class="mtool-time">⏱ ${s.tool_time || ''}</div>
+    </div>`;
+  }
+
+  // 7. Связь с целями
+  if (s.goal) {
+    h += `<div class="msec">🎯 Связь с целями бизнеса</div>`;
+    h += `<div class="mgoal">
+      <div class="mgoal-name">Цель: ${s.goal}</div>
+      <div class="mgoal-grid">
+        <div class="mgoal-before"><div class="mgoal-lbl">Без ИИ</div>${s.goal_before || ''}</div>
+        <div class="mgoal-after"><div class="mgoal-lbl">С ИИ</div>${s.goal_after || ''}</div>
+      </div>
+    </div>`;
+  }
+
+  // 8. Связи
+  if (s.links && s.links.length) {
+    h += `<div class="msec">⚡ Связи с другими звеньями</div>`;
+    h += `<div class="mlinks">`;
+    s.links.forEach(l => {
+      h += `<div class="ml">
+        <div class="ml-dot" style="background:${l.color}; color:${l.color}"></div>
+        <div>
+          <div class="ml-lbl" style="color:${l.color}">${l.lbl}</div>
+          <div>${l.txt}</div>
+          <div class="ml-sub">${l.sub}</div>
+        </div>
+      </div>`;
+    });
+    h += '</div>';
+  }
+
+  // 9. Метрики
+  if (s.metrics && s.metrics.length) {
+    h += `<div class="msec">📊 Ключевые метрики</div>`;
+    h += '<div class="mmets">';
+    s.metrics.forEach(m => {
+      h += `<div class="mmet">
+        <div class="mmet-val">${m.val}</div>
+        <div class="mmet-lbl">${m.lbl}</div>
+      </div>`;
+    });
+    h += '</div>';
+  }
+
+  document.getElementById('mBody').innerHTML = h;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function openConn(ci, ix){
+  const c = CONNS.find(c => c.after === ci);
+  if (!c) return;
+  const it = c.items[ix];
+  document.getElementById('mBadge').className = 'mbadge';
+  document.getElementById('mBadge').style.background = it.color + '22';
+  document.getElementById('mBadge').style.color = it.color;
+  document.getElementById('mBadge').textContent = '🔗 Переплетение цепочек';
+  document.getElementById('mTitle').textContent = it.label;
+  document.getElementById('mBody').innerHTML = `<div class="mdesc" style="margin-top:14px">${it.desc}</div>`;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeM(e){
+  if (e && e.target.classList && !e.target.classList.contains('overlay') && e.target.tagName !== 'BUTTON') return;
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+  // Reset badge style
+  setTimeout(() => {
+    const b = document.getElementById('mBadge');
+    b.style.background = '';
+    b.style.color = '';
+  }, 300);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeM({target:{classList:{contains:()=>true}, tagName:'DIV'}});
+});
+
+// ═══════════════════ ФОН: НЕЙРОСЕТЬ НА CANVAS ═══════════════════
+(function neuralBackground(){
+  const canvas = document.getElementById('netCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let nodes = [];
+  const NODE_COUNT = 38;
+
+  function resize(){
+    W = canvas.width = window.innerWidth * window.devicePixelRatio;
+    H = canvas.height = window.innerHeight * window.devicePixelRatio;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', () => {
+    resize();
+    initNodes();
+  });
+
+  function initNodes(){
+    nodes = [];
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        r: 1.5 + Math.random() * 1.5,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  initNodes();
+
+  let t = 0;
+  function draw(){
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+    t += 0.015;
+
+    // Линии
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < 26000) {
+          const alpha = (1 - d2 / 26000) * 0.25;
+          const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+          grad.addColorStop(0, `rgba(29, 184, 122, ${alpha})`);
+          grad.addColorStop(1, `rgba(6, 182, 212, ${alpha * 0.6})`);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+
+          // Бегущая точка
+          if (d2 < 18000) {
+            const flow = (Math.sin(t + i + j) + 1) / 2;
+            const fx = a.x + (b.x - a.x) * flow;
+            const fy = a.y + (b.y - a.y) * flow;
+            ctx.fillStyle = `rgba(29, 184, 122, ${alpha * 1.6})`;
+            ctx.beginPath();
+            ctx.arc(fx, fy, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+    }
+
+    // Узлы
+    nodes.forEach((n, i) => {
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+      const pulse = 0.6 + 0.4 * Math.sin(t * 1.6 + n.phase);
+      const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+      glow.addColorStop(0, `rgba(29, 184, 122, ${0.6 * pulse})`);
+      glow.addColorStop(1, 'rgba(29, 184, 122, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = `rgba(15, 186, 106, ${0.8 * pulse})`;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═══════════════════ ИНИЦИАЛИЗАЦИЯ ═══════════════════
+renderMap();
+</script>
+
+</body>
+</html>
