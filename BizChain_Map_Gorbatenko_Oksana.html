@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map · ВАМ РАДЫ · Горбатенко Оксана</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f2; --bg2:#eef4f0;
+  --card:rgba(255,255,255,0.75);
+  --card2:rgba(255,255,255,0.9);
+  --text:#0f1419; --text2:#3d4852; --text3:#7a8590;
+  --border:rgba(15,186,106,0.08);
+  --green:#1db87a; --green2:#0d9560;
+  --yellow:#e8a308; --red:#e04848; --blue:#2196f3;
+  --purple:#7c3aed; --teal:#0d9488; --orange:#f97316; --amber:#d97706;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+body{position:relative;min-height:100vh}
+
+/* === CANVAS FON === */
+#netCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.55}
+
+/* === HOLOGRAPHIC BG === */
+.bg-grid{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.04;
+  background-image:linear-gradient(rgba(15,186,106,0.4) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,186,106,0.4) 1px,transparent 1px);
+  background-size:60px 60px;transform:perspective(800px) rotateX(60deg) translateY(20%);
+  transform-origin:center top}
+.bg-orb{position:fixed;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(15,186,106,0.06) 0%,transparent 70%);
+  z-index:1;pointer-events:none;filter:blur(40px)}
+.bg-orb.o1{top:-200px;left:-200px}
+.bg-orb.o2{bottom:-200px;right:-200px;background:radial-gradient(circle,rgba(33,150,243,0.06) 0%,transparent 70%)}
+
+/* === WRAP === */
+.wrap{position:relative;z-index:5;max-width:1280px;margin:0 auto;padding:24px 20px 60px}
+
+/* === HEADER === */
+.head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:42px;height:42px;border-radius:11px;
+  background:linear-gradient(135deg,#7ab648,#2aa198 50%,#1a5276);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 20px rgba(15,186,106,0.25),inset 0 1px 0 rgba(255,255,255,0.4)}
+.logo-mark::before{content:'AI';color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;letter-spacing:-0.02em}
+.logo-txt{font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.12em;color:var(--text2)}
+.logo-txt b{color:var(--green2);font-weight:800}
+.head-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;
+  background:var(--card);backdrop-filter:blur(10px);
+  border:1px solid var(--border);border-radius:100px;
+  font-size:11px;font-weight:600;color:var(--text2);
+  letter-spacing:0.04em}
+.orb{width:8px;height:8px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#4ade80,#1db87a);
+  box-shadow:0 0 10px rgba(15,186,106,0.6);
+  animation:orbPulse 2s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{box-shadow:0 0 6px rgba(15,186,106,0.4);transform:scale(1)}50%{box-shadow:0 0 14px rgba(15,186,106,0.9);transform:scale(1.15)}}
+
+.title{margin-top:6px;font-family:'Unbounded',sans-serif;font-weight:800;font-size:38px;line-height:1.05;letter-spacing:-0.025em;
+  background:linear-gradient(135deg,#1db87a 0%,#06b6d4 50%,#2196f3 100%);
+  background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:gradShift 5s ease-in-out infinite}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.subtitle{margin-top:10px;font-size:14px;color:var(--text2);font-weight:500}
+.subtitle b{color:var(--green2)}
+.meta-row{margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
+.meta-chip{font-size:10.5px;font-weight:600;color:var(--text2);padding:5px 11px;
+  background:rgba(255,255,255,0.55);backdrop-filter:blur(8px);border:1px solid var(--border);
+  border-radius:100px;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em}
+
+/* === SECTIONS === */
+.section{margin:34px 0 0}
+.section-h{display:flex;align-items:center;gap:9px;margin-bottom:14px;flex-wrap:wrap}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:var(--green2);background:rgba(15,186,106,0.08);padding:4px 9px;border-radius:6px;letter-spacing:0.05em}
+.section-t{font-family:'Unbounded',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em}
+.section-sub{font-size:12px;color:var(--text3);margin-left:auto;font-weight:500}
+
+/* === BIZCARD === */
+.bizcard{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bzc{background:var(--card);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:14px;padding:14px 14px 12px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.02),inset 0 1px 0 rgba(255,255,255,0.7);
+  transition:transform 0.25s,box-shadow 0.25s}
+.bzc:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,186,106,0.08)}
+.bzc-val{font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px;color:var(--text);letter-spacing:-0.02em;line-height:1.15}
+.bzc-val.sm{font-size:15px}
+.bzc-lbl{font-size:10.5px;font-weight:600;color:var(--text2);margin-top:4px;letter-spacing:0.02em}
+.bzc-sub{font-size:9.5px;color:var(--text3);margin-top:3px;font-family:'JetBrains Mono',monospace}
+
+/* === TASKS === */
+.tasks{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.task{background:var(--card);backdrop-filter:blur(10px);
+  border:1px solid var(--border);border-radius:11px;padding:11px 13px;
+  display:flex;align-items:flex-start;gap:10px}
+.task-n{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;
+  color:var(--green2);background:rgba(15,186,106,0.08);padding:3px 7px;border-radius:6px;flex-shrink:0;margin-top:1px}
+.task-txt{font-size:12px;color:var(--text2);line-height:1.55}
+
+/* === GOAL PANEL === */
+.goal-panel{background:linear-gradient(135deg,rgba(15,186,106,0.06),rgba(33,150,243,0.04));
+  backdrop-filter:blur(14px);border:1px solid rgba(15,186,106,0.15);
+  border-radius:16px;padding:18px 22px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  box-shadow:0 4px 20px rgba(15,186,106,0.04),inset 0 1px 0 rgba(255,255,255,0.6)}
+.goal-icon{font-size:22px}
+.goal-lbl{font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;color:var(--green2);letter-spacing:0.06em}
+.goal-vals{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;color:var(--text);
+  display:flex;flex-wrap:wrap;gap:6px 13px}
+.goal-vals span{display:inline-flex;align-items:center;gap:4px}
+.goal-vals .dot{width:3px;height:3px;border-radius:50%;background:var(--green);opacity:0.5}
+
+/* === STATS === */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:10px}
+.stat{background:var(--card);backdrop-filter:blur(10px);
+  border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}
+.stat-val{font-family:'Unbounded',sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.025em;line-height:1}
+.stat.g .stat-val{color:var(--green)}
+.stat.y .stat-val{color:var(--yellow)}
+.stat.r .stat-val{color:var(--red)}
+.stat.t .stat-val{background:linear-gradient(135deg,#1db87a,#2196f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-lbl{font-size:10px;color:var(--text2);font-weight:600;margin-top:5px;letter-spacing:0.04em;text-transform:uppercase}
+
+/* === BRANCHES === */
+.branches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.br{background:var(--card);backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:13px;padding:13px 15px;
+  position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s}
+.br::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+  background:linear-gradient(180deg,#1db87a,#06b6d4,#2196f3)}
+.br:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(15,186,106,0.07)}
+.br-n{font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;color:var(--text);letter-spacing:-0.01em}
+.br-pot{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13.5px;color:var(--green2);margin:5px 0 5px}
+.br-d{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* === CHAIN STRIP === */
+.chains{display:flex;flex-direction:column;gap:0;margin-top:6px}
+.chain{background:var(--card);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:16px;padding:14px 16px;
+  position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,0.02),0 4px 14px rgba(15,186,106,0.03),inset 0 1px 0 rgba(255,255,255,0.7);
+  display:flex;gap:14px;align-items:stretch;
+  opacity:0;transform:translateY(20px);
+  animation:rowIn 0.55s ease-out forwards}
+.chain:nth-child(1){animation-delay:0.05s}
+.chain:nth-child(3){animation-delay:0.15s}
+.chain:nth-child(5){animation-delay:0.25s}
+.chain:nth-child(7){animation-delay:0.35s}
+.chain:nth-child(9){animation-delay:0.45s}
+@keyframes rowIn{to{opacity:1;transform:translateY(0)}}
+
+.chain::before{content:'';position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:2px}
+.chain.c1::before{background:linear-gradient(180deg,#4ade80,#1db87a,#06b6d4)}
+.chain.c2::before{background:linear-gradient(180deg,#a78bfa,#7c3aed,#ec4899)}
+.chain.c3::before{background:linear-gradient(180deg,#fbbf24,#e8a308,#f97316)}
+.chain.c4::before{background:linear-gradient(180deg,#60a5fa,#2196f3,#06b6d4)}
+.chain.c5::before{background:linear-gradient(180deg,#f87171,#e04848,#f97316)}
+
+.cl-label{flex-shrink:0;width:170px;padding-left:14px}
+.cl-emoji{font-size:20px;margin-bottom:4px}
+.cl-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.01em}
+.cl-sub{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.04em;margin-top:2px;text-transform:uppercase}
+.cl-gain{margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;color:var(--green2);line-height:1.4}
+.cl-time{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text3);margin-top:3px;line-height:1.3}
+
+.cl-steps{flex:1;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;overflow-x:auto}
+.cl-steps::-webkit-scrollbar{height:0}
+.step{flex:1;min-width:135px;padding:11px 11px 10px;border-radius:12px;cursor:pointer;
+  position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s}
+.step.full{background:linear-gradient(180deg,rgba(15,186,106,0.10),rgba(15,186,106,0.03));border:1px solid rgba(15,186,106,0.18)}
+.step.boost{background:linear-gradient(180deg,rgba(232,163,8,0.10),rgba(232,163,8,0.02));border:1px solid rgba(232,163,8,0.20)}
+.step.human{background:linear-gradient(180deg,rgba(224,72,72,0.07),rgba(224,72,72,0.02));border:1px solid rgba(224,72,72,0.16)}
+.step.hole{border-style:dashed!important;background:rgba(255,255,255,0.45)}
+
+.step::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.4) 45%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0.4) 55%,transparent 60%);
+  transform:translateX(-100%);transition:transform 0.65s ease;pointer-events:none}
+.step:hover::after{transform:translateX(100%)}
+
+.step:hover{transform:translateY(-3px)}
+.step.full:hover{box-shadow:0 8px 26px rgba(15,186,106,0.16)}
+.step.boost:hover{box-shadow:0 8px 26px rgba(232,163,8,0.13)}
+.step.human:hover{box-shadow:0 8px 26px rgba(224,72,72,0.10)}
+
+.sname{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.3;white-space:pre-line}
+.step.hole .sname::after{content:' ⚠';font-size:9px;color:var(--red)}
+.sbadge{margin-top:5px;display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.step.full .sbadge{color:var(--green2)}
+.step.boost .sbadge{color:var(--amber)}
+.step.human .sbadge{color:var(--red)}
+
+.arrow{flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center}
+
+/* === CONNS === */
+.conns{display:flex;align-items:center;gap:8px;padding:9px 16px 9px 188px;flex-wrap:wrap;
+  opacity:0;animation:rowIn 0.55s ease-out forwards;animation-delay:0.5s}
+.conn{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;
+  background:rgba(255,255,255,0.6);backdrop-filter:blur(10px);
+  border:1px solid rgba(15,186,106,0.10);border-radius:100px;
+  font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s}
+.conn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px currentColor}
+.conn-ico{font-size:13px}
+
+/* === POT BY CHAIN === */
+.pot-chains{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:6px}
+.potc{background:var(--card);backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:12px;padding:11px 12px;text-align:left}
+.potc-n{font-family:'Unbounded',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:-0.005em}
+.potc.c1 .potc-n{color:var(--green2)}
+.potc.c2 .potc-n{color:var(--purple)}
+.potc.c3 .potc-n{color:var(--amber)}
+.potc.c4 .potc-n{color:var(--blue)}
+.potc.c5 .potc-n{color:var(--red)}
+.potc-v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;color:var(--text);margin:4px 0 3px}
+.potc-d{font-size:10px;color:var(--text2);line-height:1.45}
+
+/* === FINAL POT === */
+.final-pot{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.fp{background:var(--card);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.fp-v{font-family:'Unbounded',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.025em;line-height:1;
+  background:linear-gradient(135deg,#1db87a,#06b6d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fp-l{font-size:10.5px;font-weight:600;color:var(--text2);margin-top:5px;letter-spacing:0.03em}
+
+/* === DISCLAIMER === */
+.disc{background:rgba(232,163,8,0.06);border:1px solid rgba(232,163,8,0.22);
+  border-radius:12px;padding:13px 16px;display:flex;gap:11px;align-items:flex-start}
+.disc-ico{font-size:18px;flex-shrink:0;margin-top:1px}
+.disc-t{font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;color:var(--amber);letter-spacing:0.02em}
+.disc-d{font-size:11px;color:var(--text2);line-height:1.55;margin-top:3px}
+
+/* === LEGEND === */
+.legend{display:flex;gap:18px;flex-wrap:wrap;padding:11px 16px;
+  background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);
+  border:1px solid var(--border);border-radius:12px;margin-top:14px}
+.lg{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);font-weight:500}
+.lg-dot{width:10px;height:10px;border-radius:50%}
+.lg.g .lg-dot{background:var(--green);box-shadow:0 0 10px rgba(15,186,106,0.6)}
+.lg.y .lg-dot{background:var(--yellow);box-shadow:0 0 10px rgba(232,163,8,0.55)}
+.lg.r .lg-dot{background:var(--red);box-shadow:0 0 10px rgba(224,72,72,0.5)}
+.lg.h .lg-dot{background:transparent;border:1px dashed var(--text2);box-shadow:none}
+
+/* === FOOTER === */
+.foot{margin-top:30px;text-align:center;font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;line-height:1.6}
+.foot b{color:var(--text2)}
+
+/* === OVERLAY/MODAL === */
+.overlay{position:fixed;inset:0;background:rgba(15,20,25,0.55);backdrop-filter:blur(4px);z-index:1000;
+  display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.overlay.show{display:flex}
+.modal{background:rgba(255,255,255,0.96);backdrop-filter:blur(24px);
+  border:1px solid rgba(15,186,106,0.12);border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.18);
+  max-width:620px;width:100%;padding:22px 24px;position:relative;
+  animation:modalIn 0.32s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mclose{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;
+  background:rgba(0,0,0,0.04);border:none;cursor:pointer;font-size:16px;color:var(--text2);
+  display:flex;align-items:center;justify-content:center}
+.mclose:hover{background:rgba(0,0,0,0.08)}
+.mbadge{display:inline-block;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.mbadge.full{background:rgba(15,186,106,0.10);color:var(--green2)}
+.mbadge.boost{background:rgba(232,163,8,0.10);color:var(--amber)}
+.mbadge.human{background:rgba(224,72,72,0.08);color:var(--red)}
+.mtitle{font-family:'Unbounded',sans-serif;font-weight:700;font-size:21px;line-height:1.15;margin:8px 0 4px;letter-spacing:-0.015em}
+.mchain{font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;font-family:'JetBrains Mono',monospace}
+.mdesc{font-size:13px;color:var(--text2);line-height:1.6;margin-top:10px}
+.mdesc strong{color:var(--text);font-weight:700}
+.mquote{font-size:12.5px;font-style:italic;color:var(--text2);
+  padding:9px 13px;margin:9px 0 3px;border-left:3px solid var(--green);
+  background:rgba(15,186,106,0.04);border-radius:0 8px 8px 0;line-height:1.55}
+.msrc{font-size:9.5px;color:var(--text3);margin:3px 0 2px;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em}
+
+.mai{padding:11px 13px;border-radius:11px;margin-top:12px}
+.mai.full{background:rgba(15,186,106,0.05);border-left:3px solid var(--green)}
+.mai.boost{background:rgba(232,163,8,0.05);border-left:3px solid var(--yellow)}
+.mai.human{background:rgba(224,72,72,0.04);border-left:3px solid var(--red)}
+.mai-t{font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.mai.full .mai-t{color:var(--green2)}
+.mai.boost .mai-t{color:var(--amber)}
+.mai.human .mai-t{color:var(--red)}
+.mai-txt{font-size:12.5px;color:var(--text);margin-top:5px;line-height:1.55;font-weight:500}
+
+.msec{font-size:9.5px;font-weight:700;color:var(--text3);letter-spacing:0.08em;
+  text-transform:uppercase;margin:14px 0 7px;padding-top:11px;
+  border-top:1px solid var(--border)}
+
+.magent{padding:10px 12px;background:rgba(33,150,243,0.04);border-radius:10px}
+.magent-name{font-weight:700;font-size:13px;color:var(--text);margin-bottom:3px}
+.magent-desc{font-size:11.5px;color:var(--text2);line-height:1.55}
+.magent-mod{font-size:10px;color:var(--blue);margin-top:4px;font-weight:600;font-family:'JetBrains Mono',monospace}
+
+.mbranch{padding:10px 12px;background:rgba(15,186,106,0.04);border-radius:10px}
+.mbranch-name{font-weight:700;font-size:13px;color:var(--green2)}
+.mbranch-pot{font-family:'JetBrains Mono',monospace;font-size:12px;margin:3px 0;font-weight:600;color:var(--text)}
+.mbranch-link{font-size:11px;color:var(--text2);line-height:1.5}
+
+.munit{padding:10px 12px;background:rgba(0,0,0,0.025);border-radius:10px}
+.munit-row{font-size:12px;color:var(--text2);padding:4px 0;display:flex;gap:8px;line-height:1.45}
+.munit-row span{flex-shrink:0;font-size:14px}
+.munit-row.hl{font-weight:600;color:var(--green2)}
+
+.mtool{padding:10px 12px;background:rgba(124,58,237,0.04);border-radius:10px;border-left:3px solid var(--purple)}
+.mtool-name{font-weight:700;font-size:13px;color:var(--purple)}
+.mtool-steps{font-size:11.5px;color:var(--text2);line-height:1.65;margin:4px 0}
+.mtool-time{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+
+.mgoal{padding:0}
+.mgoal-name{font-weight:700;font-size:12.5px;color:var(--text);margin-bottom:7px}
+.mgoal-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mgoal-before,.mgoal-after{padding:8px 10px;border-radius:8px;font-size:11px;line-height:1.5}
+.mgoal-before{background:rgba(224,72,72,0.05);color:var(--red)}
+.mgoal-after{background:rgba(15,186,106,0.05);color:var(--green2)}
+.mgoal-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;opacity:0.8}
+
+.mlinks{display:flex;flex-direction:column;gap:7px}
+.ml{display:flex;gap:10px;font-size:11.5px;color:var(--text2);align-items:flex-start;padding:8px 11px;background:rgba(0,0,0,0.02);border-radius:9px}
+.ml-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;box-shadow:0 0 8px currentColor}
+.ml-lbl{font-weight:700;font-size:11px;font-family:'JetBrains Mono',monospace}
+.ml-sub{font-size:9.5px;color:var(--text3);margin-top:2px;letter-spacing:0.03em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+
+.mmets{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin-top:14px}
+.mmet{background:rgba(15,186,106,0.04);border:1px solid rgba(15,186,106,0.08);border-radius:10px;padding:9px 10px;text-align:center}
+.mmet-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;color:var(--green2);line-height:1}
+.mmet-lbl{font-size:9.5px;color:var(--text2);margin-top:3px;font-weight:600;letter-spacing:0.02em}
+
+/* === RESPONSIVE === */
+@media (max-width:900px){
+  .bizcard{grid-template-columns:repeat(2,1fr)}
+  .tasks{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .branches,.final-pot{grid-template-columns:1fr}
+  .pot-chains{grid-template-columns:repeat(2,1fr)}
+  .chain{flex-direction:column}
+  .cl-label{width:100%;padding-left:8px}
+  .cl-steps{flex-wrap:wrap}
+  .conns{padding-left:16px}
+  .title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="netCanvas"></canvas>
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+
+<div class="wrap">
+
+<!-- ============== HEADER ============== -->
+<header>
+  <div class="head">
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <div class="logo-txt"><b>ИИЩЕНКО</b> · LAB</div>
+    </div>
+    <div class="head-badge"><span class="orb"></span> BizChain Map · AI-аудит потенциала</div>
+  </div>
+  <h1 class="title">«ВАМ РАДЫ» — карта роста к канатной дороге</h1>
+  <div class="subtitle">
+    Посуточная аренда квартир · <b>Горбатенко Оксана Сергеевна</b> · Благовещенск, Амурская область
+  </div>
+  <div class="meta-row">
+    <span class="meta-chip">📌 5 лет на рынке</span>
+    <span class="meta-chip">🏠 20–21 квартира</span>
+    <span class="meta-chip">⭐ 5.0 на 2ГИС</span>
+    <span class="meta-chip">🔄 50% повторных гостей</span>
+    <span class="meta-chip">🚠 Канатная дорога · лето 2026</span>
+  </div>
+</header>
+
+<!-- ============== BLOCK 2: BIZ CARD ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">01</span>
+    <span class="section-t">Карточка бизнеса</span>
+    <span class="section-sub">Ключевые метрики на момент распаковки · май 2026</span>
+  </div>
+  <div class="bizcard">
+    <div class="bzc">
+      <div class="bzc-val sm">«ВАМ РАДЫ»</div>
+      <div class="bzc-lbl">ИП Горбатенко О.С.</div>
+      <div class="bzc-sub">Субаренда, 5 лет</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">20–21</div>
+      <div class="bzc-lbl">Квартир в портфеле</div>
+      <div class="bzc-sub">из них 3 балластных</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">3 000 ₽</div>
+      <div class="bzc-lbl">Средняя цена ночи</div>
+      <div class="bzc-sub">«ниже не опускаемся»</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">90% / 65%</div>
+      <div class="bzc-lbl">Загрузка</div>
+      <div class="bzc-sub">сезон / март 2026</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">50%</div>
+      <div class="bzc-lbl">Прямые брони</div>
+      <div class="bzc-sub">повторные + сарафан</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">9 чел.</div>
+      <div class="bzc-lbl">Команда</div>
+      <div class="bzc-sub">менеджер, бухгалтер, 6 горничных, 1 в декрете</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">14–21 ч</div>
+      <div class="bzc-lbl">Оксана/неделя</div>
+      <div class="bzc-sub">+ выезды на проблемы</div>
+    </div>
+    <div class="bzc">
+      <div class="bzc-val">~300 К ₽</div>
+      <div class="bzc-lbl">Долг по 8 арендам</div>
+      <div class="bzc-sub">временная просадка</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 3: 6 TASKS ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">02</span>
+    <span class="section-t">Шесть задач, которые решает карта</span>
+    <span class="section-sub">из ответов Оксаны · апрель–май 2026</span>
+  </div>
+  <div class="tasks">
+    <div class="task"><span class="task-n">01</span><span class="task-txt"><b>Запустить опубликацию на все площадки.</b> «Я больше чем уверена, что новых квартир нет на Квартирке, Суточно.ру, Броневике, Яндекс Путешествиях. Было бы здорово, если бы ИИ опубликовал их там все.»</span></div>
+    <div class="task"><span class="task-n">02</span><span class="task-txt"><b>Заменить любительские фото на профессиональные.</b> Главный тормоз привлечения — снимки на iPhone. Без хороших фото объявления не цепляют, особенно к лету 2026 на канатке.</span></div>
+    <div class="task"><span class="task-n">03</span><span class="task-txt"><b>Дать рекламу во все соцсети, группы и чаты.</b> Сейчас этого не делается совсем. Дыра, через которую утекает 5–10% потенциального трафика.</span></div>
+    <div class="task"><span class="task-n">04</span><span class="task-txt"><b>Реанимировать Instagram и запустить ТГ-канал о Благовещенске.</b> Канатка, набережная, мероприятия, очереди на таможне — готовый поток тем для прогрева гостей до приезда.</span></div>
+    <div class="task"><span class="task-n">05</span><span class="task-txt"><b>Сохранять контакты и возвращать гостей.</b> «Постоянников своих не удерживаем. Контакты тоже не сохраняем.» 50% повторных — это сейчас. С CRM и рассылкой может быть 65–70%.</span></div>
+    <div class="task"><span class="task-n">06</span><span class="task-txt"><b>Освободить Оксане 10–15 часов в неделю на стратегию.</b> Сегодня они уходят на выезды на квартиры (сломался кран, нет постельного, пропал чайник). Эта рутина — кандидат №1 на делегирование.</span></div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 4: GOAL PANEL ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">03</span>
+    <span class="section-t">Цель через 12 месяцев</span>
+    <span class="section-sub">из карты роста · апрель 2026</span>
+  </div>
+  <div class="goal-panel">
+    <span class="goal-icon">🎯</span>
+    <div>
+      <div class="goal-lbl">ЦЕЛЬ К ВЕСНЕ 2027</div>
+      <div class="goal-vals">
+        <span>20 качественных квартир</span><span class="dot"></span>
+        <span>загрузка 85%</span><span class="dot"></span>
+        <span>600 000 ₽/мес выручки</span><span class="dot"></span>
+        <span>400–600 К ₽ чистой</span><span class="dot"></span>
+        <span>4–6 ч/нед Оксаны</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 5: STATS ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">04</span>
+    <span class="section-t">ИИ-потенциал бизнеса</span>
+    <span class="section-sub">25 звеньев = 5 цепочек × 5 этапов</span>
+  </div>
+  <div class="stats">
+    <div class="stat g"><div class="stat-val">16</div><div class="stat-lbl">🟢 ИИ делает сам</div></div>
+    <div class="stat y"><div class="stat-val">6</div><div class="stat-lbl">🟡 ИИ ускоряет ×5–10</div></div>
+    <div class="stat r"><div class="stat-val">3</div><div class="stat-lbl">🔴 Нужен человек</div></div>
+    <div class="stat t"><div class="stat-val">88%</div><div class="stat-lbl">ИИ-потенциал</div></div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 6: BRANCHES ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">05</span>
+    <span class="section-t">Шесть веток роста</span>
+    <span class="section-sub">приоритеты по ₽-потенциалу · 12 месяцев</span>
+  </div>
+  <div class="branches">
+    <div class="br">
+      <div class="br-n">🚠 Канатка + китайский сегмент</div>
+      <div class="br-pot">+1,5–3 млн ₽/год</div>
+      <div class="br-d">Профи-фото 5 квартир у моста + объявления на китайском + ТГ-канал о Благовещенске к запуску канатной дороги летом 2026.</div>
+    </div>
+    <div class="br">
+      <div class="br-n">🏢 Корпоративный канал</div>
+      <div class="br-pot">+0,6–1,2 млн ₽/год</div>
+      <div class="br-d">АГПЗ, ДВОКУ, больницы, командировочные. Сейчас 40% потока, но без системы. Договоры → стабильная загрузка вне сезона.</div>
+    </div>
+    <div class="br">
+      <div class="br-n">💬 Прямые брони + автоответы</div>
+      <div class="br-pot">+0,9–1,8 млн ₽/год</div>
+      <div class="br-d">Шаблоны для Telegram/Max, авто-ответ ночью, интеграция Realty Calendar. Цель — забрать 7–10% комиссии у площадок.</div>
+    </div>
+    <div class="br">
+      <div class="br-n">📈 Динамическое ценообразование</div>
+      <div class="br-pot">+0,6–1 млн ₽/год</div>
+      <div class="br-d">Realty Calendar умеет, но не используется на полную. ИИ-аналитик: «пик спроса → +10–15% к цене», «провал → −10%».</div>
+    </div>
+    <div class="br">
+      <div class="br-n">📱 Соцсети как воронка</div>
+      <div class="br-pot">+0,4–0,6 млн ₽/год</div>
+      <div class="br-d">ТГ-канал, реанимированный Instagram, реклама в чатах Благовещенска. Контент о городе + квартиры как «свои» в кадре.</div>
+    </div>
+    <div class="br">
+      <div class="br-n">🗂 Балласт → долгосрок</div>
+      <div class="br-pot">+0,6–0,9 млн ₽/год</div>
+      <div class="br-d">3 квартиры (Воронкова 27, Заводская 4/4) перевести из посуточной в долгосрочную. Минус головная боль, плюс стабильная аренда.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============== BLOCK 7: CHAIN MAP ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">06</span>
+    <span class="section-t">Карта цепочек бизнеса</span>
+    <span class="section-sub">кликните по любому звену — откроется досье с цитатами Оксаны</span>
+  </div>
+  <div id="mapRoot"></div>
+</section>
+
+<!-- ============== BLOCK 8: POT BY CHAIN ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">07</span>
+    <span class="section-t">Потенциал по цепочкам</span>
+    <span class="section-sub">прирост за 12 месяцев при внедрении ИИ</span>
+  </div>
+  <div class="pot-chains">
+    <div class="potc c1">
+      <div class="potc-n">📢 ПРИВЛЕЧЕНИЕ</div>
+      <div class="potc-v">+1,2–2,2 млн ₽/год</div>
+      <div class="potc-d">Все площадки + ТГ-канал о Благовещенске + реклама в чатах. Готовность к канатке.</div>
+    </div>
+    <div class="potc c2">
+      <div class="potc-n">💼 ПРОДАЖА</div>
+      <div class="potc-v">+0,9–1,8 млн ₽/год</div>
+      <div class="potc-d">Шаблоны Telegram/Max, авто-ответ 24/7, динамические цены. Конверсия 80% → 90%.</div>
+    </div>
+    <div class="potc c3">
+      <div class="potc-n">🛠 ИСПОЛНЕНИЕ</div>
+      <div class="potc-v">Экспертиза Оксаны</div>
+      <div class="potc-d">Уборка и выезды — физический труд. ИИ освобождает 10–15 ч/нед через CRM и инструкции для гостей.</div>
+    </div>
+    <div class="potc c4">
+      <div class="potc-n">🎬 КОНТЕНТ</div>
+      <div class="potc-v">+0,8–1,4 млн ₽/год</div>
+      <div class="potc-d">Профи-фото (одноразово), описания на русском+китайском, ТГ-канал, реклама в чатах.</div>
+    </div>
+    <div class="potc c5">
+      <div class="potc-n">🔁 УДЕРЖАНИЕ</div>
+      <div class="potc-v">+0,5–1,0 млн ₽/год</div>
+      <div class="potc-d">CRM, программа лояльности, реферальная система. Повторные с 50% → 65–70%.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 9: FINAL POT ============== -->
+<section class="section">
+  <div class="section-h">
+    <span class="section-num">08</span>
+    <span class="section-t">Итоговый потенциал бизнеса</span>
+    <span class="section-sub">при последовательной реализации всех 6 веток роста</span>
+  </div>
+  <div class="final-pot">
+    <div class="fp"><div class="fp-v">+4,8–8,8 млн</div><div class="fp-l">₽ в год, потенциал всех веток</div></div>
+    <div class="fp"><div class="fp-v">+3–6 млн</div><div class="fp-l">₽/год реалистично за 12 мес</div></div>
+    <div class="fp"><div class="fp-v">600 К ₽</div><div class="fp-l">Целевая выручка в месяц</div></div>
+    <div class="fp"><div class="fp-v">88%</div><div class="fp-l">Звеньев автоматизируется ИИ</div></div>
+    <div class="fp"><div class="fp-v">8 дыр</div><div class="fp-l">Закрываются сразу (быстрый эффект)</div></div>
+    <div class="fp"><div class="fp-v">~780 ч</div><div class="fp-l">Освобождаем Оксане в год</div></div>
+  </div>
+</section>
+
+<!-- ============== BLOCK 10: DISCLAIMER + LEGEND + FOOTER ============== -->
+<section class="section">
+  <div class="disc">
+    <span class="disc-ico">⚠️</span>
+    <div>
+      <div class="disc-t">Дисклеймер</div>
+      <div class="disc-d">Это не финансовый прогноз и не гарантия результата. Цифры — ориентировочный прогноз при последовательной реализации веток роста с реальными данными из распаковки. Результаты зависят от темпа внедрения, сезонности, готовности канатной дороги Благовещенск–Хэйхэ и общей экономической ситуации. Все цифры обсуждаются и уточняются на сопровождении.</div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="lg g"><span class="lg-dot"></span> Зелёный — ИИ автоматизирует полностью</div>
+    <div class="lg y"><span class="lg-dot"></span> Жёлтый — ИИ ускоряет, человек контролирует</div>
+    <div class="lg r"><span class="lg-dot"></span> Красный — требует живого человека</div>
+    <div class="lg h"><span class="lg-dot"></span> Пунктирная рамка ⚠ — дыра, не делается</div>
+  </div>
+  <div class="foot">
+    <b>© ИИщенко LAB · Центр развития бизнеса</b><br>
+    BizChain Map v4.2 · Подготовлено для Горбатенко О. С., «ВАМ РАДЫ», Благовещенск · Май 2026<br>
+    Тел.: +7 914 538-90-45
+  </div>
+</section>
+
+</div><!-- /.wrap -->
+
+<!-- ============== MODAL ============== -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="mclose" onclick="closeM()">✕</button>
+    <span class="mbadge" id="mBadge">🟢 ИИ делает сам</span>
+    <div class="mtitle" id="mTitle">Звено</div>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+
+<script>
+/* ============== DATA: 5 CHAINS × 5 STEPS = 25 ============== */
+const CHAINS = [
+{
+  cls:'c1', emoji:'📢', name:'ПРИВЛЕЧЕНИЕ', sub:'гостей',
+  gain:'Авито · ЦИАН · Сарафан 50%',
+  time:'Канатка 2026 → китайский поток',
+  steps:[
+    {
+      name:'Объявления\nна площадках', type:'full', badge:'ИИ сам', hole:false,
+      title:'Объявления на Авито и ЦИАН',
+      chain:'Привлечение', ai:'full',
+      desc:'<strong>Главный канал привлечения.</strong> Авито даёт 10–30% броней в зависимости от месяца, ЦИАН растёт в 2026 (2–15%). Сейчас Оксана сама фотографирует квартиру на iPhone (10–15 фото за визит), заполняет шаблон, дочка переписывает описание. Публикация — ручная.',
+      desc_quote:'«Открываю Авито, ЦИАН, Яндекс.Недвижимость. Заполняю поля по шаблону. Прошу менеджера вставить описание на квартиру. Загружаю фотографии, публикую.»',
+      desc_source:'сценарий распаковки, Б4.1, шаги 6–9',
+      ai_text:'ChatGPT/Claude генерирует уникальные SEO-описания для каждой квартиры (русский + китайский), бот публикует на 8 площадок одной кнопкой через Realty Calendar API. Новая квартира появляется везде за 15 минут вместо 2–3 дней.',
+      agent:'Копирайтер + Ген Агент',
+      agent_desc:'Копирайтер пишет описания по фото и характеристикам, Ген Агент координирует публикацию.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Канатка + китайский сегмент',
+      branch_pot:'+1,5–3 млн ₽/год',
+      branch_link:'Авито + ЦИАН = главные двери. Описания на китайском к лету 2026 — это новый поток гостей с канатки.',
+      unit_money:'~5 000–10 000 ₽/мес (платное продвижение Авито)',
+      unit_time:'~2–3 ч/нед (Оксана + дочь)',
+      unit_pot:'С ИИ: новая квартира → 8 площадок за 15 мин. Описания на 2 языках. Экономия 1,5 ч/нед.',
+      tool:'Claude + Realty Calendar API + шаблон описания',
+      tool_steps:'1) Шаблон описания на основе чек-листа квартиры. 2) Тест на 3 квартирах. 3) Подключение API публикации. 4) Перевод на китайский для мостовых квартир.',
+      tool_time:'4–6 часов настройки',
+      goal:'Загрузка 85% и выручка 600 К ₽/мес',
+      goal_before:'10–15 фото на iPhone, описание правит дочь, публикация занимает 2–3 дня на квартиру',
+      goal_after:'Профи-фото + ИИ-описание (RU/CN) + публикация на 8 площадок за 15 минут',
+      links:[
+        {color:'#7c3aed', lbl:'← Контент', txt:'Фото и описания питают объявления', sub:'Информационный'},
+        {color:'#f97316', lbl:'← Удержание', txt:'Постоянные пишут напрямую — экономия комиссии', sub:'Петля сарафана'}
+      ],
+      metrics:[
+        {val:'10–30%', lbl:'броней с Авито'},
+        {val:'2–15%', lbl:'броней с ЦИАН'},
+        {val:'8', lbl:'площадок целевых'}
+      ]
+    },
+    {
+      name:'Второстепенные\nплатформы', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Островок · Квартирка · Броневик · Суточно.ру · Твил',
+      chain:'Привлечение', ai:'full',
+      desc:'<strong>Дыра в привлечении.</strong> Эти платформы дают 1–10% броней каждая, но новые квартиры там не размещаются. Оксана сама признала: «Больше чем уверена, что новых квартир нет на Квартирке, Суточно.ру, Броневике, Яндекс Путешествиях».',
+      desc_quote:'«Первая задача — опубликовать все квартиры на всех существующих сайтах. Было бы здорово, если бы ИИ мог опубликовать их там все.»',
+      desc_source:'из распаковки, Б7.4 — прямой запрос Оксаны',
+      ai_text:'ИИ-агент пакетно загружает квартиры на все вторичные площадки: Островок, Квартирка, Броневик, Суточно.ру, Твил, Яндекс.Путешествия. Адаптирует описание под формат каждой площадки. Раз в неделю — синхронизация цен и календарей.',
+      agent:'Копирайтер',
+      agent_desc:'Адаптирует базовое описание под формат каждой площадки, заливает фото, синхронизует календарь.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Канатка + китайский сегмент',
+      branch_pot:'+1,5–3 млн ₽/год',
+      branch_link:'Закрытие этой дыры = +5–10% загрузки сразу. Особенно Островок и Суточно для туристов.',
+      unit_money:'0 ₽/мес сейчас (дыра — не делается)',
+      unit_time:'0 ч/нед сейчас (но потеря ~50–150 К ₽/мес недополученной выручки)',
+      unit_pot:'С ИИ: 21 квартира × 5 площадок = 105 объявлений за 1 день вместо месяца ручной работы.',
+      tool:'Claude + интеграция через RPA или ручной шаблон',
+      tool_steps:'1) Создать шаблон для каждой из 5 площадок. 2) Пакетно опубликовать 21 квартиру. 3) Настроить синхронизацию с Realty Calendar. 4) Еженедельный аудит цен.',
+      tool_time:'8–10 часов первичной настройки',
+      goal:'Загрузка 85% во вне-сезон',
+      goal_before:'Новые квартиры есть только на Авито и ЦИАН — теряем 5–10% потенциальной загрузки',
+      goal_after:'Все 20 квартир на 8 площадках — синхронизация цен и календаря автоматическая',
+      links:[
+        {color:'#0d9488', lbl:'→ Продажа', txt:'Больше объявлений = больше входящих', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'8%', lbl:'броней Островок'},
+        {val:'5%', lbl:'броней Суточно'},
+        {val:'1%', lbl:'броней Твил'}
+      ]
+    },
+    {
+      name:'Соцсети\nи ТГ-канал', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Telegram-канал + Instagram + ВКонтакте',
+      chain:'Привлечение', ai:'full',
+      desc:'<strong>Дыра в позиционировании.</strong> Сейчас соцсетей нет вообще. Instagram пробовали — забросили. ТГ-канала о Благовещенске нет, а это упущенная воронка для китайского туриста и командировочных. Особенно перед запуском канатной дороги 2026.',
+      desc_quote:'«Пробовали вести Instagram. Результата никакого не было... Освещала бы новую набережную и канатную дорогу. Триумфальную арку. Свои загородные походы. Возможно, какие-то мероприятия. Очереди на таможне в Китай.»',
+      desc_source:'из распаковки, Б4.5 + Б4.6',
+      ai_text:'ИИ создаёт контент-план на 3 месяца, генерирует 12 постов в месяц о Благовещенске (канатка, набережная, триумфальная арка, очереди на таможне, рекомендации гостям), Копирайтер пишет тексты на основе тем Оксаны, Ген Агент публикует по расписанию.',
+      agent:'Ген Агент + Копирайтер',
+      agent_desc:'Ген Агент держит контент-план и календарь, Копирайтер генерирует посты под голос Оксаны («ничего страшного», «вам рады»).',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Соцсети как воронка',
+      branch_pot:'+0,4–0,6 млн ₽/год',
+      branch_link:'ТГ-канал = прогрев туристов ДО приезда. Прямые брони без комиссии площадок.',
+      unit_money:'0 ₽/мес сейчас (дыра)',
+      unit_time:'0 ч/нед сейчас. С ИИ: 1 ч/нед на одобрение постов',
+      unit_pot:'С ИИ: 12 постов/мес автоматически. Через 6 мес — 500–1000 подписчиков. Через 12 мес — стабильная доля прямых броней через ТГ.',
+      tool:'Claude AI + Tilda/Telegraph + автопостинг',
+      tool_steps:'1) Создать ТГ-канал «ВАМ РАДЫ · Благовещенск». 2) Контент-план на 90 дней. 3) Реанимировать Instagram — переподключить через VPN. 4) Тест 30 постов, корректировка голоса. 5) Автопостинг.',
+      tool_time:'6 часов настройки + 1 ч/нед поддержка',
+      goal:'+10% прямых броней через соцсети к 2027',
+      goal_before:'Нет соцсетей, нет точек контакта с гостем до площадки — гость находит и сразу бронирует',
+      goal_after:'ТГ-канал о Благовещенске → подписчики приходят за городом, остаются за квартирами',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Подписчики ТГ → прямые брони', sub:'Петля возврата'},
+        {color:'#7c3aed', lbl:'← Контент', txt:'Темы дочери о Благовещенске → посты', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'0', lbl:'постов сейчас'},
+        {val:'12', lbl:'постов/мес цель'},
+        {val:'500+', lbl:'подписч. за 6 мес'}
+      ]
+    },
+    {
+      name:'Сарафан\nи рекомендации', type:'boost', badge:'ИИ ×5',
+      title:'Постоянные гости и реферальный поток',
+      chain:'Привлечение', ai:'boost', hole:false,
+      desc:'<strong>50% всех броней — прямые и через рекомендации.</strong> Это самая сильная сторона бизнеса Оксаны. Но дыра: «Не знаем, кто от кого к нам приходит». Поэтому реферальную программу настроить невозможно — потеря данных на самом критичном узле.',
+      desc_quote:'«В 50% возвращаемых гостей, а также процент гостей по рекомендации. Я готова это поощрять, но мы это не делаем. Потому что не знаем, кто от кого к нам приходит.»',
+      desc_source:'из распаковки, Б1.4–Б1.5',
+      ai_text:'CRM фиксирует при каждом запросе: «Откуда узнали? От кого порекомендовали?». ИИ автоматически связывает нового гостя с рекомендателем, начисляет ему скидку 10% на следующий приезд, отправляет благодарственное сообщение в Telegram/WhatsApp.',
+      agent:'Удержание + Аналитик',
+      agent_desc:'Удержание ведёт учёт реферальной программы, Аналитик считает LTV каждого «амбассадора».',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Сарафан + учёт = лояльность. С учётом рекомендателей доля прямых броней может вырасти с 50% до 65–70%.',
+      unit_money:'0 ₽ затрат (просто учёт)',
+      unit_time:'~1 ч/нед менеджера на учёт',
+      unit_pot:'С ИИ: учёт автоматический. «Спасибо за рекомендацию» уходит ботом. Доля повторных 50% → 65–70%.',
+      tool:'Простая CRM (AmoCRM/Bitrix) + бот в Telegram',
+      tool_steps:'1) Завести 5 полей: имя, телефон, источник, кто рекомендовал, дата последнего визита. 2) Шаблон «Спасибо, ваша скидка 10%». 3) Месячный отчёт «Топ-10 рекомендателей».',
+      tool_time:'3 часа настройки',
+      goal:'Повторные гости с 50% → 70% за 12 мес',
+      goal_before:'50% повторных, но непонятно, кого благодарить за рекомендации — теряется данные',
+      goal_after:'Каждый рекомендатель в CRM, автоматическая скидка, благодарственное сообщение',
+      links:[
+        {color:'#f97316', lbl:'→ Привлечение', txt:'Гость рекомендует → новый гость', sub:'Петля сарафана'},
+        {color:'#d97706', lbl:'← Удержание', txt:'Довольный гость → рекомендация', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'50%', lbl:'прямые брони'},
+        {val:'70%', lbl:'цель через год'},
+        {val:'10%', lbl:'скидка за реферал'}
+      ]
+    },
+    {
+      name:'Ночной\nавтоответ', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Авто-ответ 24/7 на первичный запрос',
+      chain:'Привлечение', ai:'full',
+      desc:'<strong>Менеджер отвечает 5–10 минут днём, но ночью может пропустить.</strong> Каждый пропущенный запрос — потерянная бронь. Особенно болезненно для китайских гостей: разница во времени и они пишут как раз ночью по Благовещенску.',
+      desc_quote:'«Менеджер сама отвечает, когда видит новое сообщение. Ночью, конечно, может пропустить, не сразу ответить.»',
+      desc_source:'из распаковки, Б2.8',
+      ai_text:'Бот отвечает мгновенно в Telegram/WhatsApp/Max в любое время суток: «Здравствуйте! Меня зовут Оксана. Сколько человек будет и на какие даты?» Если гость отвечает, бот предлагает свободные квартиры из Realty Calendar. Утром менеджер вступает только для оплаты.',
+      agent:'Воронки',
+      agent_desc:'Принимает запрос, классифицирует (количество гостей, даты), предлагает варианты, передаёт горячих менеджеру.',
+      agent_mod:'Модуль 03: Лидогенерация',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Ночной запрос → автоответ → бронь утром. Сейчас 5–10% таких теряется.',
+      unit_money:'0 ₽ сейчас (дыра)',
+      unit_time:'0 ч/нед (не делается)',
+      unit_pot:'С ИИ: ответ за 30 секунд 24/7. Гость не уходит к конкуренту. +5–10% к загрузке вне сезона.',
+      tool:'Telegram-бот через ManyChat или Bot Father + Claude API',
+      tool_steps:'1) Скрипт первого ответа (3 вопроса). 2) Интеграция с Realty Calendar (свободные квартиры). 3) Тест на 50 запросах. 4) Передача менеджеру утром.',
+      tool_time:'5–6 часов настройки',
+      goal:'Загрузка 85% (особенно март и октябрь)',
+      goal_before:'Ночные запросы пропускаются. Гость пишет в 2–3 ночи — отвечают в 9 утра. К этому моменту бронь уходит к конкуренту',
+      goal_after:'Бот отвечает за 30 секунд в любое время. Менеджер берёт оплату утром по уже подогретой брони',
+      links:[
+        {color:'#0d9488', lbl:'→ Продажа', txt:'Ночной диалог → утренняя оплата', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'5–10 мин', lbl:'ответ днём'},
+        {val:'0', lbl:'ответов ночью'},
+        {val:'30 сек', lbl:'с ботом'}
+      ]
+    }
+  ]
+},
+{
+  cls:'c2', emoji:'💼', name:'ПРОДАЖА', sub:'и бронь',
+  gain:'Конверсия ~80% · от 1 часа до брони',
+  time:'Шаблоны WhatsApp работают, Telegram/Max — нет',
+  steps:[
+    {
+      name:'Запрос гостя\n+ шаблон', type:'full', badge:'ИИ сам',
+      title:'Первичный диалог и сценарий', hole:false,
+      chain:'Продажа', ai:'full',
+      desc:'<strong>Есть отработанный 10-шаговый скрипт.</strong> «Здравствуйте, посуточная аренда квартир, меня зовут Оксана. Сколько человек будет?» → подбор → детали → оплата. Когда был WhatsApp, шаблоны работали отлично. В Telegram и Max шаблоны настроить «нельзя».',
+      desc_quote:'«Когда был у всех WhatsApp, у нас были настроены шаблоны с ответами, было очень удобно быстро отвечать. Сейчас мы работаем в основном в Telegram и Max. Не очень удобно, нельзя настроить шаблоны.»',
+      desc_source:'из распаковки, Б2.8',
+      ai_text:'Бот в Telegram/Max использует тот же сценарий: «Здравствуйте, сколько человек?» → свободные квартиры → детали (постельное, бесконтактный заезд) → ссылка на оплату. Время от первого сообщения до оплаты — 15 минут вместо часа.',
+      agent:'Воронки',
+      agent_desc:'Ведёт первичный диалог по 10-шаговому сценарию, использует Realty Calendar для подбора, передаёт оплату Посадочным.',
+      agent_mod:'Модуль 03: Лидогенерация',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Скрипт уже отработан 5 лет. Перенос его в бот — техническая задача, не творческая.',
+      unit_money:'0 ₽ (внутренний процесс)',
+      unit_time:'~5–7 ч/нед менеджера на диалоги',
+      unit_pot:'С ИИ: бот ведёт первые 6 шагов сценария. Менеджер вступает только на оплате. Экономия 4–5 ч/нед.',
+      tool:'Telegram/Max-бот с готовыми шаблонами',
+      tool_steps:'1) Записать дословный скрипт Оксаны в бота. 2) Подключить Realty Calendar API. 3) Тестировать на 30 диалогах с правкой. 4) Передача менеджеру для оплаты.',
+      tool_time:'8 часов настройки',
+      goal:'Время бронирования: 1 час → 15 минут',
+      goal_before:'От первого сообщения до подтверждённой оплаты — час. Менеджер вручную пишет шаблоны',
+      goal_after:'Бот ведёт сценарий, оплата через 15 минут, менеджер только подтверждает',
+      links:[
+        {color:'#0d9488', lbl:'→ Исполнение', txt:'Оплата → бронь в Realty Calendar', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'10', lbl:'шагов скрипта'},
+        {val:'~1 ч', lbl:'до оплаты сейчас'},
+        {val:'~15 мин', lbl:'с ботом'}
+      ]
+    },
+    {
+      name:'Подбор\nпо Realty Calendar', type:'boost', badge:'ИИ ×3',
+      title:'Подбор свободной квартиры', hole:false,
+      chain:'Продажа', ai:'boost',
+      desc:'<strong>Realty Calendar — главный технологический актив.</strong> Менеджер видит занятые/свободные даты по всем 20 квартирам в одном экране. Платформа работает, но Оксана уточнила: это НЕ Bnovo (важно для записи в карте роста).',
+      desc_quote:'«Менеджер отвечает шаблоном: Сколько человек будет? — Два. — Менеджер предлагает свободные квартиры из Realty Calendar.»',
+      desc_source:'сценарий распаковки, Б2.1, шаги 2–4',
+      ai_text:'ИИ-подбор: бот видит даты гостя и количество людей, фильтрует свободные квартиры по сегменту (центр / микрорайон / у моста), предлагает 2–3 варианта с фото. Менеджер только утверждает выбор. Если у гостя есть «история» — ИИ предлагает ту же квартиру, что в прошлый раз.',
+      agent:'Воронки + Аналитик',
+      agent_desc:'Воронки — фильтрация и подбор, Аналитик — рекомендации по сегменту гостя (командировочный → микрорайон, турист → центр).',
+      agent_mod:'Модуль 03: Лидогенерация',
+      branch:'Динамическое ценообразование',
+      branch_pot:'+0,6–1 млн ₽/год',
+      branch_link:'Подбор + динамика цены: пик спроса → +10–15%, провал → −10%. Realty Calendar умеет, но не используется на полную.',
+      unit_money:'Тариф Realty Calendar (платный)',
+      unit_time:'~3 ч/нед менеджера на подбор',
+      unit_pot:'С ИИ: бот предлагает 2–3 варианта за 30 секунд. Менеджер сэкономит 2 ч/нед.',
+      tool:'Realty Calendar API + ИИ-фильтр сегмента',
+      tool_steps:'1) Подключить API Realty Calendar к боту. 2) Алгоритм фильтрации по людям, датам, бюджету. 3) Шаблон «Из доступного предлагаю...».',
+      tool_time:'4 часа интеграции',
+      goal:'Конверсия 80% → 90%',
+      goal_before:'Менеджер вручную смотрит календарь, пишет варианты одним сообщением',
+      goal_after:'Бот предлагает 2–3 квартиры с фото и ценой за 30 секунд',
+      links:[
+        {color:'#0d9488', lbl:'→ Исполнение', txt:'Подбор → бронь в Realty Calendar', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'21', lbl:'квартира в системе'},
+        {val:'80%', lbl:'конверсия сейчас'},
+        {val:'90%', lbl:'цель'}
+      ]
+    },
+    {
+      name:'Уточнение\nдеталей · FAQ', type:'full', badge:'ИИ сам',
+      title:'Бесконтактный заезд, постельное, удобства', hole:false,
+      chain:'Продажа', ai:'full',
+      desc:'<strong>Гости задают одни и те же вопросы.</strong> «Бесконтактный заезд?», «Есть постельное и полотенце?», «Утюг, фен, бойлер?». Менеджер 5 лет отвечает одно и то же. Это идеальное место для бота — список FAQ + точные ответы.',
+      desc_quote:'«Гость уточняет детали: Какое заселение? Бесконтактное? Есть постельное и полотенце? — Менеджер: Да, есть постельное и полотенца, утюг, фен, сушилка, гладильная доска. Бойлер, кондиционер.»',
+      desc_source:'сценарий распаковки, Б2.1, шаги 5–6',
+      ai_text:'Бот моментально отвечает на любой вопрос из 30–40 FAQ. «Можно с собакой?», «Бесконтактный заезд?», «Есть микроволновка?». Менеджер вступает только если вопрос вне базы (тогда добавляет в FAQ для следующего раза).',
+      agent:'Воронки',
+      agent_desc:'Держит базу FAQ по 21 квартире, отвечает на 95% вопросов автоматически, обучается на новых.',
+      agent_mod:'Модуль 03: Лидогенерация',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Снимает 30–40% диалоговой нагрузки с менеджера. Снижает потребность в ночной смене.',
+      unit_money:'0 ₽ (часть бота)',
+      unit_time:'~2 ч/нед менеджера на FAQ',
+      unit_pot:'С ИИ: 95% вопросов закрыты ботом. Освобождение 1,5 ч/нед.',
+      tool:'Claude AI + база FAQ по 21 квартире',
+      tool_steps:'1) Собрать 30 типовых вопросов. 2) Прописать индивидуальные ответы по каждой квартире (есть/нет тёплый пол, какая плита, есть ли парковка). 3) Связать с Realty Calendar.',
+      tool_time:'5 часов настройки',
+      goal:'Конверсия 80% → 90%',
+      goal_before:'Менеджер отвечает на одни и те же вопросы 30 раз в день',
+      goal_after:'Бот закрывает FAQ за 5 секунд, менеджер только на нестандартных вопросах',
+      links:[
+        {color:'#d97706', lbl:'← Исполнение', txt:'Запросы о квартире питают FAQ', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'30+', lbl:'типовых FAQ'},
+        {val:'95%', lbl:'закроет бот'}
+      ]
+    },
+    {
+      name:'Бронь\n+ предоплата 2000₽', type:'full', badge:'ИИ сам',
+      title:'Шаблон брони и предоплата', hole:false,
+      chain:'Продажа', ai:'full',
+      desc:'<strong>Чёткий шаблон уже работает.</strong> «Для брони квартиры необходимо перевести 2000 руб. на номер 89622854057 Т-банк». Простой и понятный. Идеально для бота — нужно только подставить адрес квартиры и сумму.',
+      desc_quote:'«Менеджер отправляет шаблон: "Для брони квартиры необходимо перевести 2000 руб. на номер 89622854057 Т-банк, Оксана Сергеевна Г."»',
+      desc_source:'сценарий распаковки, Б2.1, шаг 8 (дословный шаблон)',
+      ai_text:'Бот автоматически отправляет персонализированный шаблон: «Для брони квартиры по адресу [АДРЕС] переведите 2000 ₽...» Включает QR-код с реквизитами Т-банка для одного касания. Сразу ставит «hold» в Realty Calendar на 30 минут.',
+      agent:'Посадочные',
+      agent_desc:'Генерируют персональную ссылку/QR на оплату, отправляют шаблон, фиксируют hold в календаре.',
+      agent_mod:'Модуль 04: Конверсия',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Снижение трения на оплате = +3–5% конверсии в бронь.',
+      unit_money:'0 ₽',
+      unit_time:'~0,5 ч/нед менеджера',
+      unit_pot:'С ИИ: шаблон уходит за секунду. Hold в календаре автоматический.',
+      tool:'Шаблон + Т-банк QR + Realty Calendar API',
+      tool_steps:'1) QR-код с автозаполнением номера и суммы. 2) Шаблон с подстановкой адреса. 3) Авто-hold на 30 минут.',
+      tool_time:'2 часа настройки',
+      goal:'Конверсия 80% → 90%',
+      goal_before:'Менеджер копирует шаблон и вписывает адрес вручную',
+      goal_after:'Бот высылает QR-код + персональный шаблон за секунду',
+      links:[
+        {color:'#0d9488', lbl:'→ Исполнение', txt:'Оплата → подготовка квартиры', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'2 000 ₽', lbl:'предоплата'},
+        {val:'30 мин', lbl:'hold брони'}
+      ]
+    },
+    {
+      name:'Подтверждение\nоплаты', type:'boost', badge:'ИИ ×3',
+      title:'Подтверждение оплаты и шаблон',
+      chain:'Продажа', ai:'boost', hole:false,
+      desc:'<strong>Менеджер вручную сверяет банк и подтверждает.</strong> «Видит когда деньги поступают, сразу подтверждает оплату гостю». Это работа на доверии — менеджер имеет доступ к личному и ИП счёту Оксаны. Можно ускорить через интеграцию с Т-банком.',
+      desc_quote:'«Оплата на мою карту Т-банка. Менеджер видит мой банк полностью — обычный счёт и счёт ИП. Видит когда деньги поступают, сразу подтверждает оплату гостю.»',
+      desc_source:'из распаковки, Б2.6',
+      ai_text:'Интеграция с Т-банк API: пришла оплата → ИИ автоматически отправляет шаблон гостю «Вами оплачена бронь 2000 руб. за квартиру по адресу [АДРЕС]...». Менеджер видит уведомление, но действия не требует. Если оплата с задержкой — напоминание гостю.',
+      agent:'Посадочные',
+      agent_desc:'Слушают банковский API, генерируют шаблон подтверждения, фиксируют оплату в CRM.',
+      agent_mod:'Модуль 04: Конверсия',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Снимает с менеджера задачу постоянной сверки банка. Освобождает 2–3 ч/нед.',
+      unit_money:'0 ₽',
+      unit_time:'~2 ч/нед менеджера на сверку',
+      unit_pot:'С ИИ: подтверждение за 30 секунд после оплаты. Экономия 1,5 ч/нед.',
+      tool:'Т-банк API + бот-уведомление',
+      tool_steps:'1) Подключение Т-банк API (есть для ИП). 2) Шаблон подтверждения. 3) Авто-отправка при поступлении.',
+      tool_time:'3–4 часа интеграции',
+      goal:'Время подтверждения: 5–60 мин → 30 сек',
+      goal_before:'Менеджер постоянно смотрит банк, копирует шаблон, вставляет адрес',
+      goal_after:'Бот видит оплату через 30 сек после поступления, автоматически отправляет шаблон',
+      links:[
+        {color:'#0d9488', lbl:'→ Исполнение', txt:'Подтверждение → подготовка к заезду', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'5–60 мин', lbl:'сейчас'},
+        {val:'30 сек', lbl:'с API'}
+      ]
+    }
+  ]
+},
+{
+  cls:'c3', emoji:'🛠', name:'ИСПОЛНЕНИЕ', sub:'и поддержка',
+  gain:'Бесконтактный заезд 100% · код сейфа',
+  time:'5 ч/нед менеджера + выезды Оксаны',
+  steps:[
+    {
+      name:'Уборка\nгорничными', type:'human', badge:'Человек', hole:false,
+      title:'Подготовка квартиры между гостями',
+      chain:'Исполнение', ai:'human',
+      desc:'<strong>Физическая работа — нельзя автоматизировать.</strong> 2 постоянных горничных + 4 по вызову. Стоимость: однокомнатная — 600 ₽, двух/трёхкомнатная — 1000 ₽. Главная боль: горничные не смотрят в чек-листы. «Хочется более чёткого исполнения по чек-листу.»',
+      desc_quote:'«Хочется более чёткого исполнения горничными по чек-листу. Чек-листы есть, но такое ощущение, что они туда не смотрят.»',
+      desc_source:'из распаковки, Б3.6',
+      ai_text:'ИИ не убирает, но: 1) шлёт горничной чек-лист по WhatsApp перед заездом (фото-формат), 2) проверяет фото-отчёт после уборки (есть ли застеленная кровать, чистая раковина), 3) автоматически перечисляет оплату при приёмке.',
+      agent:'Аналитик (контроль качества)',
+      agent_desc:'Проверяет фото-отчёт горничной по чек-листу. Если что-то упущено — отмечает для следующей.',
+      agent_mod:'Модуль 04: Удержание (косвенно)',
+      branch:null, branch_pot:null, branch_link:null,
+      unit_money:'600–1000 ₽ за уборку · ~30 000–50 000 ₽/мес',
+      unit_time:'~3 ч/нед менеджера на координацию',
+      unit_pot:'С ИИ-контролем: меньше повторных уборок, меньше жалоб гостей, +3% к рейтингу.',
+      tool:'Telegram-бот для горничных + фото-чек-лист',
+      tool_steps:'1) Шаблон чек-листа в виде фото. 2) Бот высылает за час до уборки. 3) Горничная присылает 5 фото после. 4) ИИ-анализ соответствия.',
+      tool_time:'4 часа настройки',
+      goal:'5★ рейтинг сохранён, жалоб на чистоту 0',
+      goal_before:'Чек-лист на бумаге, горничные «не смотрят», менеджер вручную проверяет фото',
+      goal_after:'Чек-лист по фото в боте, ИИ-контроль соответствия, оплата автоматом',
+      links:[
+        {color:'#0d9488', lbl:'← Продажа', txt:'Оплата → уборка → готовность к заезду', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'2+4', lbl:'горничные'},
+        {val:'600₽', lbl:'однушка'},
+        {val:'1000₽', lbl:'двушка/трёшка'}
+      ]
+    },
+    {
+      name:'Бесконтактный\nзаезд (код)', type:'full', badge:'ИИ сам', hole:false,
+      title:'100% бесконтактный заезд',
+      chain:'Исполнение', ai:'full',
+      desc:'<strong>Уникальное преимущество Оксаны.</strong> Все 20–21 квартиры оборудованы кодовыми замками на 100%, сейфы с ключами имеют механический код. Гость пишет «я у двери» — менеджер высылает код сейфа. Это уже автоматизировано и работает на конкурентном уровне.',
+      desc_quote:'«В 15:00 гость пишет "Я у подъезда". Менеджер пишет, как зайти в дом, и скидывает код сейфа.»',
+      desc_source:'из распаковки, Б3.1, шаги 6–7',
+      ai_text:'Бот по триггеру (гость написал «я у двери» / «приехал» / время заезда наступило) автоматически высылает: инструкцию входа + код сейфа + видео «как открыть». Никакого участия менеджера. Освобождает 1 ч/нед.',
+      agent:'Воронки (триггер)',
+      agent_desc:'Слушает сообщения гостя, при ключевом слове или времени высылает код сейфа.',
+      agent_mod:'Модуль 03: Лидогенерация (триггеры)',
+      branch:null, branch_pot:null, branch_link:'Уже работает на 100% — основа для масштабирования.',
+      unit_money:'~50 000 ₽ одноразово на сейфы/замки (уже сделано)',
+      unit_time:'~1 ч/нед менеджера на отправку кодов',
+      unit_pot:'С ИИ: автоматическая отправка. Менеджер освобождается на 1 ч/нед.',
+      tool:'Бот в Telegram/Max с триггерами',
+      tool_steps:'1) Карта квартир и кодов в боте. 2) Триггеры на сообщения. 3) Шаблон с кодом + видео.',
+      tool_time:'3 часа настройки',
+      goal:'Сохранить и масштабировать 100% бесконтактность',
+      goal_before:'Менеджер вручную копирует код из своей таблицы, вставляет адрес',
+      goal_after:'Бот по триггеру высылает код за 5 секунд после «я у двери»',
+      links:[
+        {color:'#d97706', lbl:'→ Удержание', txt:'Гостевой опыт → высокий отзыв', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'100%', lbl:'квартир с кодом'},
+        {val:'24/7', lbl:'заезд'}
+      ]
+    },
+    {
+      name:'Wi-Fi\n+ инструкции', type:'full', badge:'ИИ сам', hole:false,
+      title:'Шаблон Wi-Fi и FAQ по квартире',
+      chain:'Исполнение', ai:'full',
+      desc:'<strong>После оплаты — менеджер скидывает Wi-Fi и инструкции.</strong> Те же 4–5 вопросов 30 раз в день: «как включить телевизор», «не работает интернет», «как включить плиту». Идеальный кейс для бота: пакет инструкций + видео по технике.',
+      desc_quote:'«Самые частые вопросы гостей: 1) Как включить телевизор. 2) Не работает интернет. 3) Как включить плиту. 4) Доставка еды / куда сходить.»',
+      desc_source:'список из распаковки, Б3.2',
+      ai_text:'После подтверждения оплаты бот автоматически высылает: 1) пароль Wi-Fi для конкретной квартиры, 2) видео-инструкции по технике (3–5 коротких клипов), 3) карту района «куда сходить» с рекомендациями Оксаны, 4) ссылку на путеводитель (есть на каждой квартире).',
+      agent:'Воронки',
+      agent_desc:'Хранит индивидуальные данные квартиры (Wi-Fi пароль, инструкции), отправляет по триггеру.',
+      agent_mod:'Модуль 03: Лидогенерация',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Снижает 4-5 повторяющихся вопросов = 1,5–2 ч/нед менеджера.',
+      unit_money:'0 ₽',
+      unit_time:'~2 ч/нед менеджера на ответы по технике',
+      unit_pot:'С ИИ: гость получает всё сам. Менеджер освобождается на 1,5 ч/нед.',
+      tool:'Бот в Telegram/Max + папка с инструкциями по каждой квартире',
+      tool_steps:'1) Записать видео-инструкции для каждой типовой техники. 2) Карта Wi-Fi паролей. 3) Триггер «оплата подтверждена → шаблон с пакетом».',
+      tool_time:'8 часов (включая запись видео)',
+      goal:'Освобождение менеджера на стратегические задачи',
+      goal_before:'Менеджер 4-5 раз в день копирует пароль и шлёт ссылки на инструкции',
+      goal_after:'Бот высылает полный пакет за 5 секунд после оплаты',
+      links:[
+        {color:'#7c3aed', lbl:'→ Контент', txt:'Путеводители → темы для ТГ-канала', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'4–5', lbl:'типовых вопросов'},
+        {val:'30/день', lbl:'повторов'}
+      ]
+    },
+    {
+      name:'Решение\nпроблем (выезды)', type:'human', badge:'Человек', hole:false,
+      title:'Сломалось / не хватает / срочно привезти',
+      chain:'Исполнение', ai:'human',
+      desc:'<strong>Главный пожиратель времени Оксаны.</strong> Сломался фен, не хватает полотенец, прорвал кран, нет сковородки, доводчик унитаза, пятна на белье. Оксана физически едет, фотографирует, вызывает мастера через Авито, везёт в прачечную (горничные без машин).',
+      desc_quote:'«Очень разные проблемы: сломался фен — надо срочно привезти. Прорвал кран — еду, фотографирую, вызываю через Авито мастера. Сложные пятна на белье — везу в прачечную (горничные без машин).»',
+      desc_source:'фрагменты дословной цитаты Б3.4',
+      ai_text:'ИИ не выезжает, но: 1) база решённых проблем по квартирам (что сломалось, когда), 2) подсказка «возможно скоро сломается фен в квартире на Воронкова — менялся 2 года назад», 3) карта проверенных мастеров по типу проблем, 4) шаблон «извинения + компенсация» гостю.',
+      agent:'Аналитик (предиктивное обслуживание)',
+      agent_desc:'Ведёт историю поломок, предсказывает «следующая возможная проблема», предлагает превентивную замену.',
+      agent_mod:'Модуль 04: Аналитика',
+      branch:'Балласт → долгосрок',
+      branch_pot:'+0,6–0,9 млн ₽/год',
+      branch_link:'3 квартиры-балласта генерируют 60–70% выездов. Перевод в долгосрок = минус головная боль.',
+      unit_money:'~10–20 000 ₽/мес на мастеров и закупки',
+      unit_time:'~5–8 ч/нед Оксаны на выезды',
+      unit_pot:'С предиктивным обслуживанием: −30% выездов. Освобождение 2–3 ч/нед Оксане.',
+      tool:'CRM с историей по квартирам + чат-бот для гостей о поломках',
+      tool_steps:'1) Карта истории поломок (2 года назад). 2) Шаблон «опишите проблему» с фото. 3) Авто-уведомление Оксане при критических. 4) Прогноз износа техники.',
+      tool_time:'5 часов настройки',
+      goal:'Освобождение Оксане 10–15 ч/нед на стратегию',
+      goal_before:'Оксана сама ездит на каждую проблему: 5–8 часов в неделю, потеря фокуса',
+      goal_after:'ИИ предсказывает, заказывает, координирует мастеров. Оксана едет только в крайних случаях',
+      links:[
+        {color:'#0d9488', lbl:'← Контент', txt:'Поломки → новые инструкции в FAQ', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'5–8 ч', lbl:'неделя сейчас'},
+        {val:'2–3 ч', lbl:'цель'},
+        {val:'12+', lbl:'типов проблем'}
+      ]
+    },
+    {
+      name:'Выезд\n+ возврат залога', type:'boost', badge:'ИИ ×3', hole:false,
+      title:'Завершение брони и возврат 2000₽',
+      chain:'Исполнение', ai:'boost',
+      desc:'<strong>Чёткий процесс уже работает.</strong> Гость выезжает → горничная убирает → менеджер пишет «куда залог?» → гость даёт карту → перевод → шаблон запроса отзыва. Здесь много шаблонов и триггеров — идеальное место для частичной автоматизации.',
+      desc_quote:'«Гость выезжает, пишет "Мы выехали". Менеджер: "Замечательно, после уборки горничной переведу залог". Горничная убирается. Менеджер: "Всё отлично. Куда залог?" Гость даёт номер карты. Менеджер переводит деньги. Менеджер скидывает шаблон запроса отзыва.»',
+      desc_source:'сценарий распаковки, Б3.1, шаги 13–19',
+      ai_text:'Триггер «гость выехал» → бот пишет «после уборки переведу залог». Горничная прислала фото-отчёт → ИИ-проверка соответствия чек-листу → бот пишет «куда залог?» → перевод через Т-банк API → автоматический запрос отзыва на 2ГИС.',
+      agent:'Воронки + Удержание',
+      agent_desc:'Воронки — триггеры на выезд и уборку. Удержание — переход к запросу отзыва.',
+      agent_mod:'Модуль 03 + Модуль 04',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Освобождает менеджера от 5–7 шаблонных сообщений на каждый выезд.',
+      unit_money:'2 000 ₽ возврат каждый раз',
+      unit_time:'~1,5 ч/нед менеджера на координацию',
+      unit_pot:'С ИИ: процесс идёт сам. Менеджер только на нестандартных ситуациях.',
+      tool:'Бот в Telegram/Max + Т-банк API + триггеры',
+      tool_steps:'1) Цепочка триггеров: выезд → шаблон → фото уборки → проверка → залог → отзыв. 2) Интеграция с Т-банк для перевода. 3) Шаблон запроса отзыва.',
+      tool_time:'6 часов настройки',
+      goal:'Освобождение менеджера + рост отзывов',
+      goal_before:'5–7 шаблонных сообщений менеджера на каждый выезд',
+      goal_after:'Бот ведёт цепочку. Менеджер вмешивается только при споре',
+      links:[
+        {color:'#d97706', lbl:'→ Удержание', txt:'Выезд → запрос отзыва', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'~5–7', lbl:'шагов сейчас'},
+        {val:'2 000₽', lbl:'залог'}
+      ]
+    }
+  ]
+},
+{
+  cls:'c4', emoji:'🎬', name:'КОНТЕНТ', sub:'и присутствие',
+  gain:'Фото iPhone · описания через дочь',
+  time:'Большая часть — дыры',
+  steps:[
+    {
+      name:'Фотосъёмка\nквартир', type:'human', badge:'Человек', hole:false,
+      title:'Профессиональные фото для объявлений',
+      chain:'Контент', ai:'human',
+      desc:'<strong>Главный тормоз привлечения.</strong> Сейчас Оксана сама фотографирует на iPhone — 10–15 фото за визит. Это не работает на новых платформах и совсем не работает на китайском сегменте. Нужен один раз: фотограф объедет 21 квартиру, сделает по 20 профи-фото.',
+      desc_quote:'«Делаю я сама на iPhone, в то время, в которое я взяла квартиру. С одной квартиры 10–15 фотографий. На одну квартиру уходит 10–15 минут.»',
+      desc_source:'из распаковки, Б4.2',
+      ai_text:'ИИ не снимает, но: 1) ТЗ фотографу с конкретным брифом по каждой квартире, 2) автоматическая обработка (ретушь, выравнивание) через Photoshop AI, 3) генерация 3D-туров из фото через Matterport-аналог, 4) подбор кадров под каждую площадку (вертикальные для ТГ, квадратные для Instagram).',
+      agent:'Ген Агент (напоминание о съёмке)',
+      agent_desc:'Напоминает о съёмке новой квартиры, готовит ТЗ фотографу, контролирует качество фото.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Канатка + китайский сегмент',
+      branch_pot:'+1,5–3 млн ₽/год',
+      branch_link:'Профи-фото в 5 ключевых квартирах у моста = +30% переходов в объявления → +5–7% загрузки.',
+      unit_money:'~30 000–50 000 ₽ одноразово (профи-фото 21 квартиры)',
+      unit_time:'10–15 мин/квартиру (Оксана) → разовый день фотографа',
+      unit_pot:'С профи-фото: переходы в объявления +30%. Окупаемость 1–2 месяца.',
+      tool:'Местный фотограф интерьеров + Photoshop AI для обработки',
+      tool_steps:'1) Найти фотографа интерьеров (Авито, Дзен). 2) ТЗ по 21 квартире: 20 кадров/квартира. 3) Один день съёмки. 4) Загрузка на все площадки.',
+      tool_time:'1 день съёмок + 2 дня обработки',
+      goal:'+1,5–3 млн ₽/год через канатку',
+      goal_before:'iPhone-фото 10–15 шт/квартиру, заметно любительское качество',
+      goal_after:'Профи-фото 20 кадров × 21 квартира, на уровне отеля 4★',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Фото → переходы в объявления', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'10–15', lbl:'фото сейчас'},
+        {val:'20+', lbl:'профи фото цель'},
+        {val:'+30%', lbl:'переходы'}
+      ]
+    },
+    {
+      name:'Описания\nквартир', type:'full', badge:'ИИ сам', hole:false,
+      title:'SEO-описания на 8 площадках',
+      chain:'Контент', ai:'full',
+      desc:'<strong>Это УЖЕ работает через ChatGPT.</strong> Дочка Оксаны (19 лет, живёт в Китае) поменяла описания на сайтах через ChatGPT — Оксана довольна. Это идеальное место для масштабирования: добавить уникальные описания на каждую площадку + китайский язык.',
+      desc_quote:'«Попросила дочку поменять описание на сайтах, и она это сделала. Возможно, взяла у кого-то из других городов красивое описание... Она тоже активно работает с ChatGPT, возможно посоветовалась с ним. Описаниями новыми я довольна.»',
+      desc_source:'из распаковки, Б7.3',
+      ai_text:'Claude/ChatGPT генерирует уникальные SEO-описания: 1) для каждой из 8 площадок свой формат, 2) на русском + китайском (для мостовых квартир), 3) подбирает ключевые слова под платформу (Авито vs Островок), 4) обновляет сезонно (зимой — про каток, летом — про канатку).',
+      agent:'Копирайтер',
+      agent_desc:'Генерирует описания по бесплатной формуле «комната + район + удобства + триггер сезона», адаптирует под площадку.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Канатка + китайский сегмент',
+      branch_pot:'+1,5–3 млн ₽/год',
+      branch_link:'Описание на китайском в 5 квартирах у моста = новый канал. Дочь Оксаны уже знает китайский.',
+      unit_money:'0 ₽ (доступ к ChatGPT/Claude уже есть)',
+      unit_time:'~1 ч/нед (Оксана/дочь)',
+      unit_pot:'С ИИ: 21 квартира × 8 площадок × 2 языка = 336 описаний за день. Автообновление к сезонам.',
+      tool:'Claude AI + дочь Оксаны (переводы на китайский)',
+      tool_steps:'1) Базовый шаблон описания. 2) Адаптация под 8 площадок. 3) Перевод на китайский (дочь). 4) Шаблоны сезонной замены.',
+      tool_time:'5 часов первичная настройка',
+      goal:'+5–8% к загрузке от китайского сегмента',
+      goal_before:'Один шаблон на всех площадках, нет китайского',
+      goal_after:'Уникальные описания × 8 площадок × 2 языка, обновление по сезонам',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Описания → переходы в объявления', sub:'Информационный'},
+        {color:'#7c3aed', lbl:'→ Контент', txt:'Описания → база для ТГ-постов', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'21', lbl:'квартир'},
+        {val:'8', lbl:'площадок'},
+        {val:'2 яз.', lbl:'RU + CN'}
+      ]
+    },
+    {
+      name:'Видеотур\nпо квартирам', type:'boost', badge:'ИИ ×5', hole:false,
+      title:'Видеотур + Reels',
+      chain:'Контент', ai:'boost',
+      desc:'<strong>Сейчас видео делается только под Авито и ЦИАН.</strong> Оксана сама снимает на iPhone. Эти видео не используются нигде больше: ни в ТГ, ни в Instagram, ни на 2ГИС. Точно так же — видео обзоры в стиле Reels для соцсетей не делаются.',
+      desc_quote:'«Снимаю видео-обзор — для подтверждения реальности квартиры на Авито, на ЦИАН.»',
+      desc_source:'сценарий распаковки, Б4.1, шаг 10',
+      ai_text:'ИИ создаёт сценарий 30-секундного Reels («заходим — кухня — спальня — вид из окна»), генерирует подписи, нарезает уже существующее видео на 3–4 формата (Reels, Stories, Shorts, ТГ-видео). Оксана/менеджер только снимает.',
+      agent:'Копирайтер (сценарии)',
+      agent_desc:'Пишет сценарии 30-сек обзоров для каждой квартиры, готовит подписи и хэштеги.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Соцсети как воронка',
+      branch_pot:'+0,4–0,6 млн ₽/год',
+      branch_link:'Видеотур = доверие. Особенно для китайских туристов, которые не верят описанию без видео.',
+      unit_money:'0 ₽ (есть iPhone)',
+      unit_time:'~30 мин/квартиру (Оксана)',
+      unit_pot:'С ИИ-сценарием: видео снимается за 5 мин по чек-листу. 4 формата автоматически.',
+      tool:'CapCut + Claude AI для сценариев + ManyChat для постинга',
+      tool_steps:'1) Универсальный шаблон видеотура (10 кадров). 2) Сценарий для каждой квартиры. 3) Нарезка в 4 формата. 4) Автопостинг.',
+      tool_time:'4 часа настройки',
+      goal:'+10% прямых броней через визуальный контент',
+      goal_before:'Видео есть только на Авито, любительское, не используется больше нигде',
+      goal_after:'Видеотур в 4 форматах × 21 квартира, автопостинг в ТГ + Instagram + Авито',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Видеотур → доверие → бронь', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'21', lbl:'квартир'},
+        {val:'30 сек', lbl:'формат Reels'}
+      ]
+    },
+    {
+      name:'ТГ-канал\nо Благовещенске', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Telegram-канал «Благовещенск и квартиры»',
+      chain:'Контент', ai:'full',
+      desc:'<strong>Дыра в контенте.</strong> Оксана знает, о чём писать («набережная, канатная дорога, триумфальная арка, очереди на таможне, приезжие артисты»), но «не знаю где публиковать, не знаю что писать». Это идеальная задача для ИИ — Оксана даёт тему, ИИ пишет пост.',
+      desc_quote:'«Освещала бы новую набережную и канатную дорогу. Триумфальную арку. Свои загородные походы. Возможно, какие-то мероприятия. Очереди на таможне в Китай. Приезжих артистов.»',
+      desc_source:'из распаковки, Б4.6 — прямой запрос Оксаны',
+      ai_text:'Контент-план на 90 дней: 3 поста/нед о Благовещенске (канатка, набережная, события). ИИ пишет под голос Оксаны («ничего страшного», «вам рады», «забота»). Менеджер/Оксана одобряет за 5 мин. Автопостинг. В каждом 5-м посте — ненавязчиво квартира как место остановки.',
+      agent:'Копирайтер + Ген Агент',
+      agent_desc:'Копирайтер пишет посты, Ген Агент держит контент-план и публикует.',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Соцсети как воронка',
+      branch_pot:'+0,4–0,6 млн ₽/год',
+      branch_link:'500–1000 подписчиков за 6 мес = воронка прямых броней без комиссии площадок.',
+      unit_money:'0 ₽ сейчас (дыра)',
+      unit_time:'0 ч/нед сейчас. С ИИ: 30 мин/нед на одобрение',
+      unit_pot:'С ИИ: 3 поста/нед автоматически. Через 6 мес — стабильный поток прямых броней через ТГ.',
+      tool:'Claude AI + Telegraph + ManyChat',
+      tool_steps:'1) Создать ТГ-канал «ВАМ РАДЫ · Благовещенск». 2) Контент-план на 90 дней. 3) Тест 30 постов. 4) Автопостинг.',
+      tool_time:'6 часов настройки',
+      goal:'500–1000 подписчиков ТГ за 6 мес → прямые брони',
+      goal_before:'Нет ТГ-канала. Гость находит квартиру, не знает города, нервничает',
+      goal_after:'Гость подписан на ТГ → знает город → бронирует напрямую',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Подписчики → прямые брони', sub:'Петля возврата'}
+      ],
+      metrics:[
+        {val:'0', lbl:'постов сейчас'},
+        {val:'3/нед', lbl:'цель'},
+        {val:'500+', lbl:'подп. за 6 мес'}
+      ]
+    },
+    {
+      name:'Реклама\nв чатах', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Реклама в группах и чатах Благовещенска',
+      chain:'Контент', ai:'full',
+      desc:'<strong>Дыра, которая признана Оксаной.</strong> «Размещение рекламы в группах мессенджеров — не делаем». Особенно болезненно: чаты строителей, чаты ДВОКУ, чаты родителей школьников и больниц — это и есть командировочные сегменты.',
+      desc_quote:'«Дать рекламу во все возможные соцсети, группы, чаты.»',
+      desc_source:'из распаковки, Б7.5, задача №2',
+      ai_text:'ИИ-агент: 1) карта всех 50+ ключевых чатов Благовещенска (ВК, ТГ), 2) генерация контекстных объявлений под каждый чат, 3) рассылка с учётом правил каждой группы, 4) учёт откликов и оптимизация. Реклама не «спам», а целевая.',
+      agent:'Копирайтер',
+      agent_desc:'Генерирует объявления под каждый чат (для ДВОКУ — «командировочным», для родителей — «семейные квартиры с детским уголком»).',
+      agent_mod:'Модуль 02: Контент-машина',
+      branch:'Корпоративный канал',
+      branch_pot:'+0,6–1,2 млн ₽/год',
+      branch_link:'Чаты ДВОКУ, АГПЗ, больниц = прямой выход на корпоративный сегмент.',
+      unit_money:'0 ₽ сейчас (большинство чатов бесплатно)',
+      unit_time:'0 ч/нед сейчас',
+      unit_pot:'С ИИ: 50 чатов × 1 пост/нед = автоматически. +5–10% новых гостей в месяц.',
+      tool:'Claude AI + ManyChat для рассылки + ручная карта чатов',
+      tool_steps:'1) Карта 50+ чатов Благовещенска. 2) Шаблоны под каждый сегмент. 3) Расписание (1 пост/нед в чате). 4) Учёт откликов.',
+      tool_time:'10 часов первичная карта чатов + 4 часа автоматизация',
+      goal:'Корпоративный сегмент 40% → 50%',
+      goal_before:'В чатах никто не знает «ВАМ РАДЫ». Командировочные находят только на Авито',
+      goal_after:'Гость из ДВОКУ видит объявление в чате ДВОКУ — пишет напрямую',
+      links:[
+        {color:'#2196f3', lbl:'→ Привлечение', txt:'Чаты → новые гости', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'50+', lbl:'целевых чатов'},
+        {val:'0', lbl:'постов сейчас'},
+        {val:'200+', lbl:'постов/мес цель'}
+      ]
+    }
+  ]
+},
+{
+  cls:'c5', emoji:'🔁', name:'УДЕРЖАНИЕ', sub:'и возврат',
+  gain:'50% повторных гостей · 5★ на 2ГИС',
+  time:'~1 ч/нед менеджера. Большая часть — дыры',
+  steps:[
+    {
+      name:'Запрос\nотзыва', type:'full', badge:'ИИ сам', hole:false,
+      title:'Авто-запрос отзыва после выезда',
+      chain:'Удержание', ai:'full',
+      desc:'<strong>Уже работает шаблоном, но не системно.</strong> Менеджер скидывает шаблон с просьбой об отзыве. Гости часто забывают или не оставляют. С ботом запрос приходит точно вовремя (через 2–3 часа после выезда), с ссылкой на 2ГИС и платформу.',
+      desc_quote:'«2ГИС мы начали активно пользоваться месяца, наверное, три только. Запрашивать отзывы у гостей. Просим постоянно, но гости либо забывают, либо не оставляют.»',
+      desc_source:'из распаковки, Б5.2',
+      ai_text:'Триггер «гость выехал и получил залог» → через 3 часа бот шлёт персональное сообщение с прямой ссылкой на 2ГИС/площадку. Через 24 часа — мягкое напоминание. ИИ умеет писать благодарственное сообщение в ответ на отзыв.',
+      agent:'Удержание',
+      agent_desc:'Триггер на выезд → запрос → напоминание → благодарность за отзыв.',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Соцсети как воронка',
+      branch_pot:'+0,4–0,6 млн ₽/год',
+      branch_link:'Больше отзывов = выше в выдаче 2ГИС и Авито = больше гостей. Косвенный, но сильный эффект.',
+      unit_money:'0 ₽',
+      unit_time:'~30 мин/нед менеджера',
+      unit_pot:'С ИИ: +50–70% отзывов. Без участия менеджера.',
+      tool:'Бот + ссылки на 2ГИС/Авито/Островок',
+      tool_steps:'1) Шаблон запроса отзыва. 2) Триггер на «получил залог + 3 часа». 3) Напоминание через 24 ч. 4) Благодарность в ответ.',
+      tool_time:'3 часа настройки',
+      goal:'Рост 5★ отзывов на 2ГИС и площадках',
+      goal_before:'Менеджер просит, гость забывает. Конверсия в отзыв ~20%',
+      goal_after:'Бот шлёт точно вовремя, конверсия 40–50%',
+      links:[
+        {color:'#d97706', lbl:'← Исполнение', txt:'Выезд → запрос отзыва', sub:'Триггерный'},
+        {color:'#7c3aed', lbl:'→ Контент', txt:'Отзывы → социальные доказательства в ТГ', sub:'Информационный'}
+      ],
+      metrics:[
+        {val:'5.0', lbl:'2ГИС сейчас'},
+        {val:'20%', lbl:'дают отзыв'},
+        {val:'40–50%', lbl:'цель'}
+      ]
+    },
+    {
+      name:'Возврат\nзалога', type:'boost', badge:'ИИ ×3', hole:false,
+      title:'Перевод залога 2000₽ после уборки',
+      chain:'Удержание', ai:'boost',
+      desc:'<strong>Триггер для отзыва.</strong> «Куда залог?» — гость даёт карту — перевод. Это работает 5 лет. С интеграцией Т-банк API менеджер освобождается от ручного перевода, а гость получает залог за 1 минуту после фото-отчёта уборки.',
+      desc_quote:'«Менеджер: Всё отлично. Куда залог? — Гость даёт номер карты. — Менеджер переводит деньги. — Менеджер скидывает шаблон запроса отзыва.»',
+      desc_source:'сценарий распаковки, Б3.1, шаги 16–19',
+      ai_text:'После фото-отчёта горничной → ИИ проверяет соответствие чек-листу → запрашивает у гостя номер карты → автоматически переводит через Т-банк API → отправляет шаблон запроса отзыва.',
+      agent:'Удержание',
+      agent_desc:'Координация фото-отчёта, перевода и запроса отзыва как единая цепочка.',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Освобождает менеджера от 5–10 переводов в день.',
+      unit_money:'2 000 ₽ возврат на каждую бронь',
+      unit_time:'~1 ч/нед менеджера',
+      unit_pot:'С ИИ: процесс идёт сам. Менеджер только при споре.',
+      tool:'Т-банк API + бот в Telegram/Max',
+      tool_steps:'1) Триггер фото-отчёта. 2) ИИ-проверка. 3) Запрос карты. 4) Авто-перевод. 5) Шаблон запроса отзыва.',
+      tool_time:'4 часа интеграции',
+      goal:'Конверсия в отзыв 40% и повторные 70%',
+      goal_before:'5–10 ручных переводов в день, паузы между переводом и запросом отзыва',
+      goal_after:'Авто-перевод за 1 мин после фото-отчёта, моментальный запрос отзыва',
+      links:[
+        {color:'#d97706', lbl:'← Исполнение', txt:'Уборка → залог → отзыв', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'5–10', lbl:'переводов/день'},
+        {val:'1 мин', lbl:'с API'}
+      ]
+    },
+    {
+      name:'CRM:\nсохранение контактов', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Сохранение базы гостей в CRM',
+      chain:'Удержание', ai:'full',
+      desc:'<strong>Главная дыра удержания.</strong> «Постоянников своих не удерживаем. Контакты тоже не сохраняем». То есть 50% повторных приходят сами, без напоминания. Если завести CRM — этот процент может вырасти до 65–70%.',
+      desc_quote:'«На самом деле мы постоянников своих не удерживаем. Никак не пишем им повторно, только если они сами написали. Контакты мы тоже не сохраняем.»',
+      desc_source:'из распаковки, Б5.1 — главное признание Оксаны',
+      ai_text:'CRM автоматически фиксирует каждого гостя: имя, телефон, даты заезда/выезда, квартира, источник, потраченная сумма, сегмент (командировочный/турист/семья), кто рекомендовал. Через 3 месяца ИИ предлагает написать «не пора ли снова?».',
+      agent:'Удержание + Аналитик',
+      agent_desc:'Удержание — ведение базы, Аналитик — сегментация и LTV-расчёты.',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Без CRM повторные приходят сами. С CRM — мы их зовём в подходящее время.',
+      unit_money:'0 ₽ сейчас (дыра)',
+      unit_time:'0 ч/нед сейчас',
+      unit_pot:'С CRM: всё фиксируется автоматически из переписок и Realty Calendar. Повторные 50% → 65–70%.',
+      tool:'AmoCRM или Bitrix24 + интеграция с Realty Calendar',
+      tool_steps:'1) Выбрать CRM (AmoCRM или Bitrix). 2) Интеграция с Telegram/Max/WhatsApp. 3) Импорт истории из Realty Calendar. 4) Сегментация (командировочный/семья/турист).',
+      tool_time:'8 часов настройки',
+      goal:'Повторные с 50% → 70%',
+      goal_before:'Контакты не сохраняются. Гость уехал → забыли',
+      goal_after:'Каждый гость в CRM с сегментом и историей',
+      links:[
+        {color:'#f97316', lbl:'→ Привлечение', txt:'CRM → реактивация → возврат', sub:'Петля возврата'}
+      ],
+      metrics:[
+        {val:'0', lbl:'в CRM сейчас'},
+        {val:'21×30', lbl:'гостей/мес'},
+        {val:'~3 000', lbl:'база за год'}
+      ]
+    },
+    {
+      name:'Программа\nлояльности', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Скидки и привилегии для постоянных',
+      chain:'Удержание', ai:'full',
+      desc:'<strong>Скидки делаются, но не озвучиваются.</strong> Оксана даёт 10% постоянным, скидку на много ночей, бесплатный поздний выезд. Но это не «программа» — гость не знает, что у него есть привилегия. Поэтому программа не работает на возврат.',
+      desc_quote:'«Озвученной программы лояльности у нас нет. Но если гости возвращаются, мы можем сделать небольшую скидочку — ну, 10%. Если на много ночей берут — конечно, делаем скидочку, но это не озвучивается. Может быть, нужно как-то программу лояльности настроить.»',
+      desc_source:'из распаковки, Б5.4',
+      ai_text:'ИИ автоматически рассчитывает уровень лояльности (1-й визит, 2-й визит, 5-й): начисляет баллы, шлёт сообщение «Вы наш постоянный гость, у вас 10% скидка», предлагает «5-й приезд бесплатно». При каждом возврате — приветствие как старого друга.',
+      agent:'Удержание',
+      agent_desc:'Ведёт уровни лояльности, начисляет скидки и баллы, информирует гостей о статусе.',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Озвученная программа лояльности = причина вернуться. +15–20% повторных броней.',
+      unit_money:'0 ₽ настройка. Скидки = часть маржи (уже даются)',
+      unit_time:'0 ч/нед сейчас',
+      unit_pot:'С ИИ: программа работает на автопилоте. Гость видит свой статус → возвращается осознанно.',
+      tool:'CRM с уровнями лояльности + бот-уведомление',
+      tool_steps:'1) Уровни: «Новый», «Постоянный», «Друг семьи». 2) Скидки и привилегии по каждому. 3) Шаблон «У вас 10% скидка». 4) Поздравления с возвратом.',
+      tool_time:'4 часа настройки',
+      goal:'Повторные 50% → 70%',
+      goal_before:'Скидки даются, но гость о них не знает',
+      goal_after:'Гость знает: «приеду 5-й раз — бесплатно»',
+      links:[
+        {color:'#0d9488', lbl:'→ Продажа', txt:'Лояльность → новая бронь со скидкой', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'10%', lbl:'скидка факт'},
+        {val:'0', lbl:'озвучено'},
+        {val:'3', lbl:'уровней цель'}
+      ]
+    },
+    {
+      name:'Рассылка\nпостоянным', type:'full', badge:'⚠ ДЫРА', hole:true,
+      title:'Реактивация и рассылки гостям',
+      chain:'Удержание', ai:'full',
+      desc:'<strong>Дыра, признанная Оксаной.</strong> Рассылок нет. Оксана не любит шаблонные рассылки («поздравляет с днём рождения — пустой звук»). Но это не значит, что нет рассылок — это значит, что они должны быть персональными: «Привет, как Заводская? Скоро снова в Благовещенск?»',
+      desc_quote:'«Никаких рассылок гостям мы не делаем. Сама по себе знаю — если меня косметическая клиника поздравляет с днём рождения, для меня это как пустой звук, просто пустая рассылка. Я не люблю эти рассылки.»',
+      desc_source:'из распаковки, Б5.3',
+      ai_text:'ИИ генерирует ПЕРСОНАЛЬНЫЕ сообщения по сегменту: командировочному — «привет, новые рейсы на АГПЗ?», семье — «скоро лето, набережная зацвела». Никакого «с днём рождения». Раз в 3 мес. Каждое сообщение проходит проверку Оксаны.',
+      agent:'Удержание',
+      agent_desc:'Генерирует персональные сообщения по сегменту гостя, не шлёт «массовку».',
+      agent_mod:'Модуль 04: Удержание / LTV',
+      branch:'Прямые брони + автоматизация',
+      branch_pot:'+0,9–1,8 млн ₽/год',
+      branch_link:'Персональная рассылка раз в 3 мес = +15–25% возвратов от существующей базы.',
+      unit_money:'0 ₽ сейчас',
+      unit_time:'0 ч/нед',
+      unit_pot:'С ИИ: персональное сообщение каждому раз в 3 мес. Время Оксаны — 15 мин/нед на одобрение.',
+      tool:'CRM + Claude AI для генерации персональных сообщений',
+      tool_steps:'1) Сегментация в CRM (3 типа гостей). 2) Шаблоны под каждый сегмент. 3) Расписание (раз в 3 мес после визита). 4) Одобрение Оксаны.',
+      tool_time:'5 часов настройки',
+      goal:'Возврат гостей с 50% → 70%',
+      goal_before:'Гость уехал. Если сам не написал — забыли. Через год пропадает из памяти',
+      goal_after:'Через 3 мес: «Привет, как АГПЗ? Снова в командировку?»',
+      links:[
+        {color:'#f97316', lbl:'→ Привлечение', txt:'Рассылка → возврат гостя', sub:'Петля возврата'},
+        {color:'#0d9488', lbl:'→ Продажа', txt:'Возврат → новая бронь', sub:'Триггерный'}
+      ],
+      metrics:[
+        {val:'0', lbl:'рассылок сейчас'},
+        {val:'4', lbl:'раза в год цель'},
+        {val:'3', lbl:'сегмента'}
+      ]
+    }
+  ]
+}
+];
+
+/* === CONNS — переплетения между цепочками === */
+const CONNS = [
+  { after:0, items:[
+    { color:'#2196f3', label:'Контент → Привлечение', icon:'🎯',
+      desc:'Профи-фото + ТГ-канал + видеотуры → переходы в объявления Авито/ЦИАН. Тип: петля возврата.' },
+    { color:'#f97316', label:'Удержание → Привлечение', icon:'🔁',
+      desc:'Постоянные гости рекомендуют → сарафан → 50% прямых броней. С CRM-учётом рекомендателей → 65–70%.' }
+  ]},
+  { after:1, items:[
+    { color:'#0d9488', label:'Продажа → Исполнение', icon:'⚡',
+      desc:'Оплата 2000₽ → авто-бронь в Realty Calendar → задача горничной → бесконтактный заезд. Тип: триггерный.' }
+  ]},
+  { after:2, items:[
+    { color:'#7c3aed', label:'Исполнение → Контент', icon:'📸',
+      desc:'Решение проблем → новые знания о квартирах → темы для ТГ-канала и FAQ-бота. Тип: информационный.' },
+    { color:'#d97706', label:'Исполнение → Удержание', icon:'⭐',
+      desc:'Выезд → возврат залога → авто-запрос отзыва. Главный триггер сбора 5★ на 2ГИС. Тип: триггерный.' }
+  ]},
+  { after:3, items:[
+    { color:'#d97706', label:'Контент → Удержание', icon:'💬',
+      desc:'Хороший контент (ТГ-канал, видеотур) на руку постоянным гостям — они подписываются, остаются в орбите бренда и возвращаются. Усиливает программу лояльности.' }
+  ]}
+];
+
+
+/* === RENDER MAP === */
+function renderMap(){
+  const root = document.getElementById('mapRoot');
+  let h = '<div class="chains">';
+  CHAINS.forEach((c, ci) => {
+    h += `<div class="chain ${c.cls}">
+      <div class="cl-label">
+        <div class="cl-emoji">${c.emoji}</div>
+        <div class="cl-name">${c.name}</div>
+        <div class="cl-sub">${c.sub}</div>
+        <div class="cl-gain">${c.gain}</div>
+        <div class="cl-time">${c.time}</div>
+      </div>
+      <div class="cl-steps">`;
+    c.steps.forEach((s, si) => {
+      h += `<div class="step ${s.type}${s.hole?' hole':''}" onclick="openM(${ci},${si})">
+        <div class="sname">${s.name}</div>
+        <div class="sbadge">${s.badge}</div>
+      </div>`;
+      if (si < c.steps.length-1) {
+        h += `<div class="arrow"><svg viewBox="0 0 18 18" width="18" height="18"><line x1="2" y1="9" x2="16" y2="9" stroke="rgba(15,186,106,0.3)" stroke-width="1.5"/><circle cy="9" r="2" fill="#1db87a" opacity="0.7"><animate attributeName="cx" from="2" to="16" dur="2s" repeatCount="indefinite"/></circle></svg></div>`;
+      }
+    });
+    h += `</div></div>`;
+
+    const conn = CONNS.find(cn => cn.after === ci);
+    if (conn) {
+      h += '<div class="conns">';
+      conn.items.forEach((it, ii) => {
+        h += `<div class="conn" onclick="showConn(${ci},${ii})">
+          <span class="conn-dot" style="color:${it.color};background:${it.color}"></span>
+          <span class="conn-ico">${it.icon}</span>${it.label}
+        </div>`;
+      });
+      h += '</div>';
+    }
+  });
+  h += '</div>';
+  root.innerHTML = h;
+}
+
+/* === SHOW CONN POPUP === */
+function showConn(ci, ii){
+  const c = CONNS.find(cn => cn.after === ci);
+  if (!c) return;
+  const it = c.items[ii];
+  document.getElementById('mBadge').className = 'mbadge full';
+  document.getElementById('mBadge').style.color = it.color;
+  document.getElementById('mBadge').style.background = it.color + '15';
+  document.getElementById('mBadge').textContent = '🔗 ПЕРЕПЛЕТЕНИЕ';
+  document.getElementById('mTitle').textContent = it.label;
+  document.getElementById('mBody').innerHTML = `
+    <div class="mchain">Связь между цепочками</div>
+    <div class="mdesc" style="margin-top:14px">${it.desc}</div>
+    <div class="msec">💡 Зачем это переплетение в карте</div>
+    <div style="font-size:12.5px;color:var(--text2);line-height:1.6">
+      Переплетения показывают, как одна цепочка питает другую. Улучшение одного звена подтягивает соседние. Закрытие дыры здесь = эффект сразу в двух цепочках.
+    </div>`;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+/* === OPEN MODAL === */
+function openM(ci, si){
+  const s = CHAINS[ci].steps[si];
+  const L = { full:'🟢 ИИ делает сам', boost:'🟡 ИИ ускоряет ×5–10', human:'🔴 Нужен человек' };
+  const T = { full:'⚡ Что конкретно делает ИИ', boost:'⚡ Как ИИ ускоряет', human:'👤 Роль человека и поддержка ИИ' };
+
+  const mb = document.getElementById('mBadge');
+  mb.className = `mbadge ${s.ai}`;
+  mb.style.color = '';
+  mb.style.background = '';
+  mb.textContent = s.hole ? '⚠️ ДЫРА — НЕ ДЕЛАЕТСЯ' : L[s.ai];
+  document.getElementById('mTitle').textContent = s.title;
+
+  let h = '';
+  h += `<div class="mchain">Цепочка: ${s.chain}</div>`;
+  h += `<div class="mdesc">${s.desc}</div>`;
+  if (s.desc_quote) h += `<div class="mquote">${s.desc_quote}</div>`;
+  if (s.desc_source) h += `<div class="msrc">📋 ${s.desc_source}</div>`;
+
+  h += `<div class="mai ${s.ai}">
+    <div class="mai-t">${T[s.ai]}</div>
+    <div class="mai-txt">${s.ai_text}</div>
+  </div>`;
+
+  if (s.agent) {
+    h += `<div class="msec">🤖 Ответственный агент</div>
+    <div class="magent">
+      <div class="magent-name">${s.agent}</div>
+      <div class="magent-desc">${s.agent_desc || ''}</div>
+      ${s.agent_mod ? `<div class="magent-mod">${s.agent_mod}</div>` : ''}
+    </div>`;
+  }
+
+  if (s.branch) {
+    h += `<div class="msec">🚀 Ветка роста</div>
+    <div class="mbranch">
+      <div class="mbranch-name">${s.branch}</div>
+      ${s.branch_pot ? `<div class="mbranch-pot">₽-потенциал: <b>${s.branch_pot}</b></div>` : ''}
+      ${s.branch_link ? `<div class="mbranch-link">${s.branch_link}</div>` : ''}
+    </div>`;
+  }
+
+  if (s.unit_money || s.unit_time) {
+    h += `<div class="msec">📊 Ресурсы и потенциал</div>
+    <div class="munit">`;
+    if (s.unit_money) h += `<div class="munit-row"><span>💰</span> ${s.unit_money}</div>`;
+    if (s.unit_time) h += `<div class="munit-row"><span>⏱</span> ${s.unit_time}</div>`;
+    if (s.unit_pot) h += `<div class="munit-row hl"><span>📈</span> ${s.unit_pot}</div>`;
+    h += '</div>';
+  }
+
+  if (s.tool) {
+    h += `<div class="msec">🛠 Рекомендация по внедрению</div>
+    <div class="mtool">
+      <div class="mtool-name">${s.tool}</div>
+      <div class="mtool-steps">${s.tool_steps || ''}</div>
+      ${s.tool_time ? `<div class="mtool-time">⏱ ${s.tool_time}</div>` : ''}
+    </div>`;
+  }
+
+  if (s.goal) {
+    h += `<div class="msec">🎯 Связь с целями бизнеса</div>
+    <div class="mgoal">
+      <div class="mgoal-name">Цель: ${s.goal}</div>
+      <div class="mgoal-grid">
+        <div class="mgoal-before"><div class="mgoal-lbl">Без ИИ</div>${s.goal_before || ''}</div>
+        <div class="mgoal-after"><div class="mgoal-lbl">С ИИ</div>${s.goal_after || ''}</div>
+      </div>
+    </div>`;
+  }
+
+  if (s.links && s.links.length) {
+    h += `<div class="msec">⚡ Связи с другими звеньями</div>
+    <div class="mlinks">`;
+    s.links.forEach(l => {
+      h += `<div class="ml">
+        <div class="ml-dot" style="background:${l.color};color:${l.color}"></div>
+        <div>
+          <div class="ml-lbl" style="color:${l.color}">${l.lbl}</div>
+          <div>${l.txt}</div>
+          <div class="ml-sub">${l.sub}</div>
+        </div>
+      </div>`;
+    });
+    h += '</div>';
+  }
+
+  if (s.metrics && s.metrics.length) {
+    h += '<div class="mmets">';
+    s.metrics.forEach(m => {
+      h += `<div class="mmet">
+        <div class="mmet-val">${m.val}</div>
+        <div class="mmet-lbl">${m.lbl}</div>
+      </div>`;
+    });
+    h += '</div>';
+  }
+
+  document.getElementById('mBody').innerHTML = h;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeM(){
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* === CANVAS NEURAL NETWORK === */
+(function(){
+  const cv = document.getElementById('netCanvas');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  let nodes = [], W = 0, H = 0;
+  function resize(){ W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  function init(){
+    nodes = [];
+    const count = Math.min(45, Math.floor((W*H)/35000));
+    for (let i=0;i<count;i++){
+      nodes.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5)*0.25,
+        vy: (Math.random()-0.5)*0.25,
+        r: 1.5 + Math.random()*1.5
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // edges
+    for (let i=0;i<nodes.length;i++){
+      for (let j=i+1;j<nodes.length;j++){
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const d = Math.sqrt(dx*dx+dy*dy);
+        if (d < 160){
+          const op = 0.32*(1-d/160);
+          ctx.strokeStyle = `rgba(29,184,122,${op})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    // nodes
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x<0||n.x>W) n.vx*=-1;
+      if (n.y<0||n.y>H) n.vy*=-1;
+      ctx.fillStyle = 'rgba(29,184,122,0.55)';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(29,184,122,0.18)';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r*2.5, 0, Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+
+/* === INIT === */
+renderMap();
+document.getElementById('overlay').addEventListener('click', function(e){
+  if (e.target.id === 'overlay') closeM();
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeM();
+});
+
+</script>
+</body>
+</html>
