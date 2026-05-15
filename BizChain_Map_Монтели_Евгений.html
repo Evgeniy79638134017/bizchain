@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — Евгений / Монтели Дизайн</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-soft: #475569;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --accent: #6366f1;
+    --accent-bg: #eef2ff;
+
+    --green: #16a34a;
+    --green-soft: #22c55e;
+    --green-bg: #f0fdf4;
+    --green-border: #86efac;
+    --green-text: #15803d;
+
+    --yellow: #d97706;
+    --yellow-soft: #f59e0b;
+    --yellow-bg: #fffbeb;
+    --yellow-border: #fcd34d;
+    --yellow-text: #b45309;
+
+    --red: #dc2626;
+    --red-soft: #ef4444;
+    --red-bg: #fef2f2;
+    --red-border: #fca5a5;
+    --red-text: #b91c1c;
+
+    --teal: #0d9488;
+    --purple: #7c3aed;
+    --amber: #d97706;
+    --blue: #3b82f6;
+    --coral: #f97316;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+    --shadow-xl: 0 25px 60px rgba(0,0,0,0.25);
+
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1220;
+      --bg-secondary: #111a2e;
+      --bg-tertiary: #172238;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+      --border: #1e293b;
+      --border-strong: #334155;
+      --accent: #818cf8;
+      --accent-bg: #1e1b4b;
+
+      --green-bg: #052e16;
+      --green-border: #14532d;
+      --green-text: #4ade80;
+
+      --yellow-bg: #422006;
+      --yellow-border: #78350f;
+      --yellow-text: #fbbf24;
+
+      --red-bg: #450a0a;
+      --red-border: #7f1d1d;
+      --red-text: #fca5a5;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px 20px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; }
+
+  /* ─── HEADER ─── */
+  .header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ─── КАРТОЧКА БИЗНЕСА ─── */
+  .business-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 26px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .metric {
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .metric-value {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .task-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .task-icon {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .task-text {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* ─── СТАТИСТИКА ─── */
+  .stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-green { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+  .stat-yellow { background: var(--yellow-bg); color: var(--yellow-text); border: 1px solid var(--yellow-border); }
+  .stat-red { background: var(--red-bg); color: var(--red-text); border: 1px solid var(--red-border); }
+  .stat-percent {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid transparent;
+  }
+
+  /* ─── КАРТА ─── */
+  .map-wrap {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 22px;
+    overflow-x: auto;
+  }
+  .map-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .chain-svg {
+    display: block;
+    width: 100%;
+    min-width: 680px;
+    height: auto;
+  }
+
+  /* ─── ЗВЕНЬЯ ─── */
+  .node { cursor: pointer; transition: transform 0.15s ease; }
+  .node:hover { transform: translateY(-2px); }
+  .node:hover rect.node-bg { filter: brightness(0.95); }
+  .node rect.node-bg {
+    transition: filter 0.15s ease, stroke-width 0.15s ease;
+  }
+  .node.active rect.node-bg {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+  }
+
+  /* ─── ЛЕГЕНДА ─── */
+  .legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-soft);
+  }
+  .legend-dot {
+    width: 11px; height: 11px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ─── ПЕРЕПЛЕТЕНИЯ ─── */
+  .links-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .link-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 15px;
+    border-left: 3px solid;
+  }
+  .link-card.teal { border-left-color: var(--teal); }
+  .link-card.purple { border-left-color: var(--purple); }
+  .link-card.amber { border-left-color: var(--amber); }
+  .link-card.blue { border-left-color: var(--blue); }
+  .link-card.coral { border-left-color: var(--coral); }
+  .link-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .link-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  /* ─── ПОТЕНЦИАЛ ─── */
+  .potential-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+  .potential-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  .potential-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    text-align: center;
+  }
+  .potential-icon { font-size: 22px; margin-bottom: 6px; }
+  .potential-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .potential-val {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .potential-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* ─── ИТОГОВЫЙ БЛОК ─── */
+  .summary {
+    background: linear-gradient(135deg, var(--accent-bg) 0%, var(--bg-secondary) 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 22px;
+  }
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .summary-metric {
+    text-align: left;
+  }
+  .summary-metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .summary-metric-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .summary-metric-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ─── ДИСКЛЕЙМЕР ─── */
+  .disclaimer {
+    border: 1px solid var(--yellow-border);
+    border-left: 4px solid var(--yellow-soft);
+    background: var(--yellow-bg);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 22px;
+  }
+  .disclaimer-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--yellow-text);
+    margin-bottom: 4px;
+  }
+  .disclaimer-text {
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  /* ─── ПОПАП ─── */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .popup-overlay.active { display: flex; }
+  .popup {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .popup-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: var(--bg-tertiary);
+    border: none;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .popup-close:hover { background: var(--border); color: var(--text); }
+
+  .popup-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .popup-chain {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .popup-title {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .popup-section {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .popup-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .popup-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .popup-section-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .popup-quote {
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--text-muted);
+    border-left: 3px solid var(--border-strong);
+    padding: 4px 0 4px 10px;
+    margin-top: 6px;
+    line-height: 1.45;
+  }
+
+  /* ─── МОБИЛЬНАЯ АДАПТАЦИЯ ─── */
+  @media (max-width: 720px) {
+    body { padding: 16px 12px 50px; }
+    .header h1 { font-size: 20px; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .tasks-grid { grid-template-columns: 1fr; gap: 10px; }
+    .links-grid { grid-template-columns: 1fr; }
+    .potential-grid { grid-template-columns: repeat(2, 1fr); }
+    .summary-row { grid-template-columns: repeat(2, 1fr); }
+    .popup { padding: 20px; }
+  }
+  @media (max-width: 500px) {
+    .header h1 { font-size: 18px; }
+    .business-card, .map-wrap, .links-section, .potential-section, .summary { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ HEADER ============ -->
+  <div class="header">
+    <span class="header-badge">🔗 BizChain Map · Формат Б</span>
+    <h1>Монтели Дизайн — карта бизнес-цепочек</h1>
+    <p class="subtitle">Евгений · производство камня, фасадов и мебели · Благовещенск · 20 лет на рынке</p>
+  </div>
+
+  <!-- ============ КАРТОЧКА БИЗНЕСА ============ -->
+  <div class="business-card">
+    <div class="section-title">Карточка бизнеса · из ответов и диагностики</div>
+
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-label">Выручка в месяц</div>
+        <div class="metric-value">~8 млн ₽</div>
+        <div class="metric-sub">цель: 13 млн</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Доля рынка камня</div>
+        <div class="metric-value">37–40%</div>
+        <div class="metric-sub">по кварцу — до 80%</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Партнёров-мебельщиков</div>
+        <div class="metric-value">~30</div>
+        <div class="metric-sub">активных</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Команда</div>
+        <div class="metric-value">30+</div>
+        <div class="metric-sub">2 площадки</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Подписчиков IG</div>
+        <div class="metric-value">4 909</div>
+        <div class="metric-sub">TG 61 · VK 270</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Отзывов 2ГИС</div>
+        <div class="metric-value">54</div>
+        <div class="metric-sub">~66% позитивных</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Загрузка фасадов</div>
+        <div class="metric-value">15%</div>
+        <div class="metric-sub">2 года назад — 100%</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Срок изготовления</div>
+        <div class="metric-value">14 дн.</div>
+        <div class="metric-sub">камень · 99% укладываются</div>
+      </div>
+    </div>
+
+    <div class="section-title">Топ-6 задач бизнеса</div>
+    <div class="tasks-grid">
+      <div class="task-card">
+        <div class="task-icon">🪑</div>
+        <div class="task-text">Усилить мебель как драйвер роста (8 → 13 млн/мес)</div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">↩️</div>
+        <div class="task-text">Вернуть откатившихся дизайнеров через мебельный канал</div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">📈</div>
+        <div class="task-text">Догрузить фасадное производство с 15% до 50–60%</div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🏷️</div>
+        <div class="task-text">Решить вопрос торговой марки (Монтели по камню занято)</div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🌟</div>
+        <div class="task-text">Построить мебельную узнаваемость с нуля</div>
+      </div>
+      <div class="task-card">
+        <div class="task-icon">🔄</div>
+        <div class="task-text">Делегировать операционку (фурнитура, мебель, маркетолог)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ КАРТА ============ -->
+  <div class="stats">
+    <span class="stat-pill stat-green">🟢 16 — ИИ автоматизирует</span>
+    <span class="stat-pill stat-yellow">🟡 4 — ИИ ускоряет</span>
+    <span class="stat-pill stat-red">🔴 5 — нужен человек</span>
+    <span class="stat-pill stat-percent">⚡ ИИ-потенциал: 64%</span>
+  </div>
+
+  <div class="map-wrap">
+    <div class="map-hint">Нажми на любое звено — увидишь, что там сейчас и что может делать ИИ</div>
+
+    <svg class="chain-svg" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-teal" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0d9488"/>
+        </marker>
+        <marker id="arr-purple" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+        </marker>
+        <marker id="arr-amber" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#d97706"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#3b82f6"/>
+        </marker>
+        <marker id="arr-coral" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#f97316"/>
+        </marker>
+      </defs>
+
+      <!-- ===== ЦЕПОЧКА 1: ПРИВЛЕЧЕНИЕ (y center 38) ===== -->
+      <text x="6" y="42" font-size="10" font-weight="800" fill="#475569" letter-spacing="0.5">ПРИВЛЕЧЕНИЕ</text>
+
+      <!-- Звено 1: Получает рекомендацию -->
+      <g class="node" onclick="showPopup('n11')">
+        <rect class="node-bg" x="100" y="16" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="100" y="16" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="145" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Получает</text>
+        <text x="145" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">рекомендацию</text>
+      </g>
+      <text x="199" y="42" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <!-- Звено 2: Виден на 2ГИС -->
+      <g class="node" onclick="showPopup('n12')">
+        <rect class="node-bg" x="208" y="16" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="208" y="16" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="253" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Виден на 2ГИС</text>
+        <text x="253" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">и сайтах</text>
+      </g>
+      <text x="307" y="42" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <!-- Звено 3: Принимает звонок -->
+      <g class="node" onclick="showPopup('n13')">
+        <rect class="node-bg" x="316" y="16" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="316" y="16" width="4" height="44" rx="2" fill="#f59e0b"/>
+        <text x="361" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Принимает</text>
+        <text x="361" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">входящий</text>
+      </g>
+      <text x="415" y="42" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <!-- Звено 4: Выдаёт прайс -->
+      <g class="node" onclick="showPopup('n14')">
+        <rect class="node-bg" x="424" y="16" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="424" y="16" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="469" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Выдаёт прайс</text>
+        <text x="469" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">и просчёт</text>
+      </g>
+      <text x="523" y="42" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <!-- Звено 5: Возвращается на заказ -->
+      <g class="node" onclick="showPopup('n15')">
+        <rect class="node-bg" x="532" y="16" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="532" y="16" width="4" height="44" rx="2" fill="#f59e0b"/>
+        <text x="577" y="34" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Возвращается</text>
+        <text x="577" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">на заказ</text>
+      </g>
+
+      <!-- ===== ЦЕПОЧКА 2: ПРОДАЖА (y center 124) ===== -->
+      <text x="6" y="128" font-size="10" font-weight="800" fill="#475569" letter-spacing="0.5">ПРОДАЖА</text>
+
+      <g class="node" onclick="showPopup('n21')">
+        <rect class="node-bg" x="100" y="102" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="100" y="102" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="145" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Принимает</text>
+        <text x="145" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">эскиз</text>
+      </g>
+      <text x="199" y="128" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n22')">
+        <rect class="node-bg" x="208" y="102" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="208" y="102" width="4" height="44" rx="2" fill="#f59e0b"/>
+        <text x="253" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Просчитывает</text>
+        <text x="253" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">заказ</text>
+      </g>
+      <text x="307" y="128" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n23')">
+        <rect class="node-bg" x="316" y="102" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="316" y="102" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="361" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Дожимает</text>
+        <text x="361" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">в Битриксе</text>
+      </g>
+      <text x="415" y="128" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n24')">
+        <rect class="node-bg" x="424" y="102" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="424" y="102" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="469" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Готовит</text>
+        <text x="469" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">договор</text>
+      </g>
+      <text x="523" y="128" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n25')">
+        <rect class="node-bg" x="532" y="102" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="532" y="102" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="577" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Принимает</text>
+        <text x="577" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">оплату 50%</text>
+      </g>
+
+      <!-- ===== ЦЕПОЧКА 3: ИСПОЛНЕНИЕ (y center 210) ===== -->
+      <text x="6" y="214" font-size="10" font-weight="800" fill="#475569" letter-spacing="0.5">ИСПОЛНЕНИЕ</text>
+
+      <g class="node" onclick="showPopup('n31')">
+        <rect class="node-bg" x="100" y="188" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="100" y="188" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="145" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Выезжает</text>
+        <text x="145" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">на замер</text>
+      </g>
+      <text x="199" y="214" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n32')">
+        <rect class="node-bg" x="208" y="188" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="208" y="188" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="253" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Конструирует</text>
+        <text x="253" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">в Базисе</text>
+      </g>
+      <text x="307" y="214" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n33')">
+        <rect class="node-bg" x="316" y="188" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="316" y="188" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="361" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Производит</text>
+        <text x="361" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">изделие</text>
+      </g>
+      <text x="415" y="214" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n34')">
+        <rect class="node-bg" x="424" y="188" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="424" y="188" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="469" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Принимает</text>
+        <text x="469" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">доплату</text>
+      </g>
+      <text x="523" y="214" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n35')">
+        <rect class="node-bg" x="532" y="188" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="532" y="188" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="577" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Монтирует</text>
+        <text x="577" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">на объекте</text>
+      </g>
+
+      <!-- ===== ЦЕПОЧКА 4: КОНТЕНТ (y center 296) ===== -->
+      <text x="6" y="300" font-size="10" font-weight="800" fill="#475569" letter-spacing="0.5">КОНТЕНТ</text>
+
+      <g class="node" onclick="showPopup('n41')">
+        <rect class="node-bg" x="100" y="274" width="90" height="44" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+        <rect x="100" y="274" width="4" height="44" rx="2" fill="#ef4444"/>
+        <text x="145" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Снимает</text>
+        <text x="145" y="306" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">готовое изделие</text>
+      </g>
+      <text x="199" y="300" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n42')">
+        <rect class="node-bg" x="208" y="274" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="208" y="274" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="253" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Пишет пост</text>
+        <text x="253" y="306" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">по фото</text>
+      </g>
+      <text x="307" y="300" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n43')">
+        <rect class="node-bg" x="316" y="274" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="316" y="274" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="361" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Публикует</text>
+        <text x="361" y="306" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">в IG/TG/VK</text>
+      </g>
+      <text x="415" y="300" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n44')">
+        <rect class="node-bg" x="424" y="274" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="424" y="274" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="469" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Запрашивает</text>
+        <text x="469" y="306" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">отзыв</text>
+      </g>
+      <text x="523" y="300" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n45')">
+        <rect class="node-bg" x="532" y="274" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="532" y="274" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="577" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Переиспольз.</text>
+        <text x="577" y="306" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">отзывы в пост</text>
+      </g>
+
+      <!-- ===== ЦЕПОЧКА 5: УДЕРЖАНИЕ (y center 382) ===== -->
+      <text x="6" y="386" font-size="10" font-weight="800" fill="#475569" letter-spacing="0.5">УДЕРЖАНИЕ</text>
+
+      <g class="node" onclick="showPopup('n51')">
+        <rect class="node-bg" x="100" y="360" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="100" y="360" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="145" y="378" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Просит отзыв</text>
+        <text x="145" y="392" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">после монтажа</text>
+      </g>
+      <text x="199" y="386" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n52')">
+        <rect class="node-bg" x="208" y="360" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="208" y="360" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="253" y="378" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Поздравляет</text>
+        <text x="253" y="392" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">с праздниками</text>
+      </g>
+      <text x="307" y="386" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n53')">
+        <rect class="node-bg" x="316" y="360" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="316" y="360" width="4" height="44" rx="2" fill="#f59e0b"/>
+        <text x="361" y="378" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Звонит через</text>
+        <text x="361" y="392" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">год на шлифовку</text>
+      </g>
+      <text x="415" y="386" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n54')">
+        <rect class="node-bg" x="424" y="360" width="90" height="44" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <rect x="424" y="360" width="4" height="44" rx="2" fill="#22c55e"/>
+        <text x="469" y="378" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Рассылает</text>
+        <text x="469" y="392" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">по базе</text>
+      </g>
+      <text x="523" y="386" text-anchor="middle" font-size="14" fill="#94a3b8">›</text>
+
+      <g class="node" onclick="showPopup('n55')">
+        <rect class="node-bg" x="532" y="360" width="90" height="44" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+        <rect x="532" y="360" width="4" height="44" rx="2" fill="#f59e0b"/>
+        <text x="577" y="378" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Предлагает</text>
+        <text x="577" y="392" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">допродажу</text>
+      </g>
+
+      <!-- ===== ПЕРЕХОДЫ МЕЖДУ ЦЕПОЧКАМИ ===== -->
+
+      <!-- Переход 1: Продажа (Принимает оплату) → Исполнение (Выезжает на замер) -->
+      <path d="M 577,146 C 577,165 145,165 145,184" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-teal)"/>
+      <text x="370" y="173" text-anchor="middle" font-size="9" font-weight="700" fill="#0d9488">оплата → запуск производства</text>
+
+      <!-- Переход 2: Исполнение (Монтирует) → Контент (Снимает) -->
+      <path d="M 577,232 C 577,250 145,250 145,272" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-purple)"/>
+      <text x="370" y="259" text-anchor="middle" font-size="9" font-weight="700" fill="#7c3aed">монтаж → съёмка изделия</text>
+
+      <!-- Переход 3: Исполнение (Монтирует) → Удержание (Просит отзыв) -->
+      <path d="M 622,210 C 645,210 645,382 622,382" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-amber)"/>
+
+      <!-- Петля 1: Контент (Переиспольз. отзывы) → Привлечение (Виден на 2ГИС) -->
+      <path d="M 622,296 C 665,296 665,38 298,38" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-blue)"/>
+
+      <!-- Петля 2: Удержание (Допродажа) → Привлечение (Получает рекомендацию) -->
+      <path d="M 100,382 C 60,382 60,38 100,38" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-coral)"/>
+
+    </svg>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#22c55e"></div>
+        ИИ автоматизирует полностью
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#f59e0b"></div>
+        ИИ ускоряет, человек контролирует
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ef4444"></div>
+        Нужен живой человек / экспертиза
+      </div>
+      <div class="legend-item">
+        <span style="color:#0d9488;font-weight:700">⤳</span> переходы и петли возврата
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ПЕРЕПЛЕТЕНИЯ ============ -->
+  <div class="links-section">
+    <div class="section-title">Переплетения между цепочками</div>
+    <div class="links-grid">
+      <div class="link-card teal">
+        <div class="link-title">Продажа → Исполнение</div>
+        <div class="link-desc"><strong>Триггер:</strong> внёс 50% предоплату → Битрикс распределяет заказ на специалиста по камню / мебельный цех. <em>Слабое место:</em> обратная связь от мебельного производства в офис хромает — Евгений сейчас курирует лично.</div>
+      </div>
+      <div class="link-card purple">
+        <div class="link-title">Исполнение → Контент</div>
+        <div class="link-desc"><strong>Триггер:</strong> монтаж завершён → мастер фотографирует на телефон → WhatsApp-группа → SMM. <em>Сейчас не работает регулярно:</em> «фото до лоска», заказчики не пускают на повторную съёмку.</div>
+      </div>
+      <div class="link-card amber">
+        <div class="link-title">Исполнение → Удержание</div>
+        <div class="link-desc"><strong>Триггер:</strong> подписан акт приёмки → автоматический запрос отзыва на 2ГИС / в директ. <em>Сейчас Регина звонит вручную</em> — не всегда регулярно. ИИ может перевести 54 отзыва → 200+ за год.</div>
+      </div>
+      <div class="link-card blue">
+        <div class="link-title">Контент → Привлечение (петля)</div>
+        <div class="link-desc"><strong>Триггер:</strong> отзыв → пост-благодарность → охват → доверие → новые клиенты на 2ГИС. <em>Критическая дыра:</em> 54 отзыва спят, нигде не публикуются. Партнёры публикуют столешницы как свои.</div>
+      </div>
+      <div class="link-card coral">
+        <div class="link-title">Удержание → Привлечение (петля)</div>
+        <div class="link-desc"><strong>Триггер:</strong> довольный клиент / партнёр рекомендует → новый мебельщик или B2C. <em>Уже работает:</em> 3–4 партнёра за месяц приходят по рекомендации. <em>Дыра:</em> нет реферальной программы для частников.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ПОТЕНЦИАЛ ПО ЦЕПОЧКАМ ============ -->
+  <div class="potential-section">
+    <div class="section-title">Потенциал ИИ по цепочкам</div>
+    <div class="potential-grid">
+      <div class="potential-card">
+        <div class="potential-icon">📣</div>
+        <div class="potential-name">Привлечение</div>
+        <div class="potential-val">40%</div>
+        <div class="potential-desc">2/5 звеньев на ИИ. Сарафан и квалификация — за людьми.</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-icon">💼</div>
+        <div class="potential-name">Продажа</div>
+        <div class="potential-val">80%</div>
+        <div class="potential-desc">4/5 звеньев на ИИ. Дожим B2C — главная быстрая победа.</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-icon">🛠️</div>
+        <div class="potential-name">Исполнение</div>
+        <div class="potential-val">20%</div>
+        <div class="potential-desc">1/5 — это экспертиза. Команда 30+ человек — главный актив.</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-icon">📸</div>
+        <div class="potential-name">Контент</div>
+        <div class="potential-val">80%</div>
+        <div class="potential-desc">4/5 звеньев на ИИ. Съёмка — за мастером, остальное автоматизируется.</div>
+      </div>
+      <div class="potential-card">
+        <div class="potential-icon">♻️</div>
+        <div class="potential-name">Удержание</div>
+        <div class="potential-val">60%</div>
+        <div class="potential-desc">3/5. Платная шлифовка через год — упускаемая выручка.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ИТОГОВЫЙ БЛОК ============ -->
+  <div class="summary">
+    <div class="section-title">Итог: что показывает карта</div>
+    <p style="font-size:14px;color:var(--text-soft);line-height:1.6;margin-bottom:8px;">
+      Из 25 звеньев <strong>16 — кандидаты на ИИ</strong>. Главные дыры — это не производство (там 20 лет опыта и сильная команда), а <strong>контент, дожим B2C и удержание клиентов после монтажа</strong>. Драйвер роста — мебельный канал, и именно в нём ИИ-инструменты дают максимальный эффект.
+    </p>
+    <div class="summary-row">
+      <div class="summary-metric">
+        <div class="summary-metric-label">ИИ-потенциал</div>
+        <div class="summary-metric-value">64%</div>
+        <div class="summary-metric-sub">16 из 25 звеньев</div>
+      </div>
+      <div class="summary-metric">
+        <div class="summary-metric-label">Цель по выручке</div>
+        <div class="summary-metric-value">8 → 13 млн</div>
+        <div class="summary-metric-sub">ориентир Евгения</div>
+      </div>
+      <div class="summary-metric">
+        <div class="summary-metric-label">Прирост выручки</div>
+        <div class="summary-metric-value">до +62%</div>
+        <div class="summary-metric-sub">при реализации стратегии</div>
+      </div>
+      <div class="summary-metric">
+        <div class="summary-metric-label">Быстрых побед</div>
+        <div class="summary-metric-value">3</div>
+        <div class="summary-metric-sub">отзывы · дожим · шлифовка</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ БЫСТРЫЕ ПОБЕДЫ ============ -->
+  <div class="links-section">
+    <div class="section-title">⚡ Топ-3 быстрых победы</div>
+    <div class="links-grid">
+      <div class="link-card teal" style="border-left-color:var(--green-soft);">
+        <div class="link-title">1. Автозапрос отзывов</div>
+        <div class="link-desc">После подписания акта приёмки → автоматическое сообщение в WhatsApp/SMS со ссылкой на 2ГИС. Сейчас 54 отзыва за всю историю — потенциал 200+ за год. Евгений сам согласился: «Это нужно подтянуть в обязательном порядке».</div>
+      </div>
+      <div class="link-card teal" style="border-left-color:var(--green-soft);">
+        <div class="link-title">2. Дожим B2C через Битрикс</div>
+        <div class="link-desc">«В январе-феврале посмотрели по Битриксу — с заказчиками не связывались неделю-две-три, заказчики ожидали просчётов». ИИ-напоминания + автоматические касания → +10–20% конверсии без новых лидов.</div>
+      </div>
+      <div class="link-card teal" style="border-left-color:var(--green-soft);">
+        <div class="link-title">3. Звонок через год на шлифовку</div>
+        <div class="link-desc">«Через год после установки мы в обязательном порядке должны позвонить и предложить платное обслуживание — шлифовку. Это бы повышало лояльность». Полностью пропускаемый сервис → новый источник выручки.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ДИСКЛЕЙМЕР ============ -->
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠️ Важно понимать про эту карту</div>
+    <div class="disclaimer-text">
+      Карта построена на ответах Евгения по 12 аудиоблокам распаковки и данных диагностики. Цифры выручки и доли рынка — со слов клиента и из открытых источников. Прогнозы прироста — ориентировочные, на базе сравнения с типовыми результатами при внедрении ИИ-инструментов в схожих нишах. Это не финансовая гарантия, а ориентир, куда направить усилия в первую очередь. Реальный результат зависит от скорости внедрения, дисциплины команды и качества контекста, который заложите в ИИ-инструменты.
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ ПОПАП ============ -->
+<div class="popup-overlay" id="popupOverlay" onclick="hidePopup(event)">
+  <div class="popup" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="hidePopup()">×</button>
+    <div id="popupChain" class="popup-chain"></div>
+    <div id="popupTitle" class="popup-title"></div>
+    <div id="popupStatus" class="popup-status"></div>
+    <div class="popup-section">
+      <div class="popup-section-label">Что сейчас</div>
+      <div id="popupNow" class="popup-section-text"></div>
+    </div>
+    <div class="popup-section">
+      <div class="popup-section-label">💡 Что делает ИИ</div>
+      <div id="popupAI" class="popup-section-text"></div>
+    </div>
+    <div class="popup-section" id="popupLinksSection">
+      <div class="popup-section-label">⚡ Связан с</div>
+      <div id="popupLinks" class="popup-section-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const nodeData = {
+  // ====== ПРИВЛЕЧЕНИЕ ======
+  'n11': {
+    chain: 'Привлечение',
+    title: 'Получает рекомендацию',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: 'Главный канал привлечения. 80–90% новых мебельщиков приходят по сарафану от других мебельщиков. Кейс: после закрытия «Мархаус» собственник порекомендовал перейти к Монтели — пришли несколько мебельщиков.',
+    ai: 'Сама рекомендация — это живой контакт людей, ИИ её не заменит. Но ИИ может: вести базу «рекомендателей», напоминать о благодарности, готовить персональные подарки партнёрам.',
+    links: 'Это вход цепочки — куда возвращаются «Допродажа» из Удержания и «Переиспольз. отзывов» из Контента (петли).'
+  },
+  'n12': {
+    chain: 'Привлечение',
+    title: 'Виден на 2ГИС / сайтах',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: '2ГИС-карточка работает как пассивный канал. 54 отзыва, ~66% позитивных, рейтинг неполный. Сайт по мебели только запускается — за все 13 лет «не было ни одного периода, когда с сайтов размещалось большое количество заявок».',
+    ai: 'Управление карточкой 2ГИС: ответы на отзывы по шаблону, регулярные обновления (фото, описания услуг). ИИ-ответы — в стиле Монтели («качество», тактично, по делу). Для нового сайта по мебели — генерация SEO-описаний и FAQ.',
+    links: 'Сюда возвращается петля «Переиспольз. отзывов» — каждый новый пост-благодарность увеличивает доверие к карточке.'
+  },
+  'n13': {
+    chain: 'Привлечение',
+    title: 'Принимает входящий',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет, человек контролирует',
+    now: 'Если звонок — попадает на Ксению (РОП) в 80–90% случаев. Если она занята — на Татьяну. Среднее время до размещения заказа — в пределах недели.',
+    ai: 'ИИ-квалификация в чат-боте 2ГИС/Instagram: уточняет нишу (мебельщик / частник), тип изделия (камень / фасады / мебель), бюджет. Передаёт менеджеру уже готовую карточку. Экономит время Ксении на типовых вопросах.',
+    links: 'Получает входящий поток из «Виден на 2ГИС». Передаёт в «Выдаёт прайс».'
+  },
+  'n14': {
+    chain: 'Привлечение',
+    title: 'Выдаёт прайс и просчёт',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Прайс выдаётся менеджером — есть готовая болванка. Складская программа Hanex: 60 цветов в Благовещенске. Просчёт типового заказа — Регина (быстрее для салонов).',
+    ai: 'Калькулятор на сайте: клиент вводит размеры, цвет, тип материала — получает предварительную стоимость моментально. ИИ-помощник менеджерам: готовит коммерческое предложение по эскизу за минуты. Снимает рутину с Ксении и Регины.',
+    links: 'Передаёт в «Возвращается на заказ». Сейчас здесь теряется часть лидов — клиенты получают цену и пропадают.'
+  },
+  'n15': {
+    chain: 'Привлечение',
+    title: 'Возвращается на заказ',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет, человек контролирует',
+    now: 'Цикл — 14 дней для мебельщиков, 2–3 недели для B2C по кухне. Иногда до полугода, если ремонт долгий. «Конверсия дожима — 10–20% из тех, кого дотянули». Главное возражение — «дорого».',
+    ai: 'Прогревающие касания: подборки работ по нише клиента, ответы на типовые возражения по «дорого» (альтернативы, рассрочка). Триггерные сообщения в Битриксе по статусу клиента. Передача в цепочку Продажа.',
+    links: 'Передаёт в «Принимает эскиз» (цепочка Продажа). Часть клиентов теряется и уходит в Битрикс — там их добивает следующее звено.'
+  },
+
+  // ====== ПРОДАЖА ======
+  'n21': {
+    chain: 'Продажа',
+    title: 'Принимает эскиз',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Мебельщик присылает эскиз → менеджер уточняет длину, ширину, цвет → выставляет счёт. Для B2C — клиент приходит в офис, консультируется, получает просчёт.',
+    ai: 'Распознавание эскизов: ИИ извлекает размеры из чертежа или фото, заполняет карточку в Битриксе. ИИ-чат принимает заявки 24/7 в WhatsApp/директе, задаёт нужные уточнения за менеджера.',
+    links: 'Вход — из «Возвращается на заказ». Передаёт в «Просчитывает заказ».'
+  },
+  'n22': {
+    chain: 'Продажа',
+    title: 'Просчитывает заказ',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет, человек контролирует',
+    now: 'Подготовка договора — 15 минут. Отрисовка эскиза — 30 мин–1 час. Полный договор по кухне с фурнитурой — 1–2 часа (дизайнер). Выставление счёта в 1С — 1–2 мин.',
+    ai: 'ИИ генерирует типовой просчёт по эскизу за 1–2 минуты. Дизайнер только проверяет и одобряет. Сложные кастомные проекты (нестандартные фрезеровки, окрашенные фасады) — за Викторией / Татьяной с их вкусом и насмотренностью.',
+    links: 'Вход — из «Принимает эскиз». Передаёт в «Дожимает в Битриксе».'
+  },
+  'n23': {
+    chain: 'Продажа',
+    title: 'Дожимает в Битриксе',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует · быстрая победа',
+    now: '«Это вот слабое место. Не перезвоны, не доработки, не вовремя сделали предварительные просчёты, не позвонили вовремя, не дожали». В январе-феврале выяснили: клиенты ждали просчётов 1–3 недели — никто с ними не связывался.',
+    ai: 'Автоматические напоминания менеджерам в Битриксе по статусам сделки. Триггерные сообщения клиентам: «прошло 3 дня после просчёта», «через неделю», «через месяц». ИИ-помощник: предлагает менеджеру скрипт под каждое возражение клиента.',
+    links: 'Сюда сходятся «зависшие» лиды из Привлечения. Передаёт в «Готовит договор». Главная быстрая победа.'
+  },
+  'n24': {
+    chain: 'Продажа',
+    title: 'Готовит договор',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Есть болванка договора. Менеджер отрисовывает эскиз, вставляет в болванку, распечатывает. По кухне с фурнитурой — дизайнер делает 1–2 часа.',
+    ai: 'ИИ собирает договор по данным из Битрикса автоматически. Дизайнер только проверяет спецификацию фурнитуры. Сокращает 1–2 часа дизайнера до 10–15 минут проверки.',
+    links: 'Передаёт в «Принимает оплату».'
+  },
+  'n25': {
+    chain: 'Продажа',
+    title: 'Принимает оплату 50%',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Предоплата 50%, доплата за день до монтажа. Счёт выставляется в 1С (1–2 мин). Для салонов — Регина.',
+    ai: 'Автоматические уведомления клиенту: счёт выставлен, оплата получена, заказ запущен в производство. Триггер для цепочки Исполнение — без участия менеджера.',
+    links: 'Запускает переход в Исполнение (бирюзовая стрелка): оплата → запуск производства → выезд замерщика.'
+  },
+
+  // ====== ИСПОЛНЕНИЕ ======
+  'n31': {
+    chain: 'Исполнение',
+    title: 'Выезжает на замер',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: 'Замерщик — отдельная роль. Камень — около 1 часа. Мебель — от 30 мин (тумба) до 3 часов (большой комплект). Координация по камню — Ксения; графики монтажей готовит она же.',
+    ai: 'Сам замер автоматизировать нельзя — это физический выезд с инструментом. Но ИИ может: оптимизировать график замерщика по геолокации, готовить чек-лист «что взять» под конкретный объект, фиксировать данные замера в Битрикс по голосовой записи.',
+    links: 'Вход из Продажи (оплата). Передаёт в «Конструирует в Базисе».'
+  },
+  'n32': {
+    chain: 'Исполнение',
+    title: 'Конструирует в Базисе',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: 'Конструктор работает в программе Базис. В команде 3 конструктора. По мебели — в среднем неделя на проработку. По камню — координирует Ксения + частично Регина.',
+    ai: 'Это экспертиза 13–20 лет — отдавать ИИ нельзя. Но ИИ может: проверять чертежи на типовые ошибки (отписан не тот цвет камня, размеры), предупреждать о конфликтах с фурнитурой, экономить время на повторных типовых задачах.',
+    links: 'Передаёт в «Производит изделие».'
+  },
+  'n33': {
+    chain: 'Исполнение',
+    title: 'Производит изделие',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: 'Раскрой на ЧПУ → кромление (большой проф. станок) → сборка бригадой. Камень — 14 дней по договору (99% укладываются), фасады — 1,5–2 недели. Команда мастеров 13–20 лет, «модель Форда»: эксцентриковая стяжка, шканты, кромление в 4 стороны.',
+    ai: 'Сама работа руками — за мастерами. ИИ может строить ERP на базе Битрикса: видеть, где каждый заказ, кто из мастеров загружен, какая фурнитура задерживается. «По мебели этот вопрос надо докручивать».',
+    links: 'Передаёт в «Принимает доплату». Слабое место: обратная связь от мебельного производства в офис.'
+  },
+  'n34': {
+    chain: 'Исполнение',
+    title: 'Принимает доплату',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Перед монтажом клиента приглашают на доплату. Окончательный расчёт — за день до монтажа.',
+    ai: 'Автоматическое уведомление клиенту: «ваш заказ готов, прошу внести оставшиеся 50% до [дата]». Напоминания через мессенджеры. Триггер для согласования даты монтажа.',
+    links: 'Передаёт в «Монтирует на объекте».'
+  },
+  'n35': {
+    chain: 'Исполнение',
+    title: 'Монтирует на объекте',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: 'Монтажная бригада: всегда 2 человека (1 — если изделие меньше метра). Подписывают акт приёмки.',
+    ai: 'Сам монтаж — руками. Но ИИ может: оптимизировать графики бригад, готовить чек-листы под каждый объект, автоматически запускать запрос отзыва сразу после подписания акта.',
+    links: 'Запускает 2 перехода: в Контент (фиолетовая стрелка — съёмка изделия) и в Удержание (янтарная — запрос отзыва).'
+  },
+
+  // ====== КОНТЕНТ ======
+  'n41': {
+    chain: 'Контент',
+    title: 'Снимает готовое изделие',
+    status: 'red',
+    statusText: '🔴 Нужен живой человек',
+    now: '«После монтажа мастера фотографируют готовые изделия на свои телефоны и скидывают в группу WhatsApp». Главная боль — фото «до лоска»: нет сантехники, нет чистоты, клиенты не пускают на повторную съёмку.',
+    ai: 'Само нажатие кнопки на камере — за человеком. Но ИИ может: дать мастерам чёткий чек-лист «как снимать» (углы, свет, отсутствие постороннего в кадре), обрабатывать фото после съёмки (свет, цветокор, ретушь).',
+    links: 'Вход — переход из Исполнения (фиолетовая стрелка). Передаёт в «Пишет пост по фото».'
+  },
+  'n42': {
+    chain: 'Контент',
+    title: 'Пишет пост по фото',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: '«Instagram полностью занимается SMM-щица. Никак этот вопрос не контролирую, никак не создаю темы. Полностью на откупе SMM-щицы. Контент-плана нет».',
+    ai: 'ИИ-помощник, обученный на голосе Монтели: получает фото + краткие данные (материал, цвет, объект) → за 2 минуты готовый пост с описанием, хэштегами, призывом. Никакого «Привет, друзья!» — стиль качества, тактично, по делу. Метафора «мы продаём кухням лицо» — встроена.',
+    links: 'Вход — из «Снимает изделие». Передаёт в «Публикует».'
+  },
+  'n43': {
+    chain: 'Контент',
+    title: 'Публикует в IG/TG/VK',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Сейчас 3 канала ведутся раздельно: Instagram — SMM-щица, Telegram + VK — маркетолог. Координации нет, контент-плана нет. 4 909 в IG, 61 в TG, 270 в VK.',
+    ai: 'Кросс-постинг: один пост → автоматическая адаптация под каждую площадку (IG — карусель, TG — длинный пост, VK — со ссылкой). Планировщик публикаций. Аналитика: какие посты заходят, какие игнорируются.',
+    links: 'Передаёт в «Запрашивает отзыв».'
+  },
+  'n44': {
+    chain: 'Контент',
+    title: 'Запрашивает отзыв',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Сейчас Регина звонит вручную после монтажа — «не всегда регулярно». За 20 лет накоплено 54 отзыва на 2ГИС.',
+    ai: 'Автоматическое сообщение клиенту через 1–3 дня после подписания акта приёмки: «Спасибо за выбор Монтели. Оставьте отзыв на 2ГИС [ссылка]». ИИ адаптирует тон под клиента (партнёр vs частник). Цель: 54 → 200+ отзывов за год.',
+    links: 'Дублирует переход из Исполнения (янтарная стрелка). Передаёт в «Переиспольз. отзывы».'
+  },
+  'n45': {
+    chain: 'Контент',
+    title: 'Переиспольз. отзывы в пост',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: '«Никак не используем 54 отзыва с 2ГИС, нигде не публикуем». Критическая дыра в системе — социальное доказательство копится, но не работает.',
+    ai: 'Каждый новый положительный отзыв → ИИ генерирует пост-благодарность с цитатой клиента → публикация во всех каналах. Подборки по нишам: «что говорят дизайнеры», «отзывы по фасадам», «отзывы по кухням».',
+    links: 'Запускает синюю петлю возврата → «Виден на 2ГИС» в Привлечении. Это и есть петля контентного маховика.'
+  },
+
+  // ====== УДЕРЖАНИЕ ======
+  'n51': {
+    chain: 'Удержание',
+    title: 'Просит отзыв после монтажа',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Регина звонит после каждого монтажа, спрашивает «всё ли устроило» и просит оставить отзыв на 2ГИС. «Это не всегда регулярно. Этот вопрос нужно в обязательном порядке подтянуть».',
+    ai: 'Автоматическая отправка через 1–3 дня после монтажа. Высвобождает Регину от рутинной работы. Сама согласилась Евгений: «Нужно, чтобы автоматически приходил запрос на отзыв в соцсетях».',
+    links: 'Вход — переход из Исполнения. Передаёт в «Поздравляет с праздниками».'
+  },
+  'n52': {
+    chain: 'Удержание',
+    title: 'Поздравляет с праздниками',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: 'Для B2B-партнёров — есть: «Поздравляем с Новым годом, с 8 Марта, с Днём мебельщика. Подарки, поездки в офисы, поздравления лично от Ксении». Для B2C — «этого процесса нет».',
+    ai: 'Календарь поздравлений по сегментам. Для B2B — персональные сообщения от имени Ксении (она проверяет и одобряет). Для B2C — массовые рассылки в WhatsApp/email после оцифровки баз.',
+    links: 'Передаёт в «Звонит через год на шлифовку».'
+  },
+  'n53': {
+    chain: 'Удержание',
+    title: 'Звонит через год на шлифовку',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет · быстрая победа',
+    now: '«Через год после установки столешницы мы в обязательном порядке должны позвонить и предложить бесплатное обслуживание (по 2-летней гарантии) и платное обслуживание — шлифовку». Это полностью пропускаемый сервис → упускаемая выручка.',
+    ai: 'Триггер по дате установки + 12 месяцев → ИИ отправляет сообщение клиенту, подбирает удобную дату. Менеджер только согласовывает выезд. Полностью новый источник выручки от старых клиентов.',
+    links: 'Передаёт в «Рассылает по базе».'
+  },
+  'n54': {
+    chain: 'Удержание',
+    title: 'Рассылает по базе',
+    status: 'green',
+    statusText: '🟢 ИИ автоматизирует',
+    now: '«У нас были бумажные базы. Эти базы есть, но их нужно оцифровать и начать с ними работать». Сейчас никаких рассылок нет — каналов связи с клиентами 5–10-летней давности тоже нет.',
+    ai: 'Этап 1: оцифровка бумажных баз (ИИ распознаёт записи). Этап 2: сегментация (камень / мебель / партнёр / B2C). Этап 3: персонализированные рассылки по сезонам (Новый год, весенние акции, новинки).',
+    links: 'Передаёт в «Предлагает допродажу».'
+  },
+  'n55': {
+    chain: 'Удержание',
+    title: 'Предлагает допродажу',
+    status: 'yellow',
+    statusText: '🟡 ИИ ускоряет, человек контролирует',
+    now: '«Это вот слабое место, которое практически не предлагается. Если пришёл за кухонной столешницей — мы предлагаем столешницу в ванную. Иногда сантехника. Этот вопрос слабо проработан». Идеальный сценарий: подоконник → кухня → ванная → шкафы → новая квартира.',
+    ai: 'ИИ-скрипты допродажи под каждый тип клиента. Триггеры в Битриксе: «клиент купил кухонную столешницу — предложи в ванную через 30 дней». Менеджер только звонит и продаёт по готовому скрипту.',
+    links: 'Запускает коралловую петлю → «Получает рекомендацию» в Привлечении. Лояльный клиент рекомендует.'
+  }
+};
+
+const statusColors = {
+  green: { bg: '#f0fdf4', text: '#15803d', border: '#86efac' },
+  yellow: { bg: '#fffbeb', text: '#b45309', border: '#fcd34d' },
+  red: { bg: '#fef2f2', text: '#b91c1c', border: '#fca5a5' }
+};
+
+// Тёмная тема — корректирует цвета попапа
+function getDarkStatusColors(status) {
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!isDark) return statusColors[status];
+  const map = {
+    green: { bg: '#052e16', text: '#4ade80', border: '#14532d' },
+    yellow: { bg: '#422006', text: '#fbbf24', border: '#78350f' },
+    red: { bg: '#450a0a', text: '#fca5a5', border: '#7f1d1d' }
+  };
+  return map[status];
+}
+
+let activeNodeId = null;
+
+function showPopup(id) {
+  const d = nodeData[id];
+  if (!d) return;
+
+  // Снять active со всех узлов
+  document.querySelectorAll('.node.active').forEach(n => n.classList.remove('active'));
+  // Поставить active на текущий
+  const el = document.querySelector(`[onclick="showPopup('${id}')"]`);
+  if (el) el.classList.add('active');
+  activeNodeId = id;
+
+  const sc = getDarkStatusColors(d.status);
+  const statusEl = document.getElementById('popupStatus');
+  statusEl.textContent = d.statusText;
+  statusEl.style.background = sc.bg;
+  statusEl.style.color = sc.text;
+  statusEl.style.border = `1px solid ${sc.border}`;
+
+  document.getElementById('popupChain').textContent = d.chain;
+  document.getElementById('popupTitle').textContent = d.title;
+  document.getElementById('popupNow').textContent = d.now;
+  document.getElementById('popupAI').textContent = d.ai;
+
+  if (d.links) {
+    document.getElementById('popupLinks').textContent = d.links;
+    document.getElementById('popupLinksSection').style.display = 'block';
+  } else {
+    document.getElementById('popupLinksSection').style.display = 'none';
+  }
+
+  document.getElementById('popupOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePopup(e) {
+  if (!e || e.target === document.getElementById('popupOverlay') || (e.target && e.target.classList && e.target.classList.contains('popup-close'))) {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    document.querySelectorAll('.node.active').forEach(n => n.classList.remove('active'));
+    activeNodeId = null;
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('popupOverlay').classList.contains('active')) {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    document.querySelectorAll('.node.active').forEach(n => n.classList.remove('active'));
+    activeNodeId = null;
+  }
+});
+</script>
+
+</body>
+</html>
