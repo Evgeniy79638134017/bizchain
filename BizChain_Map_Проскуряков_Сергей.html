@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain Map — ООО «СтройПро» · Проскуряков Сергей</title>
+<style>
+:root {
+  --bg: #f4f4f6;
+  --bg-card: #ffffff;
+  --bg-soft: #fafafb;
+  --bg-row-alt: #f8f9fa;
+  --text: #1c1c1e;
+  --text-mid: #3a3a3d;
+  --text-muted: #6e6e73;
+  --text-faint: #9d9da3;
+  --border: #e0e0e4;
+  --border-soft: #ecedef;
+  --steel: #1c4e80;
+  --steel-soft: #e7eef5;
+
+  --green: #2E7D32;
+  --green-bg: #e8f3e9;
+  --green-stroke: #87c189;
+  --green-text: #1b5e20;
+
+  --yellow: #B45309;
+  --yellow-bg: #fef4e2;
+  --yellow-stroke: #f0c27a;
+  --yellow-text: #92400e;
+
+  --red: #B71C1C;
+  --red-bg: #fde8e8;
+  --red-stroke: #e89898;
+  --red-text: #8c0c0c;
+
+  --teal: #0F766E;
+  --violet: #6D28D9;
+  --amber: #B45309;
+  --indigo: #1E40AF;
+  --rose: #BE123C;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
+
+  --font-display: 'IBM Plex Sans', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --bg-card: #1a1d23;
+    --bg-soft: #14171c;
+    --bg-row-alt: #181b21;
+    --text: #f1f1f4;
+    --text-mid: #d4d4d8;
+    --text-muted: #a0a0a8;
+    --text-faint: #6e6e78;
+    --border: #2c2f36;
+    --border-soft: #25282e;
+    --steel: #5a9bd5;
+    --steel-soft: #1c2a3a;
+
+    --green-bg: #163b1d;
+    --green-stroke: #2E7D32;
+    --green-text: #86d189;
+
+    --yellow-bg: #3a2710;
+    --yellow-stroke: #92571a;
+    --yellow-text: #f5c873;
+
+    --red-bg: #3a1414;
+    --red-stroke: #8c2424;
+    --red-text: #f08080;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 28px 80px;
+}
+
+/* HEADER */
+.hero {
+  border-left: 4px solid var(--steel);
+  padding: 6px 0 6px 22px;
+  margin-bottom: 36px;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-mid);
+  max-width: 720px;
+}
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.hero-meta b { color: var(--text); font-weight: 600; }
+
+/* SECTION HEADERS */
+.section {
+  margin-top: 56px;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.section-hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* === BUSINESS CARD === */
+.biz-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.biz-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 800px) {
+  .biz-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.metric {
+  padding: 16px 18px;
+  background: var(--bg-soft);
+  border-radius: 10px;
+  border-left: 3px solid var(--steel);
+}
+.metric-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.metric-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}
+
+.tasks-block {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--border);
+}
+.tasks-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 800px) {
+  .tasks-grid { grid-template-columns: 1fr; }
+}
+.task {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+}
+.task-icon {
+  width: 28px; height: 28px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--steel-soft);
+  color: var(--steel);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+.task-text {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.4;
+}
+
+/* === MAP === */
+.map-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.stats-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+.pill-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.pill-green { background: var(--green-bg); color: var(--green-text); }
+.pill-green .pill-dot { background: var(--green); }
+.pill-yellow { background: var(--yellow-bg); color: var(--yellow-text); }
+.pill-yellow .pill-dot { background: var(--yellow); }
+.pill-red { background: var(--red-bg); color: var(--red-text); }
+.pill-red .pill-dot { background: var(--red); }
+.pill-total {
+  background: var(--steel-soft);
+  color: var(--steel);
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+.svg-scroll {
+  overflow-x: auto;
+  margin: 0 -4px;
+  padding: 4px;
+}
+.chain-svg {
+  display: block;
+  min-width: 700px;
+  height: auto;
+  user-select: none;
+}
+
+.node { cursor: pointer; }
+.node rect.body { transition: filter 0.18s, transform 0.18s; transform-origin: center; }
+.node:hover rect.body { filter: brightness(0.95); }
+.node:hover { transform: translateY(-1.5px); }
+.node text { pointer-events: none; }
+
+/* LEGEND */
+.legend {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-box {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.legend-line {
+  width: 24px; height: 0;
+  border-top: 1.5px dashed currentColor;
+  flex-shrink: 0;
+}
+
+/* === BRIDGES (переплетения) === */
+.bridges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .bridges-grid { grid-template-columns: 1fr; }
+}
+.bridge {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.bridge::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--bridge-color, var(--steel));
+}
+.bridge:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.bridge-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bridge-color, var(--steel));
+  margin-bottom: 8px;
+}
+.bridge-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.bridge-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* === POTENTIAL CHAINS === */
+.potential-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1000px) {
+  .potential-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .potential-grid { grid-template-columns: 1fr; }
+}
+.pot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
+.pot-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.pot-ratio {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pot-ratio span {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.pot-bar {
+  height: 6px;
+  background: var(--bg-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 10px 0 12px;
+  display: flex;
+}
+.pot-bar-g { background: var(--green); }
+.pot-bar-y { background: var(--yellow); }
+.pot-bar-r { background: var(--red); }
+.pot-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+/* === FINAL ROI BLOCK === */
+.roi-block {
+  background: linear-gradient(135deg, var(--steel) 0%, #2c5f96 100%);
+  border-radius: 14px;
+  padding: 32px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.roi-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 20px);
+  pointer-events: none;
+}
+.roi-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  position: relative;
+}
+.roi-sub {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+  position: relative;
+}
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  position: relative;
+}
+@media (max-width: 800px) {
+  .roi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.roi-metric {
+  padding: 16px 0;
+}
+.roi-metric-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+.roi-metric-value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.roi-metric-sub {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+.roi-metric-arrow {
+  display: inline-block;
+  margin: 0 6px;
+  opacity: 0.5;
+}
+
+/* DISCLAIMER */
+.disclaimer {
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--yellow-bg);
+  border-left: 4px solid var(--yellow);
+  border-radius: 6px;
+  color: var(--yellow-text);
+}
+.disclaimer-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.disclaimer-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--yellow-text);
+  opacity: 0.92;
+}
+
+/* === POPUP === */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 21, 0.55);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.popup-overlay.active { display: flex; }
+.popup {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 28px 26px 24px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  max-height: 88vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+}
+.popup-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  border: none;
+  background: var(--bg-soft);
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.popup-close:hover { background: var(--border); color: var(--text); }
+.popup-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.popup-status .pill-dot { width: 6px; height: 6px; }
+.popup-chain {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: 6px;
+}
+.popup-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.popup-section {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+.popup-section:first-of-type {
+  padding-top: 0;
+  margin-top: 0;
+  border: none;
+}
+.popup-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.popup-section-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-mid);
+}
+.popup-section-text strong { color: var(--text); font-weight: 600; }
+
+.footer-note {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.footer-note span { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">BizChain Map · диагностический отчёт</div>
+    <h1 class="hero-title">ООО «СтройПро» — карта бизнес-цепочек с ИИ-аудитом</h1>
+    <p class="hero-sub">Проскуряков Сергей Владимирович · производство и монтаж металлоконструкций, газификация · Благовещенск, Амурская область</p>
+    <div class="hero-meta">
+      <span>Подготовлено: <b>15.05.2026</b></span>
+      <span>Метод: <b>BizChain Map · Формат Б</b></span>
+      <span>Источник: <b>распаковка + диагностика</b></span>
+    </div>
+  </header>
+
+  <!-- ===== БЛОК 1: КАРТОЧКА БИЗНЕСА ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">Карточка бизнеса</div>
+      <div class="section-hint">Данные из анкеты и диагностики</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-grid">
+        <div class="metric">
+          <div class="metric-label">Выручка</div>
+          <div class="metric-value">12,65 млн ₽</div>
+          <div class="metric-sub">май–дек 2025 · цель 18 млн в 2026</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Средний чек</div>
+          <div class="metric-value">~1,05 млн ₽</div>
+          <div class="metric-sub">расчёт по 12 клиентам</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Клиентов в 2025</div>
+          <div class="metric-value">12</div>
+          <div class="metric-sub">ТОП-2 = 67% оборота</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Команда</div>
+          <div class="metric-value">5 чел.</div>
+          <div class="metric-sub">+ ПТО вакантно</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Производство ИК-8</div>
+          <div class="metric-value">25–30 т/мес</div>
+          <div class="metric-sub">потолок мощности</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Подготовка КП</div>
+          <div class="metric-value">3–5 дней</div>
+          <div class="metric-sub">делает только Сергей</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Тендеры (ЕИС)</div>
+          <div class="metric-value">0</div>
+          <div class="metric-sub">НОСТРОЙ есть · подано: 0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Каналы лидов</div>
+          <div class="metric-value">80/10</div>
+          <div class="metric-sub">сарафан 80–90% · Авито 10%</div>
+        </div>
+      </div>
+
+      <div class="tasks-block">
+        <div class="tasks-title">Топ-6 задач бизнеса</div>
+        <div class="tasks-grid">
+          <div class="task">
+            <div class="task-icon">01</div>
+            <div class="task-text">Наладить поток входящих заявок — сейчас 80–90% это сарафан</div>
+          </div>
+          <div class="task">
+            <div class="task-icon">02</div>
+            <div class="task-text">Автоматизировать КП: читать ТЗ, считать, оформлять — с 3–5 дней до 1 дня</div>
+          </div>
+          <div class="task">
+            <div class="task-icon">03</div>
+            <div class="task-text">Выйти на тендеры через ЕИС — НОСТРОЙ есть, нужен процесс</div>
+          </div>
+          <div class="task">
+            <div class="task-icon">04</div>
+            <div class="task-text">Запустить газификацию как устойчивое направление</div>
+          </div>
+          <div class="task">
+            <div class="task-icon">05</div>
+            <div class="task-text">Снять с Сергея операционную рутину — первичка, переписка, чаты</div>
+          </div>
+          <div class="task">
+            <div class="task-icon">06</div>
+            <div class="task-text">Наладить производство контента — Авито, 2ГИС, Telegram</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== БЛОК 2: КАРТА ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">Карта цепочек · ИИ-аудит</div>
+      <div class="section-hint">Нажми на любое звено</div>
+    </div>
+
+    <div class="map-wrap">
+      <div class="stats-row">
+        <span class="pill pill-green"><span class="pill-dot"></span>11 звеньев · ИИ полностью</span>
+        <span class="pill pill-yellow"><span class="pill-dot"></span>6 звеньев · ИИ ускоряет</span>
+        <span class="pill pill-red"><span class="pill-dot"></span>8 звеньев · человек</span>
+        <span class="pill pill-total">68% ИИ-потенциал</span>
+      </div>
+
+      <div class="svg-scroll">
+        <svg class="chain-svg" viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg" aria-label="BizChain Map">
+          <defs>
+            <marker id="ar-gray" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#9d9da3"/>
+            </marker>
+            <marker id="ar-teal" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#0F766E"/>
+            </marker>
+            <marker id="ar-violet" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#6D28D9"/>
+            </marker>
+            <marker id="ar-amber" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#B45309"/>
+            </marker>
+            <marker id="ar-indigo" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#1E40AF"/>
+            </marker>
+            <marker id="ar-rose" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#BE123C"/>
+            </marker>
+          </defs>
+
+          <!-- Альтернация фона рядов -->
+          <rect x="0" y="0"   width="700" height="88" rx="4" fill="var(--bg-row-alt)" opacity="0.5"/>
+          <rect x="0" y="184" width="700" height="80" rx="4" fill="var(--bg-row-alt)" opacity="0.5"/>
+          <rect x="0" y="360" width="700" height="80" rx="4" fill="var(--bg-row-alt)" opacity="0.5"/>
+
+          <!-- ============ ROW 1: ПРИВЛЕЧЕНИЕ ============ -->
+          <text x="14" y="54" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700"
+                fill="var(--text-muted)" letter-spacing="1">ПРИВЛЕЧЕНИЕ</text>
+
+          <!-- 1.1 Размещает (зелёный) -->
+          <g class="node" onclick="showPopup('p1')">
+            <rect class="body" x="100" y="26" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="100" y="26" width="4" height="44" fill="var(--green)"/>
+            <text x="146" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Размещает</text>
+            <text x="146" y="58" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">на Авито</text>
+          </g>
+          <text x="200" y="52" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 1.2 Принимает звонок (жёлтый) -->
+          <g class="node" onclick="showPopup('p2')">
+            <rect class="body" x="208" y="26" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="208" y="26" width="4" height="44" fill="var(--yellow)"/>
+            <text x="254" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Принимает</text>
+            <text x="254" y="58" text-anchor="middle" font-size="10" fill="var(--yellow-text)" opacity="0.75">входящий</text>
+          </g>
+          <text x="308" y="52" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 1.3 Получает ТЗ (красный) -->
+          <g class="node" onclick="showPopup('p3')">
+            <rect class="body" x="316" y="26" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="316" y="26" width="4" height="44" fill="var(--red)"/>
+            <text x="362" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Получает ТЗ</text>
+            <text x="362" y="58" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">эскиз/проект</text>
+          </g>
+          <text x="416" y="52" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 1.4 Квалифицирует (жёлтый) -->
+          <g class="node" onclick="showPopup('p4')">
+            <rect class="body" x="424" y="26" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="424" y="26" width="4" height="44" fill="var(--yellow)"/>
+            <text x="470" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Квалифицирует</text>
+            <text x="470" y="58" text-anchor="middle" font-size="10" fill="var(--yellow-text)" opacity="0.75">по объёму</text>
+          </g>
+          <text x="524" y="52" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 1.5 Заводит в базу (зелёный) -->
+          <g class="node" onclick="showPopup('p5')">
+            <rect class="body" x="532" y="26" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="532" y="26" width="4" height="44" fill="var(--green)"/>
+            <text x="578" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Заводит</text>
+            <text x="578" y="58" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">в базу/CRM</text>
+          </g>
+
+          <!-- ============ ROW 2: ПРОДАЖА ============ -->
+          <text x="14" y="142" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700"
+                fill="var(--text-muted)" letter-spacing="1">ПРОДАЖА</text>
+
+          <!-- 2.1 Изучает ТЗ (красный) -->
+          <g class="node" onclick="showPopup('s1')">
+            <rect class="body" x="100" y="114" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="100" y="114" width="4" height="44" fill="var(--red)"/>
+            <text x="146" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Изучает ТЗ</text>
+            <text x="146" y="146" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">экспертиза</text>
+          </g>
+          <text x="200" y="140" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 2.2 Считает смету (жёлтый — УЗКОЕ МЕСТО) -->
+          <g class="node" onclick="showPopup('s2')">
+            <rect class="body" x="208" y="114" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="208" y="114" width="4" height="44" fill="var(--yellow)"/>
+            <text x="254" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Считает смету</text>
+            <text x="254" y="146" text-anchor="middle" font-size="9.5" fill="var(--yellow-text)" opacity="0.8">⚡ узкое место</text>
+          </g>
+          <text x="308" y="140" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 2.3 Оформляет КП (зелёный) -->
+          <g class="node" onclick="showPopup('s3')">
+            <rect class="body" x="316" y="114" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="316" y="114" width="4" height="44" fill="var(--green)"/>
+            <text x="362" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Оформляет КП</text>
+            <text x="362" y="146" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">Excel-шаблон</text>
+          </g>
+          <text x="416" y="140" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 2.4 Согласовывает (красный) -->
+          <g class="node" onclick="showPopup('s4')">
+            <rect class="body" x="424" y="114" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="424" y="114" width="4" height="44" fill="var(--red)"/>
+            <text x="470" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Согласует</text>
+            <text x="470" y="146" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">цену с клиентом</text>
+          </g>
+          <text x="524" y="140" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 2.5 Подписывает договор (зелёный) -->
+          <g class="node" onclick="showPopup('s5')">
+            <rect class="body" x="532" y="114" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="532" y="114" width="4" height="44" fill="var(--green)"/>
+            <text x="578" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Подписывает</text>
+            <text x="578" y="146" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">договор</text>
+          </g>
+
+          <!-- ПЕРЕХОД 1: Продажа → Исполнение (триггерный, бирюзовый) -->
+          <path d="M 578,158 L 578,170 L 146,170 L 146,184"
+                stroke="#0F766E" stroke-width="1.6" stroke-dasharray="5,3"
+                fill="none" marker-end="url(#ar-teal)"/>
+          <text x="362" y="180" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9"
+                fill="#0F766E" font-weight="600" letter-spacing="0.5">▸ АВАНС → СТАРТ РАБОТ</text>
+
+          <!-- ============ ROW 3: ИСПОЛНЕНИЕ ============ -->
+          <text x="14" y="230" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700"
+                fill="var(--text-muted)" letter-spacing="1">ИСПОЛНЕНИЕ</text>
+
+          <!-- 3.1 Деталировка КМД (красный) -->
+          <g class="node" onclick="showPopup('i1')">
+            <rect class="body" x="100" y="202" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="100" y="202" width="4" height="44" fill="var(--red)"/>
+            <text x="146" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Деталировка</text>
+            <text x="146" y="234" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">КМД · Вадим</text>
+          </g>
+          <text x="200" y="228" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 3.2 Закуп материала (жёлтый) -->
+          <g class="node" onclick="showPopup('i2')">
+            <rect class="body" x="208" y="202" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="208" y="202" width="4" height="44" fill="var(--yellow)"/>
+            <text x="254" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Закуп</text>
+            <text x="254" y="234" text-anchor="middle" font-size="10" fill="var(--yellow-text)" opacity="0.75">материала</text>
+          </g>
+          <text x="308" y="228" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 3.3 Производство (красный) -->
+          <g class="node" onclick="showPopup('i3')">
+            <rect class="body" x="316" y="202" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="316" y="202" width="4" height="44" fill="var(--red)"/>
+            <text x="362" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Производит</text>
+            <text x="362" y="234" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">ИК-8 · цех</text>
+          </g>
+          <text x="416" y="228" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 3.4 Контролирует (красный) -->
+          <g class="node" onclick="showPopup('i4')">
+            <rect class="body" x="424" y="202" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="424" y="202" width="4" height="44" fill="var(--red)"/>
+            <text x="470" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Контроль</text>
+            <text x="470" y="234" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">монтажа</text>
+          </g>
+          <text x="524" y="228" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 3.5 Сдача объекта (жёлтый) -->
+          <g class="node" onclick="showPopup('i5')">
+            <rect class="body" x="532" y="202" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="532" y="202" width="4" height="44" fill="var(--yellow)"/>
+            <text x="578" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Сдаёт</text>
+            <text x="578" y="234" text-anchor="middle" font-size="10" fill="var(--yellow-text)" opacity="0.75">объект</text>
+          </g>
+
+          <!-- ПЕРЕХОД 2: Исполнение → Контент (фиолетовый, информационный) -->
+          <path d="M 578,246 L 578,258 L 146,258 L 146,272"
+                stroke="#6D28D9" stroke-width="1.6" stroke-dasharray="5,3"
+                fill="none" marker-end="url(#ar-violet)"/>
+          <text x="362" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9"
+                fill="#6D28D9" font-weight="600" letter-spacing="0.5">▸ СДАЧА → ФОТО → КОНТЕНТ</text>
+
+          <!-- ПЕРЕХОД 3: Исполнение → Удержание (янтарный) -->
+          <path d="M 624,224 L 660,224 L 660,400 L 624,400"
+                stroke="#B45309" stroke-width="1.6" stroke-dasharray="5,3"
+                fill="none" marker-end="url(#ar-amber)"/>
+          <text x="662" y="312" font-family="IBM Plex Mono, monospace" font-size="9"
+                fill="#B45309" font-weight="600" letter-spacing="0.5" transform="rotate(90, 662, 312)">▸ СДАЧА → ОТЗЫВ</text>
+
+          <!-- ============ ROW 4: КОНТЕНТ ============ -->
+          <text x="14" y="318" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700"
+                fill="var(--text-muted)" letter-spacing="1">КОНТЕНТ</text>
+
+          <!-- 4.1 Снимает фото (красный) -->
+          <g class="node" onclick="showPopup('c1')">
+            <rect class="body" x="100" y="290" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="100" y="290" width="4" height="44" fill="var(--red)"/>
+            <text x="146" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Снимает фото</text>
+            <text x="146" y="322" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">мастер/прораб</text>
+          </g>
+          <text x="200" y="316" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 4.2 Пишет текст (зелёный) -->
+          <g class="node" onclick="showPopup('c2')">
+            <rect class="body" x="208" y="290" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="208" y="290" width="4" height="44" fill="var(--green)"/>
+            <text x="254" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Пишет текст</text>
+            <text x="254" y="322" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">к посту</text>
+          </g>
+          <text x="308" y="316" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 4.3 Публикует Авито (зелёный) -->
+          <g class="node" onclick="showPopup('c3')">
+            <rect class="body" x="316" y="290" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="316" y="290" width="4" height="44" fill="var(--green)"/>
+            <text x="362" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Публикует</text>
+            <text x="362" y="322" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">на Авито</text>
+          </g>
+          <text x="416" y="316" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 4.4 Обновляет 2ГИС (зелёный) -->
+          <g class="node" onclick="showPopup('c4')">
+            <rect class="body" x="424" y="290" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="424" y="290" width="4" height="44" fill="var(--green)"/>
+            <text x="470" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Обновляет</text>
+            <text x="470" y="322" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">2ГИС/сайт</text>
+          </g>
+          <text x="524" y="316" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 4.5 Ведёт Telegram (зелёный) -->
+          <g class="node" onclick="showPopup('c5')">
+            <rect class="body" x="532" y="290" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="532" y="290" width="4" height="44" fill="var(--green)"/>
+            <text x="578" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Ведёт</text>
+            <text x="578" y="322" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">Telegram-канал</text>
+          </g>
+
+          <!-- ПЕТЛЯ: Контент → Привлечение (индиго, левая петля) -->
+          <path d="M 100,312 L 60,312 L 60,48 L 100,48"
+                stroke="#1E40AF" stroke-width="1.6" stroke-dasharray="5,3"
+                fill="none" marker-end="url(#ar-indigo)"/>
+          <text x="40" y="180" font-family="IBM Plex Mono, monospace" font-size="9"
+                fill="#1E40AF" font-weight="600" letter-spacing="0.5" transform="rotate(-90, 40, 180)">▸ КОНТЕНТ → НОВЫЕ ЛИДЫ</text>
+
+          <!-- ============ ROW 5: УДЕРЖАНИЕ ============ -->
+          <text x="14" y="406" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700"
+                fill="var(--text-muted)" letter-spacing="1">УДЕРЖАНИЕ</text>
+
+          <!-- 5.1 Просит отзыв (зелёный) -->
+          <g class="node" onclick="showPopup('u1')">
+            <rect class="body" x="100" y="378" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="100" y="378" width="4" height="44" fill="var(--green)"/>
+            <text x="146" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Просит отзыв</text>
+            <text x="146" y="410" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">на 2ГИС</text>
+          </g>
+          <text x="200" y="404" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 5.2 Рассылает (зелёный) -->
+          <g class="node" onclick="showPopup('u2')">
+            <rect class="body" x="208" y="378" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="208" y="378" width="4" height="44" fill="var(--green)"/>
+            <text x="254" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Рассылает</text>
+            <text x="254" y="410" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">по базе</text>
+          </g>
+          <text x="308" y="404" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 5.3 Сезонный оффер (жёлтый) -->
+          <g class="node" onclick="showPopup('u3')">
+            <rect class="body" x="316" y="378" width="92" height="44" rx="8"
+                  fill="var(--yellow-bg)" stroke="var(--yellow-stroke)" stroke-width="1.5"/>
+            <rect x="316" y="378" width="4" height="44" fill="var(--yellow)"/>
+            <text x="362" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="var(--yellow-text)">Сезонный</text>
+            <text x="362" y="410" text-anchor="middle" font-size="10" fill="var(--yellow-text)" opacity="0.75">оффер</text>
+          </g>
+          <text x="416" y="404" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 5.4 Допродажа (красный) -->
+          <g class="node" onclick="showPopup('u4')">
+            <rect class="body" x="424" y="378" width="92" height="44" rx="8"
+                  fill="var(--red-bg)" stroke="var(--red-stroke)" stroke-width="1.5"/>
+            <rect x="424" y="378" width="4" height="44" fill="var(--red)"/>
+            <text x="470" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="var(--red-text)">Допродажа</text>
+            <text x="470" y="410" text-anchor="middle" font-size="10" fill="var(--red-text)" opacity="0.75">личный звонок</text>
+          </g>
+          <text x="524" y="404" text-anchor="middle" font-size="16" fill="#9d9da3">›</text>
+
+          <!-- 5.5 Сарафан (зелёный) -->
+          <g class="node" onclick="showPopup('u5')">
+            <rect class="body" x="532" y="378" width="92" height="44" rx="8"
+                  fill="var(--green-bg)" stroke="var(--green-stroke)" stroke-width="1.5"/>
+            <rect x="532" y="378" width="4" height="44" fill="var(--green)"/>
+            <text x="578" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="var(--green-text)">Запускает</text>
+            <text x="578" y="410" text-anchor="middle" font-size="10" fill="var(--green-text)" opacity="0.75">реферал-петлю</text>
+          </g>
+
+          <!-- ПЕТЛЯ ВОЗВРАТА: Удержание → Привлечение (правая, розовая) -->
+          <path d="M 624,400 L 685,400 L 685,48 L 624,48"
+                stroke="#BE123C" stroke-width="1.6" stroke-dasharray="5,3"
+                fill="none" marker-end="url(#ar-rose)"/>
+          <text x="697" y="224" font-family="IBM Plex Mono, monospace" font-size="9"
+                fill="#BE123C" font-weight="600" letter-spacing="0.5" transform="rotate(-90, 697, 224)">▸ САРАФАН → НОВЫЙ КЛИЕНТ</text>
+
+        </svg>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-box" style="background:var(--green)"></div>
+          ИИ автоматизирует полностью
+        </div>
+        <div class="legend-item">
+          <div class="legend-box" style="background:var(--yellow)"></div>
+          ИИ ускоряет в 5–10 раз
+        </div>
+        <div class="legend-item">
+          <div class="legend-box" style="background:var(--red)"></div>
+          Требует живого человека / экспертизы
+        </div>
+        <div class="legend-item" style="color:#0F766E">
+          <div class="legend-line"></div>
+          Переход между цепочками
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== БЛОК 3: ПЕРЕПЛЕТЕНИЯ ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">Переплетения цепочек</div>
+      <div class="section-hint">Где ИИ даёт максимальный эффект</div>
+    </div>
+    <div class="bridges-grid">
+      <div class="bridge" style="--bridge-color: #0F766E" onclick="showPopup('b1')">
+        <div class="bridge-label">Триггер</div>
+        <div class="bridge-title">Продажа → Исполнение</div>
+        <div class="bridge-desc">Аванс получен → задача в чате производства, заявки на материал, бронь окна в ИК-8. Сейчас вручную через чаты.</div>
+      </div>
+      <div class="bridge" style="--bridge-color: #6D28D9" onclick="showPopup('b2')">
+        <div class="bridge-label">Информация</div>
+        <div class="bridge-title">Исполнение → Контент</div>
+        <div class="bridge-desc">Сдача объекта → фото мастера → ИИ пишет пост, обновляет Авито, ведёт Telegram. Сейчас фото оседают в телефонах.</div>
+      </div>
+      <div class="bridge" style="--bridge-color: #B45309" onclick="showPopup('b3')">
+        <div class="bridge-label">Триггер</div>
+        <div class="bridge-title">Исполнение → Удержание</div>
+        <div class="bridge-desc">Объект сдан → автозапрос отзыва на 2ГИС, занесение клиента в базу для допродаж. Сейчас не делается.</div>
+      </div>
+      <div class="bridge" style="--bridge-color: #1E40AF" onclick="showPopup('b4')">
+        <div class="bridge-label">Петля</div>
+        <div class="bridge-title">Контент → Привлечение</div>
+        <div class="bridge-desc">Публикации в Авито/Telegram/2ГИС → новые входящие. Сейчас разорвана: фото есть, постов нет.</div>
+      </div>
+      <div class="bridge" style="--bridge-color: #BE123C" onclick="showPopup('b5')">
+        <div class="bridge-label">Петля</div>
+        <div class="bridge-title">Удержание → Привлечение</div>
+        <div class="bridge-desc">Сарафан 80–90% оборота. Работает стихийно. ИИ может стимулировать: запрос рефералов после хорошего отзыва.</div>
+      </div>
+      <div class="bridge" style="--bridge-color: #1c4e80" onclick="showPopup('b6')">
+        <div class="bridge-label">Новый канал</div>
+        <div class="bridge-title">Тендеры ЕИС</div>
+        <div class="bridge-desc">НОСТРОЙ есть, подано 0 заявок. ИИ мониторит ЕИС по ключевым словам, готовит проекты заявок к проверке Сергеем.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== БЛОК 4: ПОТЕНЦИАЛ ПО ЦЕПОЧКАМ ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">Потенциал по цепочкам</div>
+      <div class="section-hint">Сколько звеньев ИИ закрывает в каждой цепочке</div>
+    </div>
+    <div class="potential-grid">
+      <div class="pot-card">
+        <div class="pot-name">Привлечение</div>
+        <div class="pot-ratio">4<span>/5</span></div>
+        <div class="pot-bar">
+          <div class="pot-bar-g" style="width:40%"></div>
+          <div class="pot-bar-y" style="width:40%"></div>
+          <div class="pot-bar-r" style="width:20%"></div>
+        </div>
+        <div class="pot-note">Реанимировать Авито/2ГИС, добавить тендеры через ЕИС</div>
+      </div>
+      <div class="pot-card">
+        <div class="pot-name">Продажа</div>
+        <div class="pot-ratio">3<span>/5</span></div>
+        <div class="pot-bar">
+          <div class="pot-bar-g" style="width:40%"></div>
+          <div class="pot-bar-y" style="width:20%"></div>
+          <div class="pot-bar-r" style="width:40%"></div>
+        </div>
+        <div class="pot-note">Главный приз: КП с 3–5 дней до 1 дня</div>
+      </div>
+      <div class="pot-card">
+        <div class="pot-name">Исполнение</div>
+        <div class="pot-ratio">2<span>/5</span></div>
+        <div class="pot-bar">
+          <div class="pot-bar-g" style="width:0%"></div>
+          <div class="pot-bar-y" style="width:40%"></div>
+          <div class="pot-bar-r" style="width:60%"></div>
+        </div>
+        <div class="pot-note">Физика и контроль — за людьми. Документы и заявки — за ИИ</div>
+      </div>
+      <div class="pot-card">
+        <div class="pot-name">Контент</div>
+        <div class="pot-ratio">4<span>/5</span></div>
+        <div class="pot-bar">
+          <div class="pot-bar-g" style="width:80%"></div>
+          <div class="pot-bar-y" style="width:0%"></div>
+          <div class="pot-bar-r" style="width:20%"></div>
+        </div>
+        <div class="pot-note">Сейчас пустая цепочка — собирается полностью</div>
+      </div>
+      <div class="pot-card">
+        <div class="pot-name">Удержание</div>
+        <div class="pot-ratio">4<span>/5</span></div>
+        <div class="pot-bar">
+          <div class="pot-bar-g" style="width:60%"></div>
+          <div class="pot-bar-y" style="width:20%"></div>
+          <div class="pot-bar-r" style="width:20%"></div>
+        </div>
+        <div class="pot-note">Системы нет — строится с нуля. Самый быстрый выигрыш</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== БЛОК 5: ИТОГ И ROI ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title">Итоговая картина · ориентировочный потенциал</div>
+      <div class="section-hint">Прогноз при реализации плана</div>
+    </div>
+
+    <div class="roi-block">
+      <div class="roi-title">Что меняется при встроенном ИИ-ассистенте</div>
+      <div class="roi-sub">Расчёт на горизонт 6–12 месяцев. Базовые показатели — из распаковки.</div>
+      <div class="roi-grid">
+        <div class="roi-metric">
+          <div class="roi-metric-label">Время на КП</div>
+          <div class="roi-metric-value">3–5 дн <span class="roi-metric-arrow">→</span> 1 дн</div>
+          <div class="roi-metric-sub">потенциально до ×5 быстрее</div>
+        </div>
+        <div class="roi-metric">
+          <div class="roi-metric-label">Операционка Сергея</div>
+          <div class="roi-metric-value">30–40 ч <span class="roi-metric-arrow">→</span> 10–15 ч</div>
+          <div class="roi-metric-sub">в неделю, ориентировочно</div>
+        </div>
+        <div class="roi-metric">
+          <div class="roi-metric-label">Контент-канал</div>
+          <div class="roi-metric-value">0 <span class="roi-metric-arrow">→</span> 3–5/нед</div>
+          <div class="roi-metric-sub">постов из фото с объектов</div>
+        </div>
+        <div class="roi-metric">
+          <div class="roi-metric-label">Цель выручки 2026</div>
+          <div class="roi-metric-value">12,65 <span class="roi-metric-arrow">→</span> 18 млн</div>
+          <div class="roi-metric-sub">при реализации полного плана</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <div class="disclaimer-title">⚠️ Важно понимать ограничения этого прогноза</div>
+      <div class="disclaimer-text">
+        Цифры выше — ориентировочные прогнозы, основанные на ответах Сергея в распаковке и сравнении с типовыми результатами в нише. Они не являются гарантией. Производственный потолок (25–30 т/мес на ИК-8) и ресурсная база — главные сдерживающие факторы. Цифра «средний чек 1,05 млн ₽» рассчитана из диагностики; Сергей сказал «не готов ответить». СРО НОПРИЗ требует физической проверки документов: в карте роста указан, в распаковке Сергей трижды отрицал. Реальные показатели зависят от темпа внедрения, найма ПТО и развития газификации.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POPUP ===== -->
+  <div class="popup-overlay" id="popupOverlay" onclick="hidePopup(event)">
+    <div class="popup" onclick="event.stopPropagation()">
+      <button class="popup-close" onclick="hidePopup()" aria-label="Закрыть">×</button>
+      <div class="popup-chain" id="popupChain"></div>
+      <div class="popup-title" id="popupTitle"></div>
+      <div id="popupStatus" class="popup-status"></div>
+      <div class="popup-section">
+        <div class="popup-section-label">○ Сейчас</div>
+        <div class="popup-section-text" id="popupNow"></div>
+      </div>
+      <div class="popup-section">
+        <div class="popup-section-label">⚡ ИИ здесь</div>
+        <div class="popup-section-text" id="popupAI"></div>
+      </div>
+      <div class="popup-section" id="popupLinksSection">
+        <div class="popup-section-label">↔ Связан с</div>
+        <div class="popup-section-text" id="popupLinks"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span>BizChain Map · ИИщенко LAB · Подготовлено для ООО «СтройПро» · 15.05.2026</span>
+  </div>
+
+</div>
+
+<script>
+const nodeData = {
+  // ===== ПРИВЛЕЧЕНИЕ =====
+  p1: {
+    chain: 'Привлечение · звено 1', title: 'Размещает на Авито',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Висит 3 объявления: <strong>газификация, металлоконструкции, общестроительные</strong>. По словам Сергея — «1–2 объявления сделали, одни и те же выкладываем». Раньше этим занимался Миша, потом забросили.',
+    ai: 'ИИ ведёт активные объявления по 3 направлениям. Автоматически обновляет описания после каждой выполненной работы — фото из чата объекта → новое объявление. Подбирает заголовки и хэштеги под нишу.',
+    links: 'Принимает входящий звонок · Обновляет 2ГИС/сайт'
+  },
+  p2: {
+    chain: 'Привлечение · звено 2', title: 'Принимает входящий',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз',
+    now: 'Звонок принимает бухгалтер Ольга или Андрей. Сергей: «По ситуации, в основном бухгалтер в течение рабочего дня. Сначала сообщение, потом звонок, потом уже выезд».',
+    ai: 'ИИ-ассистент первой линии в Авито/мессенджерах: задаёт квалификационные вопросы (ниша, объём, сроки, есть ли ТЗ), фиксирует ответы. Передаёт человеку только когда лид «созрел». Сергей сам говорил: «Надо говорить, что будет и ассистент вести переписку».',
+    links: 'Размещает на Авито · Получает ТЗ'
+  },
+  p3: {
+    chain: 'Привлечение · звено 3', title: 'Получает ТЗ',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Клиент присылает проект или эскиз — часто «на коленях». Сергей: «Получение исходного материала, который можно запустить в работу — это занимает достаточно долго времени».',
+    ai: 'Передача документа от клиента — живая. Но дальше ИИ помогает: распознаёт чертежи, размеры, типы профиля, готовит черновую выборку материалов. Сергей сам выделил это в топ-3 задачи для ИИ: «возможность переработки проектов выборка».',
+    links: 'Принимает входящий · Изучает ТЗ (Продажа)'
+  },
+  p4: {
+    chain: 'Привлечение · звено 4', title: 'Квалифицирует по объёму',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз',
+    now: 'Сергей оценивает: подходит объём (до 25–30 т/мес), есть ли смысл браться. По словам Сергея: «Если максимальный цикл можно сделать вне площадки и привести уже готовые вещи — можно заниматься».',
+    ai: 'ИИ предварительно оценивает запрос по чек-листу Сергея (тоннаж, тип работ, география, есть ли субподряд) и выдаёт рекомендацию: «брать / уточнить / отказать с альтернативой». Финальное решение всегда за Сергеем.',
+    links: 'Получает ТЗ · Заводит в базу'
+  },
+  p5: {
+    chain: 'Привлечение · звено 5', title: 'Заводит в базу / CRM',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Базы как таковой нет. Сергей: «База контактов какая-то есть. Собиралась как с интернета, так и просто с личных. Надо её прорабатывать постоянно». CRM отсутствует — всё в чатах.',
+    ai: 'ИИ заводит каждого лида в простую базу (Notion/таблица): кто, ниша, объём, статус, источник, дата контакта. Автоматически ставит напоминания на follow-up через 3/7/14 дней. Возвращает «потерянных».',
+    links: 'Квалифицирует · Изучает ТЗ (Продажа)'
+  },
+
+  // ===== ПРОДАЖА =====
+  s1: {
+    chain: 'Продажа · звено 1', title: 'Изучает ТЗ',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Сергей лично разбирается в проекте: проверяет геометрию, тип профиля, реализуемость. Это его экспертиза 20+ лет. «Без технической поддержки очень тяжело, но закрываем. Самому приходится что-то прорабатывать».',
+    ai: 'Финальное решение по проекту — Сергей. Но ИИ заранее готовит выборку материалов, считает тоннаж, проверяет ТЗ на типовые ошибки. Сергей видит готовую черновую разборку — экономит 2–3 часа на каждом КП.',
+    links: 'Получает ТЗ (Привлечение) · Считает смету'
+  },
+  s2: {
+    chain: 'Продажа · звено 2', title: 'Считает смету',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз · ⚡ узкое место',
+    now: '<strong>3–5 дней и больше</strong>. Делает только Сергей. Его слова: «Только я сижу, больше никто в этом не разбирается». Это главное узкое место всей системы — задерживает всё, что идёт следом.',
+    ai: 'ИИ использует пообъектные таблицы (фактические нормочасы, машинные часы, цены материала) как обучающую базу. Получает ТЗ → выдаёт черновой расчёт за минуты. Сергей правит и финализирует. <strong>Цель: 3–5 дней → 1 день.</strong>',
+    links: 'Изучает ТЗ · Оформляет КП'
+  },
+  s3: {
+    chain: 'Продажа · звено 3', title: 'Оформляет КП',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Excel-таблица по разделам работ: материал, изготовление, монтаж, транспорт, НДС. Сергей: «Есть что входит, как структурировано — по разделам работ».',
+    ai: 'ИИ берёт расчёт сметы и автоматически заполняет КП по шаблону Excel «СтройПро». Меняет шапку, спецификацию, сроки. Сергей открывает готовый файл, проверяет, отправляет.',
+    links: 'Считает смету · Согласует цену'
+  },
+  s4: {
+    chain: 'Продажа · звено 4', title: 'Согласует цену с клиентом',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Сергей: «Если как бы сильно перегибают палку, то, конечно, в том числе наезжаем... такая рабочая ругань возникает нормально». Это его территория — переговоры по цене требуют живого диалога.',
+    ai: 'Переговоры — Сергей или Андрей. Но ИИ держит историю общения и подсказывает: какие аргументы работали раньше, какие скидки давали, какие предложения по удешевлению готовить.',
+    links: 'Оформляет КП · Подписывает договор'
+  },
+  s5: {
+    chain: 'Продажа · звено 5', title: 'Подписывает договор',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Шаблон договора + спецификация. Сергей: «Договор, спецификация к договору приложение. Аванс по расчётному счёту, либо наличкой».',
+    ai: 'ИИ автоматически заполняет договор и спецификацию по согласованному КП. Подставляет реквизиты клиента, объёмы, сроки. Отправляет на e-mail и фиксирует в базе. Бухгалтер только проверяет.',
+    links: 'Согласует цену · → Деталировка (Исполнение)'
+  },
+
+  // ===== ИСПОЛНЕНИЕ =====
+  i1: {
+    chain: 'Исполнение · звено 1', title: 'Деталировка КМД',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Чертежи делает <strong>Вадим</strong>. Сергей: «Можно выбрать материал, закупить его, завести, сделать деталировочные чертежи, уточнения. Как правило, это делает отдельный человек».',
+    ai: 'Это инженерная экспертиза — остаётся за Вадимом. Но ИИ помогает: автозаполнение спецификаций к чертежам, проверка геометрии на типовые ошибки, формирование ведомости материалов.',
+    links: 'Подписывает договор (Продажа) · Закуп материала'
+  },
+  i2: {
+    chain: 'Исполнение · звено 2', title: 'Закуп материала',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз',
+    now: 'Заявки оформляет инженер снабжения по деталировке. Сергей: «Заказчик такой крупный обращается — это уже как бы такая позиция, что надёжны, значит, исполнять».',
+    ai: 'ИИ получает ведомость материалов, формирует заявки поставщикам, подставляет цены, готовит платёжки. Инженер снабжения проверяет и отправляет. Контроль остатков по факту.',
+    links: 'Деталировка · Производит'
+  },
+  i3: {
+    chain: 'Исполнение · звено 3', title: 'Производство в цеху',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Производство на ИК-8: «Цех без козлового, без башенного крана. По факту всё собирается руками, переворачивается руками». Прораб + сварщики координируют процесс.',
+    ai: 'Физическое производство — за людьми. ИИ ведёт пообъектную таблицу: фактические нормочасы, машинные часы. Эти данные затем «учат» ИИ точнее считать следующие КП.',
+    links: 'Закуп материала · Контроль монтажа'
+  },
+  i4: {
+    chain: 'Исполнение · звено 4', title: 'Контроль монтажа',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Сергей выезжает лично или отправляет мастера/снабженца. Слова Сергея: «Приезжает там я там либо мастер, либо там снабженец, либо инженер там контролирует этот ход работ».',
+    ai: 'Контроль на объекте — живой. Но ИИ помогает на удалёнке: разбирает фото/видео из чата объекта, формирует ежедневный сводный отчёт, отмечает риски (отставание по графику, проблемы с материалом).',
+    links: 'Производит · Сдаёт объект'
+  },
+  i5: {
+    chain: 'Исполнение · звено 5', title: 'Сдаёт объект',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз',
+    now: 'Закрытие документов: акты, накладные. Сергей: «Закрыть документы, приёмки, передачи». Фотофиксация: «Не всегда делается».',
+    ai: 'ИИ собирает фото с объекта из чата, готовит пакет документов закрытия по шаблону, формирует фотоотчёт для клиента. <strong>Триггерит цепочки Контент и Удержание.</strong>',
+    links: '→ Снимает фото (Контент) · → Просит отзыв (Удержание)'
+  },
+
+  // ===== КОНТЕНТ =====
+  c1: {
+    chain: 'Контент · звено 1', title: 'Снимает фото',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Фото на объекте делает мастер, прораб или Сергей. Хранится «на компьютере, в диске, в папках по объектным, в чатах». В публикацию не идёт.',
+    ai: 'Физическая съёмка — за людьми. ИИ настраивает простой чек-лист для мастера: какие 5–7 кадров снять перед сдачей объекта (общий план, узлы, до/после, бригада).',
+    links: 'Сдаёт объект (Исполнение) · Пишет текст'
+  },
+  c2: {
+    chain: 'Контент · звено 2', title: 'Пишет текст к посту',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: '<strong>Не делается.</strong> Сергей: «Ничего не делается. Мне нужен человек. Кто это будет делать?»',
+    ai: 'ИИ получает фото + краткие данные объекта (клиент, ниша, объём, особенности) из таблицы и пишет пост «голосом» Сергея: сухо, конкретно, без маркетингового лоска. «Теплоты минимум, больше конкретики, больше цифр».',
+    links: 'Снимает фото · Публикует на Авито'
+  },
+  c3: {
+    chain: 'Контент · звено 3', title: 'Публикует на Авито',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Один шаблонный текст на 3 объявления. «Скопировали, вставили, подкорректировали». 10% оборота, но времени на ответы уходит много.',
+    ai: 'ИИ обновляет каждое объявление 1–2 раза в неделю: меняет фото, добавляет последние реализованные кейсы, корректирует описания под сезон. Активные объявления → выше в выдаче Авито.',
+    links: 'Пишет текст · Обновляет 2ГИС'
+  },
+  c4: {
+    chain: 'Контент · звено 4', title: 'Обновляет 2ГИС / сайт',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: '2ГИС: «Нанимал человека специально, кто 2ГИС с Авито мне раскачивал, раскручивал. Забросил это дело». Сайт: «Ещё ни разу не обновлял».',
+    ai: 'ИИ ведёт карточку 2ГИС: новые фото после каждой сдачи, ответы на отзывы, статус активности. Раз в квартал обновляет блок «Реализованные проекты» на сайте — карусель кейсов с реальными цифрами.',
+    links: 'Публикует на Авито · Ведёт Telegram'
+  },
+  c5: {
+    chain: 'Контент · звено 5', title: 'Ведёт Telegram-канал',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Канал был — заброшен. «Соцсетей нету. Пытался Telegram-канал вести... посто не успевал писать этот инженер ПТО». Сергей хочет: «Видеть то, что делаем, то и надо видеть».',
+    ai: 'ИИ ведёт Telegram «по делу»: ход работ на объектах (этапы, фото, замеры), сдача с фотоотчётом, технические разборы. Без воды. Это и витрина для тендеров, и инструмент удержания клиентов.',
+    links: 'Обновляет 2ГИС · → Размещает на Авито (петля)'
+  },
+
+  // ===== УДЕРЖАНИЕ =====
+  u1: {
+    chain: 'Удержание · звено 1', title: 'Просит отзыв',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: '<strong>Не делается.</strong> Сергей: «Без понятия, не занимался этим вопросом. Миша занимался, как он там что-то делал».',
+    ai: 'ИИ автоматически (через 1–2 дня после сдачи объекта) отправляет клиенту сообщение с просьбой оставить отзыв на 2ГИС со ссылкой. Отслеживает написанные отзывы. Готовит ответы от лица компании.',
+    links: 'Сдаёт объект (Исполнение) · Рассылает'
+  },
+  u2: {
+    chain: 'Удержание · звено 2', title: 'Рассылает по базе',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Сергей: «Никаких поздравлений — по делу написали: есть работа, нет работы. Есть список контактов, есть список клиентов, кто работает».',
+    ai: 'ИИ ведёт рассылку по существующей базе клиентов: новые направления (газификация), сезонные офферы (весна — леера, осень — крыша/ангары), производственные новости. Без воды, по делу — в стиле Сергея.',
+    links: 'Просит отзыв · Сезонный оффер'
+  },
+  u3: {
+    chain: 'Удержание · звено 3', title: 'Сезонный оффер',
+    status: 'yellow', statusText: '🟡 ИИ ускоряет в 5–10 раз',
+    now: 'Сезонность Сергей знает: «Пик весной — это леера. Тёплый сезон с марта по ноябрь. Конец года загружен. Январь-февраль провальные». Сезонных рассылок нет.',
+    ai: 'ИИ заранее (за 1–2 месяца) генерирует тексты сезонных предложений, Сергей одобряет. Рассылка идёт в плановые даты по сегментам базы (по типу клиента).',
+    links: 'Рассылает · Допродажа'
+  },
+  u4: {
+    chain: 'Удержание · звено 4', title: 'Допродажа',
+    status: 'red', statusText: '🔴 Требует живого человека',
+    now: 'Стихийно. Постоянные клиенты возвращаются сами (Амурагрокомплекс). Активной допродажи нет.',
+    ai: 'Допродажа крупным клиентам — личный звонок Сергея или Андрея. ИИ готовит список: кому, когда последний раз делали, какие новые направления могут заинтересовать. Сергей звонит по готовому списку.',
+    links: 'Сезонный оффер · Запускает реферал-петлю'
+  },
+  u5: {
+    chain: 'Удержание · звено 5', title: 'Запускает реферал-петлю',
+    status: 'green', statusText: '🟢 ИИ автоматизирует полностью',
+    now: 'Сарафан = 80–90% оборота, но <strong>работает стихийно</strong>. Никаких благодарностей за рекомендации не отправляется.',
+    ai: 'После положительного отзыва ИИ отправляет клиенту короткое сообщение с благодарностью и просьбой порекомендовать знакомым. Готовит ссылку/визитку. Стихийный сарафан → управляемый канал.',
+    links: 'Допродажа · → Размещает на Авито (петля → Привлечение)'
+  },
+
+  // ===== ПЕРЕПЛЕТЕНИЯ =====
+  b1: {
+    chain: 'Переплетение · триггер', title: 'Продажа → Исполнение',
+    status: 'yellow', statusText: '🟡 Сейчас вручную',
+    now: 'Сергей: «Да ничего автоматически не происходит. Естественно, всё делается как-то через чаты подаётся команда». Сергей лично запускает каждое исполнение.',
+    ai: 'Аванс зафиксирован → ИИ автоматически создаёт чат объекта, ставит задачу прорабу, формирует заявки на материалы по спецификации, бронирует окно в ИК-8.',
+    links: 'Подписывает договор → Деталировка КМД'
+  },
+  b2: {
+    chain: 'Переплетение · информация', title: 'Исполнение → Контент',
+    status: 'red', statusText: '🔴 Цепочка разорвана',
+    now: 'Сергей: «Делаем [фото]. Не идёт никуда». Фото оседают в телефонах. Главная дыра контентной системы.',
+    ai: 'Сдача объекта → фото мастера автоматически попадают в обработку → ИИ генерирует пост, обновление Авито/2ГИС, материал для Telegram. Одна сдача = 3–4 единицы контента.',
+    links: 'Сдаёт объект → Снимает фото / Пишет текст'
+  },
+  b3: {
+    chain: 'Переплетение · триггер', title: 'Исполнение → Удержание',
+    status: 'red', statusText: '🔴 Цепочка отсутствует',
+    now: 'Сергей: «Без понятия [как просим отзыв], не занимался этим вопросом». Отзывы не собираются — несмотря на хорошие отношения с клиентами.',
+    ai: 'Сдача объекта зафиксирована → через 1–2 дня клиент получает сообщение с запросом отзыва на 2ГИС. Параллельно клиент попадает в сегмент «постоянные» для сезонных рассылок.',
+    links: 'Сдаёт объект → Просит отзыв'
+  },
+  b4: {
+    chain: 'Переплетение · петля', title: 'Контент → Привлечение',
+    status: 'red', statusText: '🔴 Петля разорвана',
+    now: 'Сейчас контент не публикуется — петля сломана на 2-м шаге. Лиды идут только через сарафан (80–90%) и старые Авито-объявления.',
+    ai: 'Регулярные публикации в Авито/2ГИС/Telegram → новые входящие в чате. ИИ-ассистент первой линии квалифицирует и передаёт человеку. Из 1 источника лидов делаем 4.',
+    links: 'Ведёт Telegram → Размещает на Авито → Принимает входящий'
+  },
+  b5: {
+    chain: 'Переплетение · петля', title: 'Удержание → Привлечение',
+    status: 'yellow', statusText: '🟡 Работает стихийно',
+    now: 'Сарафан — 80–90% оборота. Сергей: «От сарафана, да, личных контактов». Работает, но без системы — нельзя усилить, нельзя предсказать.',
+    ai: 'После положительного отзыва — автоблагодарность с просьбой рекомендовать. Готовая электронная визитка/ссылка. ИИ ведёт реестр рефералов, видит каналы, помогает усилить лучшие.',
+    links: 'Запускает реферал-петлю → Размещает на Авито'
+  },
+  b6: {
+    chain: 'Переплетение · новый канал', title: 'Тендеры через ЕИС',
+    status: 'red', statusText: '🔴 Канал не открыт',
+    now: 'НОСТРОЙ есть, на ЕИС зарегистрирован, но <strong>0 поданных заявок</strong>. Сергей: «Слабо ориентируюсь в тендерном законодательстве... Вот будет искусственный интеллект, будешь заниматься этим вопросом».',
+    ai: 'ИИ мониторит ЕИС по ключевым словам (металлоконструкции, ограждения, монтаж, ангары). Готовит проекты заявок по подходящим лотам. Сергей проверяет и подписывает. Открывает новый канал лидов.',
+    links: 'Размещает на Авито · Заводит в базу'
+  }
+};
+
+const statusBgColors = {
+  green: { bg: 'var(--green-bg)', color: 'var(--green-text)', dot: 'var(--green)' },
+  yellow: { bg: 'var(--yellow-bg)', color: 'var(--yellow-text)', dot: 'var(--yellow)' },
+  red: { bg: 'var(--red-bg)', color: 'var(--red-text)', dot: 'var(--red)' }
+};
+
+function showPopup(id) {
+  const d = nodeData[id];
+  if (!d) return;
+  const overlay = document.getElementById('popupOverlay');
+  const sc = statusBgColors[d.status];
+  const statusEl = document.getElementById('popupStatus');
+  statusEl.innerHTML = '<span class="pill-dot" style="background:' + sc.dot + '"></span>' + d.statusText;
+  statusEl.style.background = sc.bg;
+  statusEl.style.color = sc.color;
+  document.getElementById('popupChain').textContent = d.chain;
+  document.getElementById('popupTitle').textContent = d.title;
+  document.getElementById('popupNow').innerHTML = d.now;
+  document.getElementById('popupAI').innerHTML = d.ai;
+  if (d.links) {
+    document.getElementById('popupLinks').textContent = d.links;
+    document.getElementById('popupLinksSection').style.display = 'block';
+  } else {
+    document.getElementById('popupLinksSection').style.display = 'none';
+  }
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePopup(e) {
+  if (!e || e.target === document.getElementById('popupOverlay') || (e.target && e.target.classList && e.target.classList.contains('popup-close'))) {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+
+</body>
+</html>
